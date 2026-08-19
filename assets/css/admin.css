@@ -1,0 +1,26 @@
+.afdsp-admin-wrap { max-width: 1100px; }
+.afdsp-settings-card { margin: 1rem 0; border: 1px solid #c3c4c7; border-radius: .4rem; padding: 1rem 1.25rem; background: #fff; }
+.afdsp-settings-card h2 { margin-top: 0; }
+.afdsp-settings-card label { display: flex; flex-direction: column; gap: .3rem; font-weight: 600; }
+.afdsp-settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.afdsp-settings-grid input, .afdsp-settings-grid select, .afdsp-area-picker input { width: 100%; max-width: none; }
+.afdsp-area-picker { position: relative; display: grid; gap: .8rem; }
+.afdsp-search-results, .afdsp-editor-results { z-index: 20; overflow: auto; max-height: 14rem; border: 1px solid #8c8f94; border-radius: .3rem; background: #fff; box-shadow: 0 .4rem 1.2rem rgba(0,0,0,.12); }
+.afdsp-search-results[hidden] { display: none; }
+.afdsp-search-results button, .afdsp-editor-result { display: block; width: 100%; border: 0; border-bottom: 1px solid #dcdcde; padding: .7rem; text-align: left; background: #fff; cursor: pointer; }
+.afdsp-search-results button:hover, .afdsp-search-results button:focus, .afdsp-editor-result:hover, .afdsp-editor-result:focus { background: #edf7fb; }
+.afdsp-search-results p { margin: 0; padding: .7rem; }
+.afdsp-bbox-details { padding: .6rem 0; }
+.afdsp-bbox-details summary { cursor: pointer; font-weight: 600; }
+.afdsp-coordinates { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .7rem; margin-top: .7rem; }
+.afdsp-checkboxes { display: flex; flex-wrap: wrap; gap: .8rem 1.2rem; margin-top: 1rem; }
+.afdsp-checkboxes label { flex-direction: row; align-items: center; font-weight: 400; }
+.afdsp-diagnostics { display: grid; grid-template-columns: minmax(10rem, auto) 1fr; gap: .35rem 1rem; }
+.afdsp-diagnostics dt { font-weight: 650; }
+.afdsp-diagnostics dd { margin: 0; overflow-wrap: anywhere; }
+.afdsp-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.afdsp-inline-form { display: inline-block; }
+.afdsp-settings-card--danger { border-color: #dba7a7; }
+.afdsp-editor-results { margin-bottom: 1rem; }
+.afdsp-editor-bbox { color: #646970; font-family: monospace; font-size: 11px; overflow-wrap: anywhere; }
+.afdsp-editor-placeholder { border: 1px dashed #8c8f94; padding: 2rem; text-align: center; }

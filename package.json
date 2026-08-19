@@ -1,0 +1,14 @@
+{
+  "name": "afd-spritpreise",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build- und Prüfskripte für das WordPress-Plugin AfD Spritpreise",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "php tests/run.php",
+    "package": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
