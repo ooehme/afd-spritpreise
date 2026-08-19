@@ -11,36 +11,43 @@ Stand: 19. August 2026
 
 ## Automatisierte Prüfungen
 
-`npm run build`: bestanden. Drei JavaScript-Assets wurden erzeugt und mit `node --check` validiert; zehn `block.json`-Dateien wurden geparst.
+`npm run build` validiert die JavaScript-Assets und alle vorhandenen `block.json`-Dateien rekursiv.
 
-`npm test`: 21/21 bestanden.
+`npm test` prüft unter anderem:
 
 - Photon-Extent und Bounding-Box-Validierung
-- TankPuls-Parameter, reales `items`-Antwortschema und Stationsfilter
-- Median gerade/ungerade und deterministische günstigste Station
+- TankPuls-Parameter, Antwortschema und Stationsfilter
+- Median und deterministische günstigste Station
 - Szenariorechnung ohne vorzeitige Rundung
-- Cache Miss, Hit, Expiry, paralleler Lock und Stale-if-error
-- Full- und Compact-Renderer
-- Gutenberg-Komponenten, Datenbindung und Theme-Schriftfamilien
-- Price Board als Raster/Liste mit konfigurierbarer Spaltenzahl
-- native Design-Supports aller gestaltbaren Unterblöcke
-- zwei Blockkonfigurationen mit unterschiedlichen Bounding Boxes
-- Shortcode
-- Aktivierung und Deaktivierung
-- GitHub-Updater
-- ausgeführter vollständiger Uninstall mit Options-, Cache-, Lock- und Site-Transient-Bereinigung
+- Cache Miss, Hit, Expiry, parallelen Lock und Stale-if-error
+- eigenständigen Full-/Compact-Renderer des Shortcodes
+- Gutenberg-Komponenten und Datenbindung
+- native Gutenberg-Design-Supports der Datenblöcke
+- freie Verschachtelbarkeit aller Datenblöcke unter `afd-spritpreise/fuel-price`
+- Abwesenheit der entfernten Container `price-board` und `facts`
+- mehrere Konfigurationen mit unterschiedlichen Bounding Boxes
+- Shortcode, Lifecycle, GitHub-Updater und Uninstall
 
-Ein zusätzlicher JavaScript-Smoke-Test bestätigt die Registrierung aller zehn Gutenberg-Blocktypen und die Parent-Speicherlogik.
+Der JavaScript-Smoke-Test erwartet acht Gutenberg-Blocktypen:
 
-PHP-Syntaxprüfung: alle PHP-Dateien bestanden.
+- `afd-spritpreise/fuel-price`
+- `afd-spritpreise/header`
+- `afd-spritpreise/fuel-tabs`
+- `afd-spritpreise/metric`
+- `afd-spritpreise/tank-saving`
+- `afd-spritpreise/cheapest-station`
+- `afd-spritpreise/demands`
+- `afd-spritpreise/method`
 
-ZIP-Prüfung: bestanden. `build/afd-spritpreise.zip` besitzt genau einen Plugin-Wurzelordner `afd-spritpreise/`, enthält die Hauptdatei direkt darunter und enthält keine Entwicklungs- oder Testabhängigkeiten.
+`price-board` und `facts` dürfen nicht mehr registriert sein.
 
-## Live-Smoke-Checks
+## Vor einem Release
 
-- TankPuls-Endpunkt mit Chemnitz-Bounding-Box: HTTP 200, `items`-Liste mit aktuellen Stationen; `priceCents` als Tausendstel-Euro bestätigt.
-- Photon-Suche `Chemnitz`, `lang=de`, `countrycode=DE`: gültige GeoJSON-Antwort; Extent `[12.7275333, 50.9039377, 13.0540169, 50.7413804]` bestätigt.
+```bash
+npm run build
+npm test
+php -l afd-spritpreise.php
+npm run package
+```
 
-## Nicht automatisierbar in dieser Umgebung
-
-Die visuelle Browser-QA der lokalen Full-/Compact-Vorschau wurde durch die Sicherheitsrichtlinie der Desktop-App für `127.0.0.1` blockiert. Die Renderer-Struktur, Tab-Zustände, Breakpoints und Overflow-Regeln wurden automatisiert bzw. statisch geprüft. Vor einem öffentlichen Release wird zusätzlich ein manueller Staging-Test mit dem produktiven Theme empfohlen.
+Zusätzlich ist ein manueller Staging-Test mit dem produktiven Theme sinnvoll, insbesondere für Theme-spezifische Gutenberg-Presets, Layoutbreiten und responsive Core-Blöcke.
