@@ -6,30 +6,33 @@ Alle relevanten Änderungen werden in dieser Datei dokumentiert. Das Projekt ver
 
 ### Added
 
-- Verschachtelter Gutenberg-Baukasten mit dynamischen Unterblöcken für alle wesentlichen Ausgabebereiche
-- Einzelne Preisfelder für aktuellen Preis, Szenariopreis und Ersparnis mit jeweils eigenen Gutenberg-Designoptionen
-- Native Farben, Hintergründe, Verläufe, Abstände, Typografie, Ausrichtung, Rahmen und Schatten je Abschnitt
-- Theme-Schriftfamilien und konfigurierbare Schriftstärken je Unterblock
-- Raster-, Listen- und Inline-Darstellung mit ein bis vier Spalten für Price Board und Zusatzinformationen
-- Blockstile Card, Editorial und Vom Theme
-- Clientseitige Aktualisierung aller frei angeordneten Komponenten beim Kraftstoffwechsel
+- Frei verschachtelbarer Gutenberg-Baukasten mit dynamischen Datenblöcken für Überschrift, Kraftstoffauswahl, einzelne Preisfelder, 50-Liter-Ersparnis, günstigste Tankstelle, Forderungen und Methodik
+- Native Gutenberg-Designoptionen für Farben, Hintergründe, Verläufe, Abstände, Typografie, Rahmen, Schatten, Dimensionen und weitere Block-Supports
+- Standard-Template auf Basis normaler Core-Blöcke wie Gruppe, Spalten und Spalte
+- Clientseitige Aktualisierung frei angeordneter Datenblöcke beim Kraftstoffwechsel
 
-### Compatibility
+### Changed
 
-- Bestehende selbstschließende 1.0-Blöcke verwenden weiterhin den bisherigen Renderer und werden erst beim Bearbeiten in den Baukasten überführt.
+- Preisfelder benötigen nur noch `afd-spritpreise/fuel-price` als Vorfahren und können beliebig tief in Core-Blöcken verschachtelt werden
+- 50-Liter-Ersparnis und günstigste Tankstelle sind ebenfalls frei unterhalb des Hauptblocks platzierbar
+- Gutenberg übernimmt Layout und Gestaltung; plugin-eigene Layout-Container sind nicht mehr Teil der Block-Architektur
+- Manuelle Font-Family-/Font-Weight-Sonderlogik entfernt zugunsten nativer Block-Supports
+
+### Removed
+
+- Obsoleter Block `afd-spritpreise/price-board`
+- Obsoleter Block `afd-spritpreise/facts`
+- Fallback für alte selbstschließende Blockstrukturen
+- Kompatibilitätslogik und Tests für frühere, noch nicht veröffentlichte Blockstrukturen
 
 ## [1.0.0] - 2026-08-19
 
 ### Added
 
-- Dynamischer Gutenberg-Block und Shortcode mit gemeinsamem Server-Renderer
+- Entwicklungsstand mit dynamischem Gutenberg-Block und Shortcode
 - Photon-Suche mit validierter Extent-Konvertierung und eigener Bounding Box je Instanz
-- TankPuls-Client, Median, günstigste Tankstelle und editierbare Szenariorechnung
+- TankPuls-Client, Median, günstigste Station und editierbare Szenariorechnung
 - Cache mit TTL, parallelem Refresh-Lock, Stale-if-error und Backend-Diagnose
-- Eigenständige Full- und Compact-Darstellung
+- Eigenständige Full-/Compact-Ausgabe für den Shortcode
 - GitHub-Release-Updater, vollständiger Lifecycle und Uninstall-Bereinigung
 - Test-, Build- und Release-Paketierungsprozess
-
-### Changed
-
-- Interaktive Kartenauswahl auf Projektentscheidung entfernt; Photon ist die alleinige Gebietsauswahl.
