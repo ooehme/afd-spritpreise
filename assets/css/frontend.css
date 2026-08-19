@@ -21,6 +21,7 @@
 .afdsp a { color: #075d86; text-underline-offset: .15em; }
 .afdsp[hidden], .afdsp [hidden] { display: none !important; }
 
+/* Standalone shortcode renderer. */
 .afdsp--full {
     overflow: hidden;
     border: 1px solid #b9cad9;
@@ -109,7 +110,7 @@
     .afdsp-tab { transition: background-color .16s ease, color .16s ease; }
 }
 
-/* Gutenberg component builder. Native block-support classes and inline styles stay authoritative. */
+/* Gutenberg builder: Gutenberg owns layout and wrapper styling. */
 .afdsp--builder {
     container-type: inline-size;
     overflow: visible;
@@ -119,84 +120,66 @@
     line-height: inherit;
 }
 
-.afdsp--builder > .afdsp-component + .afdsp-component { margin-top: var(--wp--style--block-gap, 1rem); }
 .afdsp--builder .afdsp-component { box-sizing: border-box; max-width: 100%; }
-.afdsp--builder .afdsp-builder-header { padding: clamp(.25rem, 1.5vw, 1rem) 0; }
 .afdsp--builder .afdsp-builder-header .afdsp-title { color: inherit; font-family: inherit; }
 .afdsp--builder .afdsp-builder-header .afdsp-intro { color: inherit; opacity: .72; }
 .afdsp--builder .afdsp-builder-header .afdsp-eyebrow { color: inherit; opacity: .75; }
-.afdsp--builder .afdsp-builder-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: min(100%, 24rem); border: 1px solid color-mix(in srgb, currentColor 20%, transparent); border-radius: .65rem; padding: .25rem; background: color-mix(in srgb, currentColor 5%, transparent); }
+.afdsp--builder .afdsp-builder-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .afdsp--builder .afdsp-builder-tabs .afdsp-tab { color: inherit; }
 .afdsp--builder .afdsp-builder-tabs .afdsp-tab.is-active { color: #fff; background: var(--afdsp-cyan, #008fc5); }
 
-.afdsp--builder .afdsp-layout--grid { display: grid; grid-template-columns: repeat(var(--afdsp-columns, 3), minmax(0, 1fr)); gap: var(--wp--style--block-gap, .75rem); }
-.afdsp--builder .afdsp-layout--list { display: flex; flex-direction: column; gap: var(--wp--style--block-gap, .75rem); }
-.afdsp--builder .afdsp-layout--inline { display: flex; flex-flow: row wrap; gap: var(--wp--style--block-gap, .75rem); }
-.afdsp--builder .afdsp-layout--inline > * { flex: 1 1 12rem; }
-.afdsp--builder .afdsp-price-board { overflow: hidden; border-radius: .75rem; padding: .55rem; }
-.afdsp--builder .afdsp-metric { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: clamp(.85rem, 2vw, 1.25rem); }
-.afdsp--builder .afdsp-metric-label { font-size: .7em; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; opacity: .75; }
-.afdsp--builder .afdsp-metric strong { margin-top: .3rem; font-size: clamp(1.65em, 1.15em + 2.4cqi, 2.75em); line-height: 1; white-space: nowrap; }
-.afdsp--builder .afdsp-metric small { margin-top: .35rem; opacity: .7; }
-.afdsp--builder .afdsp-builder-facts { border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: .65rem; padding: 1rem; }
-.afdsp--builder .afdsp-tank-saving, .afdsp--builder .afdsp-builder-station { min-width: 0; padding: .5rem; }
-.afdsp--builder .afdsp-tank-saving { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; border-bottom: 1px solid color-mix(in srgb, currentColor 16%, transparent); }
-.afdsp--builder .afdsp-tank-saving span, .afdsp--builder .afdsp-builder-station > span { font-size: .78em; opacity: .72; }
-.afdsp--builder .afdsp-tank-saving strong, .afdsp--builder .afdsp-builder-station b { color: var(--afdsp-accent, #0085b5); font-size: 1.2em; }
+/* Price fields intentionally carry no layout, padding or value font-size rules. */
+.afdsp--builder .afdsp-metric-label { display: block; opacity: .75; }
+.afdsp--builder .afdsp-data-metric > strong { display: block; margin-top: .25em; font-size: inherit; line-height: inherit; }
+.afdsp--builder .afdsp-data-metric > small { display: block; margin-top: .25em; opacity: .7; }
+
+.afdsp--builder .afdsp-tank-saving, .afdsp--builder .afdsp-builder-station { min-width: 0; }
+.afdsp--builder .afdsp-tank-saving { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.afdsp--builder .afdsp-tank-saving span, .afdsp--builder .afdsp-builder-station > span { opacity: .72; }
+.afdsp--builder .afdsp-tank-saving strong, .afdsp--builder .afdsp-builder-station b { color: var(--afdsp-accent, currentColor); }
 .afdsp--builder .afdsp-station-row { display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
 .afdsp--builder .afdsp-station-row > div { display: flex; flex-direction: column; min-width: 0; }
 .afdsp--builder .afdsp-station-row > div:last-child { align-items: end; flex: 0 0 auto; }
 .afdsp--builder .afdsp-station-row small { opacity: .72; }
 
-.afdsp--builder .afdsp-builder-demands { margin-top: clamp(2rem, 5vw, 3rem); }
 .afdsp--builder .afdsp-demands-heading { margin-bottom: 1rem; }
 .afdsp--builder .afdsp-demands-heading::before { display: block; width: 8.5rem; height: .25rem; margin-bottom: .8rem; background: linear-gradient(90deg, var(--afdsp-blue), var(--afdsp-cyan)); content: ""; }
-.afdsp--builder .afdsp-demands-heading h3 { margin: 0; color: inherit; font-family: inherit; font-size: 1.55em; }
+.afdsp--builder .afdsp-demands-heading h3 { margin: 0; color: inherit; font-family: inherit; }
 .afdsp--builder .afdsp-demands-heading p { margin: .25rem 0 0; opacity: .72; }
-.afdsp--builder .afdsp-demand-list { margin: 0; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); padding: 0; background: color-mix(in srgb, currentColor 2%, transparent); list-style: none; counter-reset: afdsp-demand; }
-.afdsp--builder .afdsp-demand-list li { display: grid; grid-template-columns: 2rem minmax(0, 1fr) minmax(11rem, .42fr); gap: 1rem; padding: 1.15rem; border-bottom: 1px dashed color-mix(in srgb, currentColor 20%, transparent); counter-increment: afdsp-demand; }
-.afdsp--builder .afdsp-demand-list li::before { color: color-mix(in srgb, currentColor 55%, transparent); font-weight: 800; content: counter(afdsp-demand) "."; }
+.afdsp--builder .afdsp-demand-list { margin: 0; padding: 0; list-style: none; counter-reset: afdsp-demand; }
+.afdsp--builder .afdsp-demand-list li { display: grid; grid-template-columns: 2rem minmax(0, 1fr) minmax(11rem, .42fr); gap: 1rem; padding-block: 1.15rem; border-bottom: 1px dashed color-mix(in srgb, currentColor 20%, transparent); counter-increment: afdsp-demand; }
+.afdsp--builder .afdsp-demand-list li::before { opacity: .6; font-weight: 800; content: counter(afdsp-demand) "."; }
 .afdsp--builder .afdsp-demand-copy h4, .afdsp--builder .afdsp-demand-copy p { margin: 0; }
-.afdsp--builder .afdsp-demand-copy h4 { color: inherit; font-family: inherit; font-size: 1em; }
+.afdsp--builder .afdsp-demand-copy h4 { color: inherit; font-family: inherit; }
 .afdsp--builder .afdsp-demand-copy p { margin-top: .25rem; opacity: .7; }
-.afdsp--builder .afdsp-demand-copy a { display: inline-block; margin-top: .45rem; border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: .2rem; padding: .1rem .45rem; color: inherit; font-size: .75em; text-decoration: none; }
+.afdsp--builder .afdsp-demand-copy a { display: inline-block; margin-top: .45rem; color: inherit; }
 .afdsp--builder .afdsp-demand-calc { display: flex; flex-direction: column; border-left: 1px dashed color-mix(in srgb, currentColor 20%, transparent); padding-left: 1rem; }
-.afdsp--builder .afdsp-demand-calc span { font-size: .7em; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .6; }
+.afdsp--builder .afdsp-demand-calc span { font-weight: 700; opacity: .6; }
 .afdsp--builder .afdsp-demand-calc strong { margin-top: .25rem; font-variant-numeric: tabular-nums; }
 .afdsp--builder .afdsp-demand-calc small { opacity: .7; }
-.afdsp--builder .afdsp-demand-note { padding: 1.15rem; }
+.afdsp--builder .afdsp-demand-note { padding-top: 1rem; }
 .afdsp--builder .afdsp-demand-note p { margin: .25rem 0 0; opacity: .72; }
-.afdsp--builder .afdsp-builder-method { border-top: 1px dashed color-mix(in srgb, currentColor 20%, transparent); padding-top: 1rem; }
-.afdsp--builder .afdsp-builder-method h3 { margin: 0; color: inherit; font-family: inherit; font-size: 1em; }
+.afdsp--builder .afdsp-builder-method h3 { margin: 0; color: inherit; font-family: inherit; }
 .afdsp--builder .afdsp-builder-method p { margin: .35rem 0 0; }
 
-/* Editorial style follows the second visual reference. */
+/* Optional top-level styles do not recreate layout containers. */
 .afdsp--builder.is-style-editorial { --afdsp-accent: #0088bd; }
 .afdsp--builder.is-style-editorial:not(.has-text-color) { color: #08233b; }
-.afdsp--builder.is-style-editorial .afdsp-price-board:not(.has-background) { background: #062a46; box-shadow: 0 .45rem 1rem rgba(4, 35, 58, .18); }
-.afdsp--builder.is-style-editorial .afdsp-price-board:not(.has-text-color) { color: #fff; }
-.afdsp--builder.is-style-editorial .afdsp-metric--scenario:not(.has-background) { background: rgba(17, 174, 224, .12); }
-.afdsp--builder.is-style-editorial .afdsp-metric--scenario:not(.has-text-color) strong,
-.afdsp--builder.is-style-editorial .afdsp-metric--saving:not(.has-text-color) strong { color: #34c6f4; }
-.afdsp--builder.is-style-editorial .afdsp-builder-facts:not(.has-background) { background: #e4f6fd; }
-.afdsp--builder.is-style-editorial .afdsp-builder-demands:not(.has-background) { background: #fff; }
 
-/* Card keeps the original encapsulated visual language. */
-.afdsp--builder:not(.is-style-editorial):not(.is-style-theme), .afdsp--builder.is-style-card { overflow: hidden; border: 1px solid #b9cad9; border-radius: 1rem; padding: clamp(.8rem, 2.5vw, 1.5rem); box-shadow: 0 .4rem 1.6rem rgba(7, 27, 52, .11); }
+.afdsp--builder:not(.is-style-editorial):not(.is-style-theme), .afdsp--builder.is-style-card {
+    overflow: hidden;
+    border: 1px solid #b9cad9;
+    border-radius: 1rem;
+    padding: clamp(.8rem, 2.5vw, 1.5rem);
+    box-shadow: 0 .4rem 1.6rem rgba(7, 27, 52, .11);
+}
 .afdsp--builder:not(.is-style-editorial):not(.is-style-theme):not(.has-background), .afdsp--builder.is-style-card:not(.has-background) { background: #f5f9fc; }
-.afdsp--builder:not(.is-style-editorial):not(.is-style-theme) .afdsp-builder-header:not(.has-background), .afdsp--builder.is-style-card .afdsp-builder-header:not(.has-background) { border-radius: .75rem; padding: 1.25rem; color: #fff; background: linear-gradient(135deg, var(--afdsp-navy), var(--afdsp-blue)); }
-.afdsp--builder:not(.is-style-editorial):not(.is-style-theme) .afdsp-price-board:not(.has-background), .afdsp--builder.is-style-card .afdsp-price-board:not(.has-background) { background: #fff; }
 
-/* Theme style only supplies structure; colors and type inherit from theme/block supports. */
 .afdsp--builder.is-style-theme { --afdsp-accent: currentColor; }
 .afdsp--builder.is-style-theme a { color: inherit; }
 .afdsp--builder.is-style-theme .afdsp-builder-tabs .afdsp-tab.is-active { color: inherit; background: color-mix(in srgb, currentColor 12%, transparent); }
-.afdsp--builder.is-style-theme .afdsp-price-board:not(.has-background),
-.afdsp--builder.is-style-theme .afdsp-builder-facts:not(.has-background),
-.afdsp--builder.is-style-theme .afdsp-builder-demands:not(.has-background) { background: transparent; }
 
 @container (max-width: 42rem) {
-    .afdsp--builder .afdsp-layout--grid { grid-template-columns: 1fr; }
     .afdsp--builder .afdsp-demand-list li { grid-template-columns: 1.6rem minmax(0, 1fr); }
     .afdsp--builder .afdsp-demand-calc { grid-column: 2; border-top: 1px dashed color-mix(in srgb, currentColor 20%, transparent); border-left: 0; padding-top: .75rem; padding-left: 0; }
     .afdsp--builder .afdsp-station-row { align-items: start; flex-direction: column; }
