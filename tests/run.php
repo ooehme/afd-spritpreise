@@ -136,14 +136,14 @@ test('Shortcode-Renderer Full und Compact', function (): void {
     assert_true(str_contains($compact, 'afdsp--compact') && !str_contains($compact, 'afdsp-receipt'));
 });
 
-test('Gutenberg-Komponenten und Datenbindung', function (): void {
+test('Atomare Gutenberg-Datenwerte und Datenbindung', function (): void {
     Cache::clear_all();
     $GLOBALS['_remote_callback'] = function (string $url): array {
         parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
         $base = ['diesel' => 1900, 'e5' => 2000, 'e10' => 1950][$query['fuel']];
         return response([
             ['id' => 'a', 'name' => 'Tank A', 'street' => 'A-Straße 1', 'postcode' => '09111', 'city' => 'Chemnitz', 'priceCents' => $base, 'isActive' => true],
-            ['id' => 'b', 'name' => 'Tank B', 'priceCents' => $base + 100, 'isActive' => true],
+            ['id' => 'b', 'name' => 'Tank B', 'street' => 'B-Straße 2', 'postcode' => '09111', 'city' => 'Chemnitz', 'priceCents' => $base + 100, 'isActive' => true],
         ]);
     };
     $renderer = new ComponentRenderer(Plugin::instance());
@@ -152,27 +152,34 @@ test('Gutenberg-Komponenten und Datenbindung', function (): void {
         'afdsp/minLat' => 50.7, 'afdsp/minLng' => 12.7, 'afdsp/maxLat' => 50.9, 'afdsp/maxLng' => 13.1,
         'afdsp/areaLabel' => 'Chemnitz', 'afdsp/defaultFuel' => 'diesel',
     ];
-    $metric = $renderer->metric(['metric' => 'current'], '', $context);
+    $value = $renderer->data_value(['field' => 'current', 'tagName' => 'strong'], '', $context);
+    $station = $renderer->data_value(['field' => 'station_name', 'tagName' => 'p'], '', $context);
     $parent = $renderer->parent(['minLat' => 50.7, 'minLng' => 12.7, 'maxLat' => 50.9, 'maxLng' => 13.1, 'areaLabel' => 'Chemnitz', 'defaultFuel' => 'diesel'], '<div data-afdsp-tab>Komponenten</div>', $context);
-    assert_true(str_contains($metric, 'data-afdsp-bind="current"'));
+    assert_true(str_contains($value, '<strong ') && str_contains($value, 'data-afdsp-bind="current"'));
+    assert_true(str_contains($station, 'data-afdsp-bind="station_name"'));
     assert_true(str_contains($parent, 'data-afdsp-builder'));
     assert_true(str_contains($parent, '"e5"'));
     assert_true(str_contains($parent, 'Komponenten</div>'));
 });
 
 test('Block-Metadaten aktivieren native Gutenberg-Stile', function (): void {
-    $directories = ['header', 'fuel-tabs', 'metric', 'tank-saving', 'cheapest-station', 'demands', 'method'];
-    foreach ($directories as $directory) {
+    foreach (['fuel-tabs', 'data-value'] as $directory) {
         $metadata = json_decode(file_get_contents(AFDSP_DIR . 'block/' . $directory . '/block.json'), true, 512, JSON_THROW_ON_ERROR);
         assert_true(!empty($metadata['supports']['color']['background']), $directory . ': background support missing');
         assert_true(!empty($metadata['supports']['typography']['fontSize']), $directory . ': font-size support missing');
+        assert_true(!empty($metadata['supports']['typography']['textAlign']), $directory . ': text-align support missing');
         assert_true(!empty($metadata['supports']['typography']['__experimentalFontFamily']), $directory . ': font-family support missing');
         assert_true(!empty($metadata['supports']['spacing']['padding']), $directory . ': padding support missing');
         assert_true(!empty($metadata['supports']['__experimentalBorder']['radius']), $directory . ': border support missing');
         assert_same(['afd-spritpreise/fuel-price'], $metadata['ancestor'], $directory . ': block must stay freely nestable below fuel-price');
     }
-    assert_true(!is_file(AFDSP_DIR . 'block/price-board/block.json'), 'Obsolete price-board metadata still exists.');
-    assert_true(!is_file(AFDSP_DIR . 'block/facts/block.json'), 'Obsolete facts metadata still exists.');
+
+    $parent = json_decode(file_get_contents(AFDSP_DIR . 'block/block.json'), true, 512, JSON_THROW_ON_ERROR);
+    assert_true(!array_key_exists('allowedBlocks', $parent['supports']), 'Parent must not restrict InnerBlocks through allowedBlocks.');
+
+    foreach (['header', 'metric', 'tank-saving', 'cheapest-station', 'demands', 'method', 'price-board', 'facts'] as $removed) {
+        assert_true(!is_file(AFDSP_DIR . 'block/' . $removed . '/block.json'), 'Obsolete metadata still exists: ' . $removed);
+    }
 });
 
 test('Mehrere Blockinstanzen mit unterschiedlichen Bounding Boxes', function (): void {

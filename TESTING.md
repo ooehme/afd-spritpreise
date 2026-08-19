@@ -2,12 +2,15 @@
 
 Stand: 19. August 2026
 
-## Umgebung
+## Zielarchitektur
 
-- PHP 8.3.32
-- Node.js 24.15.0
-- npm 11.12.1
-- Zielkompatibilität: PHP 8.1+, WordPress 6.6–7.0
+Der Gutenberg-Baukasten registriert genau drei Plugin-Blöcke:
+
+- `afd-spritpreise/fuel-price`
+- `afd-spritpreise/fuel-tabs`
+- `afd-spritpreise/data-value`
+
+Alle früheren Präsentationsblöcke müssen abwesend sein. Layout und statische Inhalte werden mit Gutenberg-Core-Blöcken gebaut.
 
 ## Automatisierte Prüfungen
 
@@ -21,33 +24,30 @@ Stand: 19. August 2026
 - Szenariorechnung ohne vorzeitige Rundung
 - Cache Miss, Hit, Expiry, parallelen Lock und Stale-if-error
 - eigenständigen Full-/Compact-Renderer des Shortcodes
-- Gutenberg-Komponenten und Datenbindung
-- native Gutenberg-Design-Supports der Datenblöcke
-- freie Verschachtelbarkeit aller Datenblöcke unter `afd-spritpreise/fuel-price`
-- Abwesenheit der entfernten Container `price-board` und `facts`
+- atomare Gutenberg-Datenwerte und Frontend-Datenbindung
+- freie Verschachtelbarkeit von `fuel-tabs` und `data-value`
+- native Gutenberg-Design-Supports inklusive Textausrichtung
+- Abwesenheit aller entfernten Präsentationsblöcke
 - mehrere Konfigurationen mit unterschiedlichen Bounding Boxes
 - Shortcode, Lifecycle, GitHub-Updater und Uninstall
 
-Der JavaScript-Smoke-Test erwartet acht Gutenberg-Blocktypen:
+Der JavaScript-Smoke-Test erwartet exakt die drei oben genannten Blocktypen und lehnt die entfernten Blocktypen ausdrücklich ab.
 
-- `afd-spritpreise/fuel-price`
-- `afd-spritpreise/header`
-- `afd-spritpreise/fuel-tabs`
-- `afd-spritpreise/metric`
-- `afd-spritpreise/tank-saving`
-- `afd-spritpreise/cheapest-station`
-- `afd-spritpreise/demands`
-- `afd-spritpreise/method`
-
-`price-board` und `facts` dürfen nicht mehr registriert sein.
-
-## Vor einem Release
+## Vor einem Merge oder Release
 
 ```bash
 npm run build
 npm test
 php -l afd-spritpreise.php
+php -l includes/class-block.php
+php -l includes/class-componentrenderer.php
 npm run package
 ```
 
-Zusätzlich ist ein manueller Staging-Test mit dem produktiven Theme sinnvoll, insbesondere für Theme-spezifische Gutenberg-Presets, Layoutbreiten und responsive Core-Blöcke.
+Zusätzlich im Gutenberg-Editor manuell prüfen:
+
+1. `data-value` in Gruppe → Spalten → Spalte verschieben.
+2. Schriftgröße, Schriftfamilie, Textausrichtung, Farbe, Hintergrund, Padding, Margin, Rahmen und Schatten ändern.
+3. Beschriftung als normalen Absatz oder normale Überschrift daneben setzen.
+4. Kraftstoff umschalten und prüfen, dass alle `data-value`-Blöcke aktualisiert werden.
+5. Standard-Template vollständig umbauen und zusätzliche Core-Blöcke einfügen.

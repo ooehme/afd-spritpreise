@@ -7,7 +7,6 @@
     var useState = element.useState;
     var InspectorControls = blockEditor.InspectorControls;
     var InnerBlocks = blockEditor.InnerBlocks;
-    var RichText = blockEditor.RichText;
     var useBlockProps = blockEditor.useBlockProps;
     var useInnerBlocksProps = blockEditor.useInnerBlocksProps;
     var PanelBody = components.PanelBody;
@@ -17,22 +16,90 @@
     var __ = i18n.__;
     var config = window.afdspAreaPickerConfig || { area: {} };
 
+    var DATA_FIELDS = [
+        { label: __('Gebietsname', 'afd-spritpreise'), value: 'area_label', sample: __('Chemnitz', 'afd-spritpreise') },
+        { label: __('Kraftstoff', 'afd-spritpreise'), value: 'fuel_label', sample: __('Diesel', 'afd-spritpreise') },
+        { label: __('Anzahl Tankstellen', 'afd-spritpreise'), value: 'station_count', sample: '50' },
+        { label: __('Einleitung', 'afd-spritpreise'), value: 'intro', sample: __('Median aus 50 Tankstellen im Gebiet Chemnitz.', 'afd-spritpreise') },
+        { label: __('Aktueller Preis', 'afd-spritpreise'), value: 'current', sample: '2,339 €/l' },
+        { label: __('Szenariopreis', 'afd-spritpreise'), value: 'scenario', sample: '1,767 €/l' },
+        { label: __('Hinweis zum Szenario', 'afd-spritpreise'), value: 'scenario_note', sample: __('wenn die Entlastungen vollständig ankommen', 'afd-spritpreise') },
+        { label: __('Ersparnis je Liter', 'afd-spritpreise'), value: 'saving', sample: '57,2 ct/l' },
+        { label: __('Ersparnis in Prozent', 'afd-spritpreise'), value: 'saving_percent', sample: '24,5 % weniger' },
+        { label: __('Ersparnis bei 50 Litern', 'afd-spritpreise'), value: 'saving_50l', sample: '28,61 € weniger' },
+        { label: __('Tankstellen-Bezeichnung', 'afd-spritpreise'), value: 'station_label', sample: __('Günstigste Tankstelle für Diesel', 'afd-spritpreise') },
+        { label: __('Tankstellen-Name', 'afd-spritpreise'), value: 'station_name', sample: 'Tankstelle Beispiel' },
+        { label: __('Tankstellen-Adresse', 'afd-spritpreise'), value: 'station_address', sample: 'Musterstraße 1, 09111 Chemnitz' },
+        { label: __('Tankstellen-Preis', 'afd-spritpreise'), value: 'station_price', sample: '2,318 €/l' },
+        { label: __('Energiesteuer – Änderung', 'afd-spritpreise'), value: 'energy_change', sample: '47,0 ct → 33,0 ct' },
+        { label: __('Energiesteuer – Effekt', 'afd-spritpreise'), value: 'energy_effect', sample: '14,0 ct weniger je Liter' },
+        { label: __('CO₂-Preis – Änderung', 'afd-spritpreise'), value: 'co2_change', sample: '17,4 ct → 0,0 ct' },
+        { label: __('CO₂-Preis – Effekt', 'afd-spritpreise'), value: 'co2_effect', sample: '17,4 ct weniger je Liter' },
+        { label: __('Mehrwertsteuer – Änderung', 'afd-spritpreise'), value: 'vat_change', sample: '19 % → 7 %' },
+        { label: __('Mehrwertsteuer – Effekt', 'afd-spritpreise'), value: 'vat_effect', sample: __('auf den verbleibenden Nettopreis', 'afd-spritpreise') },
+        { label: __('Methodik', 'afd-spritpreise'), value: 'method', sample: __('Median aus gültigen, aktiven Tankstellen. Intern wird ohne vorzeitige Rundung gerechnet.', 'afd-spritpreise') }
+    ];
+
     var DEFAULT_TEMPLATE = [
-        ['afd-spritpreise/header', {}],
-        ['afd-spritpreise/fuel-tabs', {}],
         ['core/group', { layout: { type: 'constrained' } }, [
-            ['core/columns', {}, [
-                ['core/column', {}, [['afd-spritpreise/metric', { metric: 'current' }]]],
-                ['core/column', {}, [['afd-spritpreise/metric', { metric: 'scenario' }]]],
-                ['core/column', {}, [['afd-spritpreise/metric', { metric: 'saving' }]]]
+            ['core/paragraph', { content: __('Regionale Kraftstoffpreise', 'afd-spritpreise') }],
+            ['core/heading', { level: 2, content: __('Das kostet Kraftstoff mit der AfD', 'afd-spritpreise') }],
+            ['afd-spritpreise/data-value', { field: 'intro', tagName: 'p' }]
+        ]],
+        ['afd-spritpreise/fuel-tabs', {}],
+        ['core/columns', {}, [
+            ['core/column', {}, [
+                ['core/paragraph', { content: __('Aktueller Kraftstoffpreis', 'afd-spritpreise') }],
+                ['afd-spritpreise/data-value', { field: 'current', tagName: 'strong' }]
+            ]],
+            ['core/column', {}, [
+                ['core/paragraph', { content: __('Nach AfD-Forderungen', 'afd-spritpreise') }],
+                ['afd-spritpreise/data-value', { field: 'scenario', tagName: 'strong' }],
+                ['afd-spritpreise/data-value', { field: 'scenario_note', tagName: 'small' }]
+            ]],
+            ['core/column', {}, [
+                ['core/paragraph', { content: __('Mögliche Ersparnis', 'afd-spritpreise') }],
+                ['afd-spritpreise/data-value', { field: 'saving', tagName: 'strong' }],
+                ['afd-spritpreise/data-value', { field: 'saving_percent', tagName: 'small' }]
             ]]
         ]],
-        ['core/group', { layout: { type: 'flex', flexWrap: 'wrap' } }, [
-            ['afd-spritpreise/tank-saving', {}],
-            ['afd-spritpreise/cheapest-station', {}]
+        ['core/columns', {}, [
+            ['core/column', {}, [
+                ['core/heading', { level: 4, content: __('Bei 50 Litern', 'afd-spritpreise') }],
+                ['afd-spritpreise/data-value', { field: 'saving_50l', tagName: 'strong' }]
+            ]],
+            ['core/column', {}, [
+                ['afd-spritpreise/data-value', { field: 'station_label', tagName: 'p' }],
+                ['afd-spritpreise/data-value', { field: 'station_name', tagName: 'strong' }],
+                ['afd-spritpreise/data-value', { field: 'station_address', tagName: 'p' }],
+                ['afd-spritpreise/data-value', { field: 'station_price', tagName: 'strong' }]
+            ]]
         ]],
-        ['afd-spritpreise/demands', {}],
-        ['afd-spritpreise/method', {}]
+        ['core/heading', { level: 3, content: __('In der Rechnung', 'afd-spritpreise') }],
+        ['core/group', { layout: { type: 'constrained' } }, [
+            ['core/heading', { level: 4, content: __('Energiesteuer auf das EU-Mindestmaß senken', 'afd-spritpreise') }],
+            ['core/paragraph', { content: __('Die Energiesteuer wird auf die europäischen Mindeststeuersätze abgesenkt.', 'afd-spritpreise') }],
+            ['afd-spritpreise/data-value', { field: 'energy_change', tagName: 'strong' }],
+            ['afd-spritpreise/data-value', { field: 'energy_effect', tagName: 'small' }],
+            ['core/paragraph', { content: '<a href="https://dserver.bundestag.de/btd/21/063/2106332.pdf">BT-Drs. 21/6332</a>' }]
+        ]],
+        ['core/group', { layout: { type: 'constrained' } }, [
+            ['core/heading', { level: 4, content: __('CO₂-Bepreisung abschaffen', 'afd-spritpreise') }],
+            ['core/paragraph', { content: __('Die nationale CO₂-Bepreisung wird im Szenario durch den konfigurierten Zielwert ersetzt.', 'afd-spritpreise') }],
+            ['afd-spritpreise/data-value', { field: 'co2_change', tagName: 'strong' }],
+            ['afd-spritpreise/data-value', { field: 'co2_effect', tagName: 'small' }],
+            ['core/paragraph', { content: '<a href="https://dserver.bundestag.de/btd/21/063/2106334.pdf">BT-Drs. 21/6334</a>' }]
+        ]],
+        ['core/group', { layout: { type: 'constrained' } }, [
+            ['core/heading', { level: 4, content: __('Mehrwertsteuer auf Kraftstoffe auf 7 % senken', 'afd-spritpreise') }],
+            ['core/paragraph', { content: __('Für Benzin und Diesel wird der konfigurierte ermäßigte Umsatzsteuersatz verwendet.', 'afd-spritpreise') }],
+            ['afd-spritpreise/data-value', { field: 'vat_change', tagName: 'strong' }],
+            ['afd-spritpreise/data-value', { field: 'vat_effect', tagName: 'small' }],
+            ['core/paragraph', { content: '<a href="https://dserver.bundestag.de/btd/21/053/2105326.pdf">BT-Drs. 21/5326</a>' }]
+        ]],
+        ['core/heading', { level: 3, content: __('Zur Berechnung', 'afd-spritpreise') }],
+        ['afd-spritpreise/data-value', { field: 'method', tagName: 'p' }],
+        ['core/paragraph', { content: __('Preisdaten: TankPuls · MTS-K', 'afd-spritpreise') }]
     ];
 
     function parentEdit(props) {
@@ -128,111 +195,47 @@
         return el(Fragment, {}, inspector, el('section', innerBlocksProps));
     }
 
-    function headerEdit(props) {
-        var attributes = props.attributes;
-        var setAttributes = props.setAttributes;
-        var area = (props.context && props.context['afdsp/areaLabel']) || config.area.areaLabel || '';
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-builder-header' });
-        return el('header', blockProps,
-            el(RichText, {
-                tagName: 'p', className: 'afdsp-eyebrow', value: attributes.eyebrow || __('Regionale Kraftstoffpreise', 'afd-spritpreise'),
-                onChange: function (value) { setAttributes({ eyebrow: value }); }
-            }),
-            el(RichText, {
-                tagName: 'h2', className: 'afdsp-title', value: attributes.title || __('Das kostet Kraftstoff mit der AfD', 'afd-spritpreise'),
-                onChange: function (value) { setAttributes({ title: value }); }
-            }),
-            el('p', { className: 'afdsp-intro' }, area ? __('Gebiet: ', 'afd-spritpreise') + area : __('Gebiet wird aus dem Hauptblock übernommen.', 'afd-spritpreise'))
-        );
-    }
-
     function tabsEdit(props) {
         var fuel = (props.context && props.context['afdsp/defaultFuel']) || 'diesel';
         var labels = { diesel: 'Diesel', e5: 'Super E5', e10: 'Super E10' };
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-tabs afdsp-builder-tabs' });
+        var blockProps = useBlockProps({ className: 'afdsp-tabs afdsp-builder-tabs' });
         return el('div', blockProps, Object.keys(labels).map(function (value) {
             return el('button', { type: 'button', key: value, className: 'afdsp-tab' + (value === fuel ? ' is-active' : ''), disabled: true }, labels[value]);
         }));
     }
 
-    function metricEdit(props) {
+    function dataValueEdit(props) {
         var attributes = props.attributes;
         var setAttributes = props.setAttributes;
-        var metric = ['current', 'scenario', 'saving'].indexOf(attributes.metric) !== -1 ? attributes.metric : 'current';
-        var labels = {
-            current: __('Aktueller Kraftstoffpreis', 'afd-spritpreise'),
-            scenario: __('Nach AfD-Forderungen', 'afd-spritpreise'),
-            saving: __('Mögliche Ersparnis', 'afd-spritpreise')
-        };
-        var samples = { current: '–,––– €/l', scenario: '–,––– €/l', saving: '–,– ct/l' };
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-data-metric afdsp-data-metric--' + metric });
+        var field = DATA_FIELDS.some(function (item) { return item.value === attributes.field; }) ? attributes.field : 'current';
+        var selected = DATA_FIELDS.find(function (item) { return item.value === field; }) || DATA_FIELDS[4];
+        var tagName = ['div', 'p', 'span', 'strong', 'small'].indexOf(attributes.tagName) !== -1 ? attributes.tagName : 'div';
+        var blockProps = useBlockProps({ className: 'afdsp-data-value' });
+
         return el(Fragment, {},
-            el(InspectorControls, {}, el(PanelBody, { title: __('Preisfeld', 'afd-spritpreise'), initialOpen: true },
-                el(SelectControl, {
-                    label: __('Kennzahl', 'afd-spritpreise'), value: metric,
-                    options: [
-                        { label: __('Aktueller Preis', 'afd-spritpreise'), value: 'current' },
-                        { label: __('AfD-Szenario', 'afd-spritpreise'), value: 'scenario' },
-                        { label: __('Ersparnis', 'afd-spritpreise'), value: 'saving' }
-                    ],
-                    onChange: function (value) { setAttributes({ metric: value }); }
-                }),
-                el(TextControl, {
-                    label: __('Eigene Beschriftung', 'afd-spritpreise'), value: attributes.label || '', placeholder: labels[metric],
-                    onChange: function (value) { setAttributes({ label: value || undefined }); }
-                })
-            )),
-            el('div', blockProps,
-                el('span', { className: 'afdsp-metric-label' }, attributes.label || labels[metric]),
-                el('strong', {}, samples[metric]),
-                metric !== 'current' ? el('small', {}, __('Live-Wert im Frontend', 'afd-spritpreise')) : null
-            )
-        );
-    }
-
-    function tankSavingEdit() {
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-tank-saving' });
-        return el('div', blockProps, el('span', {}, __('Bei 50 Litern', 'afd-spritpreise')), el('strong', {}, '–,–– € ' + __('weniger', 'afd-spritpreise')));
-    }
-
-    function stationEdit() {
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-builder-station' });
-        return el('div', blockProps,
-            el('span', {}, __('Günstigste Tankstelle', 'afd-spritpreise')),
-            el('div', { className: 'afdsp-station-row' },
-                el('div', {}, el('strong', {}, __('Live-Daten im Frontend', 'afd-spritpreise')), el('small', {}, __('Adresse wird dynamisch geladen.', 'afd-spritpreise'))),
-                el('div', {}, el('small', {}, __('Preis', 'afd-spritpreise')), el('b', {}, '–,––– €/l'))
-            )
-        );
-    }
-
-    function demandsEdit() {
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-builder-demands' });
-        var rows = [
-            __('Energiesteuer auf das EU-Mindestmaß senken', 'afd-spritpreise'),
-            __('CO₂-Bepreisung abschaffen', 'afd-spritpreise'),
-            __('Mehrwertsteuer auf Kraftstoffe auf 7 % senken', 'afd-spritpreise')
-        ];
-        return el('section', blockProps,
-            el('div', { className: 'afdsp-demands-heading' },
-                el('h3', {}, __('Diese drei AfD-Forderungen sind eingerechnet', 'afd-spritpreise')),
-                el('p', {}, __('Die Rechenwerte werden im Frontend dynamisch eingesetzt.', 'afd-spritpreise'))
+            el(InspectorControls, {},
+                el(PanelBody, { title: __('Datenwert', 'afd-spritpreise'), initialOpen: true },
+                    el(SelectControl, {
+                        label: __('Wert', 'afd-spritpreise'),
+                        value: field,
+                        options: DATA_FIELDS.map(function (item) { return { label: item.label, value: item.value }; }),
+                        onChange: function (value) { setAttributes({ field: value }); }
+                    }),
+                    el(SelectControl, {
+                        label: __('HTML-Element', 'afd-spritpreise'),
+                        value: tagName,
+                        options: [
+                            { label: 'div', value: 'div' },
+                            { label: 'p', value: 'p' },
+                            { label: 'span', value: 'span' },
+                            { label: 'strong', value: 'strong' },
+                            { label: 'small', value: 'small' }
+                        ],
+                        onChange: function (value) { setAttributes({ tagName: value }); }
+                    })
+                )
             ),
-            el('ol', { className: 'afdsp-demand-list' }, rows.map(function (title, index) {
-                return el('li', { key: index },
-                    el('div', { className: 'afdsp-demand-copy' }, el('h4', {}, title)),
-                    el('div', { className: 'afdsp-demand-calc' }, el('span', {}, __('In der Rechnung', 'afd-spritpreise')), el('strong', {}, '–'))
-                );
-            }))
-        );
-    }
-
-    function methodEdit(props) {
-        var area = (props.context && props.context['afdsp/areaLabel']) || config.area.areaLabel || '';
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-builder-method' });
-        return el('section', blockProps,
-            el('h3', {}, __('Zur Berechnung', 'afd-spritpreise')),
-            el('p', {}, area ? __('Die Methodik wird mit Live-Daten für das Gebiet ', 'afd-spritpreise') + area + __(' ausgegeben.', 'afd-spritpreise') : __('Die Methodik wird im Frontend mit Live-Daten ausgegeben.', 'afd-spritpreise'))
+            el(tagName, blockProps, selected.sample)
         );
     }
 
@@ -240,11 +243,6 @@
     function saveDynamic() { return null; }
 
     blocks.registerBlockType('afd-spritpreise/fuel-price', { edit: parentEdit, save: saveInnerBlocks });
-    blocks.registerBlockType('afd-spritpreise/header', { edit: headerEdit, save: saveDynamic });
     blocks.registerBlockType('afd-spritpreise/fuel-tabs', { edit: tabsEdit, save: saveDynamic });
-    blocks.registerBlockType('afd-spritpreise/metric', { edit: metricEdit, save: saveDynamic });
-    blocks.registerBlockType('afd-spritpreise/tank-saving', { edit: tankSavingEdit, save: saveDynamic });
-    blocks.registerBlockType('afd-spritpreise/cheapest-station', { edit: stationEdit, save: saveDynamic });
-    blocks.registerBlockType('afd-spritpreise/demands', { edit: demandsEdit, save: saveDynamic });
-    blocks.registerBlockType('afd-spritpreise/method', { edit: methodEdit, save: saveDynamic });
+    blocks.registerBlockType('afd-spritpreise/data-value', { edit: dataValueEdit, save: saveDynamic });
 }(window.wp.blocks, window.wp.blockEditor, window.wp.components, window.wp.element, window.wp.i18n));

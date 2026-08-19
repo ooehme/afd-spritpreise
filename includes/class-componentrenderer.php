@@ -7,6 +7,14 @@ defined('ABSPATH') || exit;
 final class ComponentRenderer
 {
     private const FUEL_LABELS = ['diesel' => 'Diesel', 'e5' => 'Super E5', 'e10' => 'Super E10'];
+    private const DATA_FIELDS = [
+        'area_label', 'fuel_label', 'station_count', 'intro',
+        'current', 'scenario', 'scenario_note', 'saving', 'saving_percent', 'saving_50l',
+        'station_label', 'station_name', 'station_address', 'station_price',
+        'energy_change', 'energy_effect', 'co2_change', 'co2_effect', 'vat_change', 'vat_effect',
+        'method',
+    ];
+    private const TAG_NAMES = ['div', 'p', 'span', 'strong', 'small'];
 
     public function __construct(private readonly Plugin $plugin)
     {
@@ -41,17 +49,6 @@ final class ComponentRenderer
         return '<section ' . $wrapper . '>' . $content . '<script type="application/json" data-afdsp-data>' . $json . '</script></section>';
     }
 
-    public function header(array $attributes, string $content, object $block): string
-    {
-        $config = $this->context_config($block);
-        $result = $this->result($config);
-        $intro = $result
-            ? sprintf(__('Median aus %1$d Tankstellen im Gebiet %2$s.', 'afd-spritpreise'), $result['station_count'], $config['areaLabel'])
-            : $config['areaLabel'];
-
-        return '<header ' . $this->wrapper('afdsp-component afdsp-builder-header') . '><p class="afdsp-eyebrow">' . esc_html((string) ($attributes['eyebrow'] ?? __('Regionale Kraftstoffpreise', 'afd-spritpreise'))) . '</p><h2 class="afdsp-title">' . esc_html((string) ($attributes['title'] ?? __('Das kostet Kraftstoff mit der AfD', 'afd-spritpreise'))) . '</h2><p class="afdsp-intro" data-afdsp-bind="intro">' . esc_html($intro) . '</p></header>';
-    }
-
     public function tabs(array $attributes, string $content, object $block): string
     {
         $fuel = $this->context_fuel($block);
@@ -60,82 +57,25 @@ final class ComponentRenderer
             $active = $value === $fuel;
             $buttons .= '<button type="button" class="afdsp-tab' . ($active ? ' is-active' : '') . '" aria-pressed="' . ($active ? 'true' : 'false') . '" tabindex="' . ($active ? '0' : '-1') . '" data-afdsp-tab="' . esc_attr($value) . '">' . esc_html($label) . '</button>';
         }
-        return '<div ' . $this->wrapper('afdsp-component afdsp-tabs afdsp-builder-tabs') . ' role="group" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $buttons . '</div>';
+
+        return '<div ' . get_block_wrapper_attributes(['class' => 'afdsp-tabs afdsp-builder-tabs']) . ' role="group" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $buttons . '</div>';
     }
 
-    public function metric(array $attributes, string $content, object $block): string
+    public function data_value(array $attributes, string $content, object $block): string
     {
-        $metric = in_array(($attributes['metric'] ?? ''), ['current', 'scenario', 'saving'], true) ? (string) $attributes['metric'] : 'current';
-        $labels = [
-            'current' => __('Aktueller Kraftstoffpreis', 'afd-spritpreise'),
-            'scenario' => __('Nach AfD-Forderungen', 'afd-spritpreise'),
-            'saving' => __('Mögliche Ersparnis', 'afd-spritpreise'),
-        ];
+        $field = in_array(($attributes['field'] ?? ''), self::DATA_FIELDS, true) ? (string) $attributes['field'] : 'current';
+        $tagName = in_array(($attributes['tagName'] ?? ''), self::TAG_NAMES, true) ? (string) $attributes['tagName'] : 'div';
         $config = $this->context_config($block);
         $result = $this->result($config);
+
         if (!$result) {
-            return $this->unavailable('afdsp-data-metric afdsp-data-metric--' . $metric);
+            return '<' . $tagName . ' ' . get_block_wrapper_attributes(['class' => 'afdsp-data-value afdsp--error']) . ' role="status">' . esc_html__('Aktuelle Kraftstoffpreise sind derzeit nicht verfügbar.', 'afd-spritpreise') . '</' . $tagName . '>';
         }
+
         $data = $this->view_data($result, $config);
-        $valueKey = ['current' => 'current', 'scenario' => 'scenario', 'saving' => 'saving'][$metric];
-        $subKey = ['current' => '', 'scenario' => 'scenario_note', 'saving' => 'saving_percent'][$metric];
-        $subtitle = $subKey ? '<small data-afdsp-bind="' . esc_attr($subKey) . '">' . esc_html($data[$subKey]) . '</small>' : '';
+        $value = array_key_exists($field, $data) ? (string) $data[$field] : '';
 
-        return '<div ' . $this->wrapper('afdsp-component afdsp-data-metric afdsp-data-metric--' . $metric) . ' data-afdsp-metric="' . esc_attr($metric) . '"><span class="afdsp-metric-label">' . esc_html((string) ($attributes['label'] ?? $labels[$metric])) . '</span><strong data-afdsp-bind="' . esc_attr($valueKey) . '">' . esc_html($data[$valueKey]) . '</strong>' . $subtitle . '</div>';
-    }
-
-    public function tank_saving(array $attributes, string $content, object $block): string
-    {
-        $config = $this->context_config($block);
-        $result = $this->result($config);
-        if (!$result) {
-            return $this->unavailable('afdsp-tank-saving');
-        }
-        $data = $this->view_data($result, $config);
-        return '<div ' . $this->wrapper('afdsp-component afdsp-tank-saving') . '><span>' . esc_html__('Bei 50 Litern', 'afd-spritpreise') . '</span><strong data-afdsp-bind="saving_50l">' . esc_html($data['saving_50l']) . '</strong></div>';
-    }
-
-    public function station(array $attributes, string $content, object $block): string
-    {
-        $config = $this->context_config($block);
-        $result = $this->result($config);
-        if (!$result) {
-            return $this->unavailable('afdsp-builder-station');
-        }
-        $data = $this->view_data($result, $config);
-        return '<div ' . $this->wrapper('afdsp-component afdsp-builder-station') . '><span data-afdsp-bind="station_label">' . esc_html($data['station_label']) . '</span><div class="afdsp-station-row"><div><strong data-afdsp-bind="station_name">' . esc_html($data['station_name']) . '</strong><small data-afdsp-bind="station_address">' . esc_html($data['station_address']) . '</small></div><div><small>' . esc_html__('Preis', 'afd-spritpreise') . '</small><b data-afdsp-bind="station_price">' . esc_html($data['station_price']) . '</b></div></div></div>';
-    }
-
-    public function demands(array $attributes, string $content, object $block): string
-    {
-        $config = $this->context_config($block);
-        $result = $this->result($config);
-        if (!$result) {
-            return $this->unavailable('afdsp-builder-demands');
-        }
-        $data = $this->view_data($result, $config);
-        $rows = [
-            ['Energiesteuer auf das EU-Mindestmaß senken', 'Die Energiesteuer wird auf die europäischen Mindeststeuersätze abgesenkt.', 'energy_change', 'energy_effect', 'BT-Drs. 21/6332', 'https://dserver.bundestag.de/btd/21/063/2106332.pdf'],
-            ['CO₂-Bepreisung abschaffen', 'Die nationale CO₂-Bepreisung wird im Szenario durch den konfigurierten Zielwert ersetzt.', 'co2_change', 'co2_effect', 'BT-Drs. 21/6334', 'https://dserver.bundestag.de/btd/21/063/2106334.pdf'],
-            ['Mehrwertsteuer auf Kraftstoffe auf 7 % senken', 'Für Benzin und Diesel wird der konfigurierte ermäßigte Umsatzsteuersatz verwendet.', 'vat_change', 'vat_effect', 'BT-Drs. 21/5326', 'https://dserver.bundestag.de/btd/21/053/2105326.pdf'],
-        ];
-        $html = '<section ' . $this->wrapper('afdsp-component afdsp-builder-demands') . '><div class="afdsp-demands-heading"><h3>' . esc_html__('Diese drei AfD-Forderungen sind eingerechnet', 'afd-spritpreise') . '</h3><p>' . esc_html__('Sie bilden die Grundlage für die oben berechneten Kraftstoffpreise.', 'afd-spritpreise') . '</p></div><ol class="afdsp-demand-list">';
-        foreach ($rows as $row) {
-            $html .= '<li><div class="afdsp-demand-copy"><h4>' . esc_html($row[0]) . '</h4><p>' . esc_html($row[1]) . '</p><a href="' . esc_url($row[5]) . '" target="_blank" rel="external noopener">' . esc_html__('Quelle:', 'afd-spritpreise') . ' ' . esc_html($row[4]) . '</a></div><div class="afdsp-demand-calc"><span>' . esc_html__('In der Rechnung', 'afd-spritpreise') . '</span><strong data-afdsp-bind="' . esc_attr($row[2]) . '">' . esc_html($data[$row[2]]) . '</strong><small data-afdsp-bind="' . esc_attr($row[3]) . '">' . esc_html($data[$row[3]]) . '</small></div></li>';
-        }
-        $html .= '</ol><div class="afdsp-demand-note"><strong>' . esc_html__('Weitere Abgaben nicht eingerechnet', 'afd-spritpreise') . '</strong><p>' . esc_html__('Erdölbevorratungsbeitrag und THG-Quote werden ohne konkrete konfigurierte Zielgröße nicht zusätzlich abgezogen.', 'afd-spritpreise') . '</p></div></section>';
-        return $html;
-    }
-
-    public function method(array $attributes, string $content, object $block): string
-    {
-        $config = $this->context_config($block);
-        $result = $this->result($config);
-        if (!$result) {
-            return $this->unavailable('afdsp-builder-method');
-        }
-        $text = sprintf(__('Median aus %1$d gültigen, aktiven Tankstellen im Gebiet %2$s. Der Bruttopreis wird um Mehrwertsteuer, Energiesteuer und CO₂-Kosten bereinigt und anschließend mit den konfigurierten Szenariowerten neu berechnet. Intern wird nicht vorzeitig gerundet.', 'afd-spritpreise'), $result['station_count'], $config['areaLabel']);
-        return '<section ' . $this->wrapper('afdsp-component afdsp-builder-method') . '><h3>' . esc_html__('Zur Berechnung', 'afd-spritpreise') . '</h3><p data-afdsp-bind="method">' . esc_html($text) . '</p><p class="afdsp-source">' . wp_kses_post(sprintf(__('Preisdaten: %s · MTS-K', 'afd-spritpreise'), '<a href="https://tankpuls.de/" rel="external nofollow">TankPuls</a>')) . '</p></section>';
+        return '<' . $tagName . ' ' . get_block_wrapper_attributes(['class' => 'afdsp-data-value']) . ' data-afdsp-bind="' . esc_attr($field) . '">' . esc_html($value) . '</' . $tagName . '>';
     }
 
     private function context_config(object $block): array
@@ -161,7 +101,7 @@ final class ComponentRenderer
         try {
             return $this->plugin->service()->get($config['box'], $config['defaultFuel']);
         } catch (\Throwable $error) {
-            error_log('AfD Spritpreise Komponente: ' . $error->getMessage()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+            error_log('AfD Spritpreise Datenwert: ' . $error->getMessage()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             return null;
         }
     }
@@ -171,7 +111,11 @@ final class ComponentRenderer
         $c = $result['calculation'];
         $station = $result['cheapest'];
         $fuel = $result['fuel'];
+
         return [
+            'area_label' => $config['areaLabel'],
+            'fuel_label' => self::FUEL_LABELS[$fuel],
+            'station_count' => (string) $result['station_count'],
             'intro' => sprintf(__('Median aus %1$d Tankstellen im Gebiet %2$s.', 'afd-spritpreise'), $result['station_count'], $config['areaLabel']),
             'current' => $this->price($c['current_gross']),
             'scenario' => $this->price($c['scenario_gross']),
@@ -189,18 +133,8 @@ final class ComponentRenderer
             'co2_effect' => $this->number(($c['co2_current'] - $c['co2_scenario']) * 100, 1) . ' ct weniger je Liter',
             'vat_change' => $this->number($c['vat_current'], 0) . ' % → ' . $this->number($c['vat_scenario'], 0) . ' %',
             'vat_effect' => __('auf den verbleibenden Nettopreis', 'afd-spritpreise'),
-            'method' => sprintf(__('Median aus %1$d gültigen, aktiven Tankstellen im Gebiet %2$s. Intern wird ohne vorzeitige Rundung gerechnet.', 'afd-spritpreise'), $result['station_count'], $config['areaLabel']),
+            'method' => sprintf(__('Median aus %1$d gültigen, aktiven Tankstellen im Gebiet %2$s. Der Bruttopreis wird um Mehrwertsteuer, Energiesteuer und CO₂-Kosten bereinigt und anschließend mit den konfigurierten Szenariowerten neu berechnet. Intern wird nicht vorzeitig gerundet.', 'afd-spritpreise'), $result['station_count'], $config['areaLabel']),
         ];
-    }
-
-    private function wrapper(string $class): string
-    {
-        return get_block_wrapper_attributes(['class' => $class]);
-    }
-
-    private function unavailable(string $class): string
-    {
-        return '<div ' . $this->wrapper('afdsp-component ' . $class . ' afdsp--error') . ' role="status">' . esc_html__('Aktuelle Kraftstoffpreise sind derzeit nicht verfügbar.', 'afd-spritpreise') . '</div>';
     }
 
     private function number(float $value, int $decimals): string

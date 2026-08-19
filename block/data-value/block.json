@@ -1,16 +1,17 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "afd-spritpreise/metric",
+  "name": "afd-spritpreise/data-value",
   "version": "1.1.0",
-  "title": "Spritpreise – Preisfeld",
+  "title": "Spritpreise – Datenwert",
   "category": "widgets",
-  "icon": "money-alt",
+  "icon": "database",
+  "description": "Ein einzelner dynamischer Wert aus dem AfD-Spritpreise-Datenkontext.",
   "textdomain": "afd-spritpreise",
   "ancestor": ["afd-spritpreise/fuel-price"],
   "attributes": {
-    "metric": { "type": "string", "default": "current" },
-    "label": { "type": "string" }
+    "field": { "type": "string", "default": "current" },
+    "tagName": { "type": "string", "default": "div" }
   },
   "usesContext": ["afdsp/minLat", "afdsp/minLng", "afdsp/maxLat", "afdsp/maxLng", "afdsp/areaLabel", "afdsp/defaultFuel"],
   "supports": {
@@ -27,6 +28,7 @@
     "typography": {
       "fontSize": true,
       "lineHeight": true,
+      "textAlign": true,
       "__experimentalFontFamily": true,
       "__experimentalFontWeight": true,
       "__experimentalFontStyle": true,

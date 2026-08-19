@@ -24,26 +24,11 @@ final class Block
         register_block_type(AFDSP_DIR . 'block', [
             'render_callback' => [$this->renderer, 'parent'],
         ]);
-        register_block_type(AFDSP_DIR . 'block/header', [
-            'render_callback' => [$this->renderer, 'header'],
-        ]);
         register_block_type(AFDSP_DIR . 'block/fuel-tabs', [
             'render_callback' => [$this->renderer, 'tabs'],
         ]);
-        register_block_type(AFDSP_DIR . 'block/metric', [
-            'render_callback' => [$this->renderer, 'metric'],
-        ]);
-        register_block_type(AFDSP_DIR . 'block/tank-saving', [
-            'render_callback' => [$this->renderer, 'tank_saving'],
-        ]);
-        register_block_type(AFDSP_DIR . 'block/cheapest-station', [
-            'render_callback' => [$this->renderer, 'station'],
-        ]);
-        register_block_type(AFDSP_DIR . 'block/demands', [
-            'render_callback' => [$this->renderer, 'demands'],
-        ]);
-        register_block_type(AFDSP_DIR . 'block/method', [
-            'render_callback' => [$this->renderer, 'method'],
+        register_block_type(AFDSP_DIR . 'block/data-value', [
+            'render_callback' => [$this->renderer, 'data_value'],
         ]);
     }
 

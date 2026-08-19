@@ -6,7 +6,7 @@
   "title": "AfD Spritpreise",
   "category": "widgets",
   "icon": "money-alt",
-  "description": "Regionale Kraftstoffpreise und AfD-Steuerszenario.",
+  "description": "Datenkontext für regionale Kraftstoffpreise und das AfD-Steuerszenario.",
   "textdomain": "afd-spritpreise",
   "attributes": {
     "minLat": { "type": "number" },
@@ -62,6 +62,7 @@
     "typography": {
       "fontSize": true,
       "lineHeight": true,
+      "textAlign": true,
       "__experimentalFontFamily": true,
       "__experimentalFontWeight": true,
       "__experimentalFontStyle": true,
@@ -71,14 +72,8 @@
     },
     "layout": {
       "allowSizingOnChildren": true
-    },
-    "allowedBlocks": true
+    }
   },
-  "styles": [
-    { "name": "card", "label": "Card", "isDefault": true },
-    { "name": "editorial", "label": "Editorial" },
-    { "name": "theme", "label": "Vom Theme" }
-  ],
   "editorScript": "afdsp-block-editor",
   "editorStyle": "afdsp-admin",
   "style": "afdsp-frontend"
