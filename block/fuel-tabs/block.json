@@ -10,13 +10,27 @@
   "ancestor": ["afd-spritpreise/fuel-price"],
   "usesContext": ["afdsp/defaultFuel"],
   "supports": {
-    "align": ["wide", "full"], "anchor": true, "ariaLabel": true, "html": false,
+    "align": ["wide", "full"],
+    "anchor": true,
+    "ariaLabel": true,
+    "html": false,
     "color": { "background": true, "text": true, "gradients": true },
-    "shadow": true, "spacing": { "margin": true, "padding": true },
+    "shadow": true,
+    "spacing": { "margin": true, "padding": true },
     "dimensions": { "minHeight": true, "minWidth": true },
     "__experimentalBorder": { "color": true, "radius": true, "style": true, "width": true },
     "position": { "sticky": true },
-    "typography": { "fontSize": true, "lineHeight": true, "__experimentalFontFamily": true, "__experimentalFontWeight": true, "__experimentalFontStyle": true, "__experimentalTextTransform": true, "__experimentalTextDecoration": true, "__experimentalLetterSpacing": true }
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "textAlign": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalTextTransform": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalLetterSpacing": true
+    }
   },
   "editorScript": "afdsp-block-editor",
   "style": "afdsp-frontend"
