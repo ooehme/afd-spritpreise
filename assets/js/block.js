@@ -165,7 +165,7 @@
             saving: __('Mögliche Ersparnis', 'afd-spritpreise')
         };
         var samples = { current: '–,––– €/l', scenario: '–,––– €/l', saving: '–,– ct/l' };
-        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-metric afdsp-metric--' + metric });
+        var blockProps = useBlockProps({ className: 'afdsp-component afdsp-data-metric afdsp-data-metric--' + metric });
         return el(Fragment, {},
             el(InspectorControls, {}, el(PanelBody, { title: __('Preisfeld', 'afd-spritpreise'), initialOpen: true },
                 el(SelectControl, {
