@@ -74,14 +74,14 @@ final class ComponentRenderer
         $config = $this->context_config($block);
         $result = $this->result($config);
         if (!$result) {
-            return $this->unavailable('afdsp-metric afdsp-metric--' . $metric);
+            return $this->unavailable('afdsp-data-metric afdsp-data-metric--' . $metric);
         }
         $data = $this->view_data($result, $config);
         $valueKey = ['current' => 'current', 'scenario' => 'scenario', 'saving' => 'saving'][$metric];
         $subKey = ['current' => '', 'scenario' => 'scenario_note', 'saving' => 'saving_percent'][$metric];
         $subtitle = $subKey ? '<small data-afdsp-bind="' . esc_attr($subKey) . '">' . esc_html($data[$subKey]) . '</small>' : '';
 
-        return '<div ' . $this->wrapper('afdsp-component afdsp-metric afdsp-metric--' . $metric) . ' data-afdsp-metric="' . esc_attr($metric) . '"><span class="afdsp-metric-label">' . esc_html((string) ($attributes['label'] ?? $labels[$metric])) . '</span><strong data-afdsp-bind="' . esc_attr($valueKey) . '">' . esc_html($data[$valueKey]) . '</strong>' . $subtitle . '</div>';
+        return '<div ' . $this->wrapper('afdsp-component afdsp-data-metric afdsp-data-metric--' . $metric) . ' data-afdsp-metric="' . esc_attr($metric) . '"><span class="afdsp-metric-label">' . esc_html((string) ($attributes['label'] ?? $labels[$metric])) . '</span><strong data-afdsp-bind="' . esc_attr($valueKey) . '">' . esc_html($data[$valueKey]) . '</strong>' . $subtitle . '</div>';
     }
 
     public function tank_saving(array $attributes, string $content, object $block): string
