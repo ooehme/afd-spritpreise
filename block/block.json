@@ -14,14 +14,7 @@
     "maxLat": { "type": "number" },
     "maxLng": { "type": "number" },
     "areaLabel": { "type": "string" },
-    "defaultFuel": { "type": "string" },
-    "displayMode": { "type": "string" },
-    "showTitle": { "type": "boolean" },
-    "showDemands": { "type": "boolean" },
-    "showMethod": { "type": "boolean" },
-    "showCheapestStation": { "type": "boolean" },
-    "showTankSaving": { "type": "boolean" },
-    "showDetailsLink": { "type": "boolean" }
+    "defaultFuel": { "type": "string", "default": "diesel" }
   },
   "providesContext": {
     "afdsp/minLat": "minLat",
@@ -34,12 +27,52 @@
   "supports": {
     "align": ["wide", "full"],
     "anchor": true,
-    "color": { "background": true, "text": true, "link": true, "gradients": true },
-    "spacing": { "margin": true, "padding": true },
-    "typography": { "fontSize": true, "lineHeight": true, "textAlign": true },
-    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "ariaLabel": true,
+    "html": false,
+    "background": {
+      "backgroundImage": true,
+      "backgroundSize": true,
+      "gradient": true
+    },
+    "color": {
+      "background": true,
+      "text": true,
+      "link": true,
+      "gradients": true
+    },
     "shadow": true,
-    "html": false
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "dimensions": {
+      "minHeight": true,
+      "minWidth": true
+    },
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "position": {
+      "sticky": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalTextTransform": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalLetterSpacing": true
+    },
+    "layout": {
+      "allowSizingOnChildren": true
+    },
+    "allowedBlocks": true
   },
   "styles": [
     { "name": "card", "label": "Card", "isDefault": true },
