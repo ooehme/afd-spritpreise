@@ -6,6 +6,7 @@
     var useEffect = element.useEffect;
     var useState = element.useState;
     var InspectorControls = blockEditor.InspectorControls;
+    var useBlockProps = blockEditor.useBlockProps;
     var PanelBody = components.PanelBody;
     var SelectControl = components.SelectControl;
     var TextControl = components.TextControl;
@@ -18,6 +19,7 @@
     function edit(props) {
         var attributes = props.attributes;
         var setAttributes = props.setAttributes;
+        var blockProps = useBlockProps();
         var searchState = useState('');
         var query = searchState[0];
         var setQuery = searchState[1];
@@ -91,8 +93,15 @@
             return el(ToggleControl, { label: label, checked: attributes[key] !== false, onChange: function (value) { var update = {}; update[key] = value; setAttributes(update); } });
         }
 
-        return el(Fragment, {}, inspector,
-            ServerSideRender ? el(ServerSideRender, { block: 'afd-spritpreise/fuel-price', attributes: attributes, skipBlockSupportAttributes: true }) : el('div', { className: 'afdsp-editor-placeholder' }, __('AfD Spritpreise – serverseitige Vorschau', 'afd-spritpreise'))
+        return el(Fragment, {},
+            inspector,
+            el('div', blockProps,
+                ServerSideRender ? el(ServerSideRender, {
+                    block: 'afd-spritpreise/fuel-price',
+                    attributes: attributes,
+                    skipBlockSupportAttributes: true
+                }) : el('div', { className: 'afdsp-editor-placeholder' }, __('AfD Spritpreise – serverseitige Vorschau', 'afd-spritpreise'))
+            )
         );
     }
 

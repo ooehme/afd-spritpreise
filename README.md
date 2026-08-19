@@ -28,19 +28,28 @@ Photon liefert `extent` als `[west, north, east, south]`. Das Plugin wandelt die
 
 Die zuvor vorgesehene interaktive Kartenauswahl wurde auf ausdrücklichen Projektentscheid entfernt. Photon ist die primäre Gebietsauswahl; die gespeicherten Koordinaten können in den Einstellungen unter **Gespeicherte Bounding Box** geprüft oder präzisiert werden.
 
-## Gutenberg
+## Gutenberg-Baukasten
 
 Blockname: `afd-spritpreise/fuel-price`
 
-Jede Instanz speichert nur Konfiguration, nie Livepreise. Im Inspector stehen zur Verfügung:
+Jede Instanz speichert nur Konfiguration und Blockstruktur, nie Livepreise. Neue Blöcke enthalten frei anordenbare dynamische Unterblöcke:
 
-- Photon-Orts-/PLZ-Suche und Gebietsbezeichnung
-- eigene Bounding Box pro Block
-- Diesel, Super E5 oder Super E10 als Standard
-- vollständige oder kompakte Darstellung
-- Titel, Forderungen, Methodik, günstigste Tankstelle, 50-Liter-Ersparnis und Details einzeln schaltbar
+- Überschrift und Gebietseinleitung
+- Kraftstoffauswahl
+- Price Board mit einzelnen Preisfeldern für aktuellen Preis, Szenariopreis und Ersparnis
+- Zusatzinformationen mit 50-Liter-Ersparnis und günstigster Tankstelle
+- Forderungen und Quellen
+- Methodik
 
-Der Block wird auf dem Server gerendert. Mehrere Blöcke mit verschiedenen Gebieten verwenden getrennte Cache-Keys.
+Jeder Unterblock besitzt eigene Gutenberg-Einstellungen für Farben, Hintergrund, Verläufe, Schriftgröße, Zeilenhöhe, Ausrichtung, Innen-/Außenabstand, Rahmen und Schatten. Zusätzlich können Theme-Schriftfamilie und Schriftstärke gewählt werden. Price Board und Zusatzinformationen unterstützen Raster, Liste und Inline sowie ein bis vier Rasterspalten.
+
+Die Unterblöcke können verschoben, dupliziert, entfernt oder innerhalb des Hauptblocks mit Gruppen und Spalten kombiniert werden. Drei Blockstile stehen bereit:
+
+- **Editorial**: an der redaktionellen Referenz orientiertes Layout; Standard für neu eingefügte Blöcke
+- **Card**: gekapselte blau-cyanfarbene Plugin-Card
+- **Vom Theme**: strukturelles Minimum, Farben und Typografie werden geerbt
+
+Bestehende Blöcke aus Version 1.0 bleiben unverändert funktionsfähig. Beim Bearbeiten können sie in den neuen Baukasten überführt werden. Alle Blöcke werden serverseitig gerendert; ein eingebetteter Datensatz aktualisiert die frei angeordneten Komponenten beim Kraftstoffwechsel ohne weitere API-Abfrage.
 
 ## Shortcode
 

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "afd-spritpreise/facts",
+  "version": "1.1.0",
+  "title": "Spritpreise – Zusatzinformationen",
+  "category": "widgets",
+  "icon": "editor-table",
+  "textdomain": "afd-spritpreise",
+  "ancestor": ["afd-spritpreise/fuel-price"],
+  "attributes": {
+    "layoutMode": { "type": "string", "default": "list" },
+    "columns": { "type": "number", "default": 2 },
+    "fontFamily": { "type": "string" },
+    "fontWeight": { "type": "string" }
+  },
+  "supports": {
+    "color": { "background": true, "text": true, "gradients": true },
+    "spacing": { "margin": true, "padding": true, "blockGap": true },
+    "typography": { "fontSize": true, "lineHeight": true, "textAlign": true },
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "shadow": true,
+    "html": false
+  },
+  "editorScript": "afdsp-block-editor",
+  "style": "afdsp-frontend"
+}

@@ -4,7 +4,7 @@ Tags: kraftstoffpreise, tankstellen, median, shortcode, gutenberg
 Requires at least: 6.6
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,13 @@ Nein. Die Gebietsauswahl erfolgt projektgemäß direkt über Photon; die technis
 Das Plugin speichert keine personenbezogenen Nutzerdaten. Es sendet serverseitige Preisabfragen an TankPuls und nur bei aktiver Backend-/Editor-Suche den eingegebenen Suchtext an Photon. GitHub wird im Backend höchstens alle zwölf Stunden auf ein neues Release geprüft.
 
 == Changelog ==
+
+= 1.1.0 =
+
+* Gutenberg-Baukasten mit separat gestaltbaren Unterblöcken für Überschrift, Tabs, Price Board, einzelne Preisfelder, Ersparnis, Tankstelle, Forderungen und Methodik.
+* Native Gutenberg-Unterstützung für Farben, Hintergründe, Typografie, Abstände, Rahmen und Schatten.
+* Price Board und Zusatzinformationen können als Raster, Liste oder Inline-Layout dargestellt werden.
+* Editorial-, Card- und Theme-Stil ergänzt; bestehende 1.0-Blöcke bleiben kompatibel.
 
 = 1.0.0 =
 

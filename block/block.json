@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "afd-spritpreise/fuel-price",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "AfD Spritpreise",
   "category": "widgets",
   "icon": "money-alt",
@@ -23,10 +23,29 @@
     "showTankSaving": { "type": "boolean" },
     "showDetailsLink": { "type": "boolean" }
   },
+  "providesContext": {
+    "afdsp/minLat": "minLat",
+    "afdsp/minLng": "minLng",
+    "afdsp/maxLat": "maxLat",
+    "afdsp/maxLng": "maxLng",
+    "afdsp/areaLabel": "areaLabel",
+    "afdsp/defaultFuel": "defaultFuel"
+  },
   "supports": {
     "align": ["wide", "full"],
+    "anchor": true,
+    "color": { "background": true, "text": true, "link": true, "gradients": true },
+    "spacing": { "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true, "textAlign": true },
+    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "shadow": true,
     "html": false
   },
+  "styles": [
+    { "name": "card", "label": "Card", "isDefault": true },
+    { "name": "editorial", "label": "Editorial" },
+    { "name": "theme", "label": "Vom Theme" }
+  ],
   "editorScript": "afdsp-block-editor",
   "editorStyle": "afdsp-admin",
   "style": "afdsp-frontend"

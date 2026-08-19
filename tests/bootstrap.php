@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 define('ABSPATH', __DIR__ . '/wordpress/');
-define('AFDSP_VERSION', '1.0.0');
+define('AFDSP_VERSION', '1.1.0');
 define('AFDSP_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('AFDSP_URL', 'https://example.test/wp-content/plugins/afd-spritpreise/');
 define('AFDSP_FILE', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'afd-spritpreise.php');
@@ -48,12 +48,15 @@ function esc_url_raw(mixed $value): string { return esc_url($value); }
 function wp_kses_post(string $value): string { return $value; }
 function sanitize_text_field(mixed $value): string { return trim(strip_tags((string) $value)); }
 function sanitize_textarea_field(mixed $value): string { return trim(strip_tags((string) $value)); }
+function sanitize_html_class(mixed $value): string { return preg_replace('/[^A-Za-z0-9_-]/', '', (string) $value) ?: ''; }
 function absint(mixed $value): int { return abs((int) $value); }
 function selected(mixed $a, mixed $b, bool $echo = true): string { return ''; }
 function checked(mixed $a, mixed $b = true, bool $echo = true): string { return ''; }
 function number_format_i18n(float $value, int $decimals = 0): string { return number_format($value, $decimals, ',', '.'); }
 function wp_date(string $format, int $timestamp): string { return date($format, $timestamp); }
 function wp_unique_id(string $prefix = ''): string { static $id = 0; return $prefix . ++$id; }
+function wp_json_encode(mixed $value, int $flags = 0, int $depth = 512): string|false { return json_encode($value, $flags, $depth); }
+function get_block_wrapper_attributes(array $extra = []): string { $attributes = []; foreach ($extra as $key => $value) { $attributes[] = esc_attr($key) . '="' . esc_attr((string) $value) . '"'; } return implode(' ', $attributes); }
 function current_user_can(string $capability): bool { return true; }
 function home_url(string $path = ''): string { return 'https://example.test' . $path; }
 function plugin_basename(string $file): string { return basename(dirname($file)) . '/' . basename($file); }

@@ -11,9 +11,9 @@ Stand: 19. August 2026
 
 ## Automatisierte Prüfungen
 
-`npm run build`: bestanden. Drei JavaScript-Assets wurden erzeugt und mit `node --check` validiert; `block.json` wurde geparst.
+`npm run build`: bestanden. Drei JavaScript-Assets wurden erzeugt und mit `node --check` validiert; zehn `block.json`-Dateien wurden geparst.
 
-`npm test`: 18/18 bestanden.
+`npm test`: 21/21 bestanden.
 
 - Photon-Extent und Bounding-Box-Validierung
 - TankPuls-Parameter, reales `items`-Antwortschema und Stationsfilter
@@ -21,11 +21,16 @@ Stand: 19. August 2026
 - Szenariorechnung ohne vorzeitige Rundung
 - Cache Miss, Hit, Expiry, paralleler Lock und Stale-if-error
 - Full- und Compact-Renderer
+- Gutenberg-Komponenten, Datenbindung und Theme-Schriftfamilien
+- Price Board als Raster/Liste mit konfigurierbarer Spaltenzahl
+- native Design-Supports aller gestaltbaren Unterblöcke
 - zwei Blockkonfigurationen mit unterschiedlichen Bounding Boxes
 - Shortcode
 - Aktivierung und Deaktivierung
 - GitHub-Updater
 - ausgeführter vollständiger Uninstall mit Options-, Cache-, Lock- und Site-Transient-Bereinigung
+
+Ein zusätzlicher JavaScript-Smoke-Test bestätigt die Registrierung aller zehn Gutenberg-Blocktypen und die Parent-Speicherlogik.
 
 PHP-Syntaxprüfung: alle PHP-Dateien bestanden.
 

@@ -23,7 +23,11 @@ final class Block
 
     public function render(array $attributes): string
     {
-        return $this->plugin->render($attributes);
+        return sprintf(
+            '<div %s>%s</div>',
+            get_block_wrapper_attributes(),
+            $this->plugin->render($attributes)
+        );
     }
 
     public function editor_config(): void

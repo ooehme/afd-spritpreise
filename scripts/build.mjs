@@ -1,4 +1,4 @@
-import { copyFile, mkdir, readFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, readdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 
 const files = ['area-picker.js', 'frontend.js', 'block.js'];
@@ -8,5 +8,17 @@ for (const file of files) {
     if (check.status !== 0) process.exit(check.status || 1);
     await copyFile(`src/${file}`, `assets/js/${file}`);
 }
-JSON.parse(await readFile('block/block.json', 'utf8'));
-console.log(`Built ${files.length} JavaScript assets.`);
+async function blockMetadata(directory) {
+    const entries = await readdir(directory, { withFileTypes: true });
+    const found = [];
+    for (const entry of entries) {
+        const path = `${directory}/${entry.name}`;
+        if (entry.isDirectory()) found.push(...await blockMetadata(path));
+        if (entry.isFile() && entry.name === 'block.json') found.push(path);
+    }
+    return found;
+}
+
+const metadata = await blockMetadata('block');
+for (const file of metadata) JSON.parse(await readFile(file, 'utf8'));
+console.log(`Built ${files.length} JavaScript assets and validated ${metadata.length} blocks.`);
