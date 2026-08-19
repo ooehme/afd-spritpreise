@@ -7,21 +7,33 @@
   "category": "widgets",
   "icon": "money-alt",
   "textdomain": "afd-spritpreise",
-  "parent": ["afd-spritpreise/price-board"],
+  "ancestor": ["afd-spritpreise/fuel-price"],
   "attributes": {
     "metric": { "type": "string", "default": "current" },
-    "label": { "type": "string" },
-    "fontFamily": { "type": "string" },
-    "fontWeight": { "type": "string" }
+    "label": { "type": "string" }
   },
   "usesContext": ["afdsp/minLat", "afdsp/minLng", "afdsp/maxLat", "afdsp/maxLng", "afdsp/areaLabel", "afdsp/defaultFuel"],
   "supports": {
-    "color": { "background": true, "text": true, "gradients": true },
-    "spacing": { "margin": true, "padding": true },
-    "typography": { "fontSize": true, "lineHeight": true, "textAlign": true },
-    "border": { "color": true, "radius": true, "style": true, "width": true },
+    "align": ["wide", "full"],
+    "anchor": true,
+    "ariaLabel": true,
+    "html": false,
+    "color": { "background": true, "text": true, "link": true, "gradients": true },
     "shadow": true,
-    "html": false
+    "spacing": { "margin": true, "padding": true },
+    "dimensions": { "minHeight": true, "minWidth": true },
+    "__experimentalBorder": { "color": true, "radius": true, "style": true, "width": true },
+    "position": { "sticky": true },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalTextTransform": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalLetterSpacing": true
+    }
   },
   "editorScript": "afdsp-block-editor",
   "style": "afdsp-frontend"
