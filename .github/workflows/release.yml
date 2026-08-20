@@ -1,0 +1,94 @@
+name: Build release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout tag
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify release version
+        shell: pwsh
+        run: |
+          $TagVersion = '${{ github.ref_name }}'.TrimStart('v', 'V')
+          $Plugin = Get-Content -LiteralPath 'afd-spritpreise.php' -Raw
+          $Readme = Get-Content -LiteralPath 'readme.txt' -Raw
+          $Package = Get-Content -LiteralPath 'package.json' -Raw | ConvertFrom-Json
+
+          if ($Plugin -notmatch 'Version:\s+([0-9A-Za-z.+-]+)') {
+              throw 'Plugin-Version konnte nicht gelesen werden.'
+          }
+          $PluginVersion = $Matches[1]
+
+          if ($Readme -notmatch 'Stable tag:\s+([0-9A-Za-z.+-]+)') {
+              throw 'Stable tag konnte nicht gelesen werden.'
+          }
+          $StableTag = $Matches[1]
+
+          if ($TagVersion -ne $PluginVersion) {
+              throw "Tag v$TagVersion passt nicht zur Plugin-Version $PluginVersion."
+          }
+          if ($TagVersion -ne $StableTag) {
+              throw "Tag v$TagVersion passt nicht zum Stable tag $StableTag."
+          }
+          if ($TagVersion -ne [string] $Package.version) {
+              throw "Tag v$TagVersion passt nicht zu package.json $($Package.version)."
+          }
+
+          Write-Output "Release-Version $TagVersion ist konsistent."
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      - name: Package plugin
+        shell: pwsh
+        run: ./scripts/package.ps1
+
+      - name: Verify release ZIP
+        shell: pwsh
+        run: |
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $Archive = [System.IO.Compression.ZipFile]::OpenRead('build/afd-spritpreise.zip')
+          try {
+              $Names = @($Archive.Entries | ForEach-Object { $_.FullName })
+
+              if ($Names -notcontains 'afd-spritpreise/afd-spritpreise.php') {
+                  throw 'Plugin-Hauptdatei fehlt im Release-ZIP.'
+              }
+              if (@($Names | Where-Object { $_.Contains('\\') }).Count -gt 0) {
+                  throw 'Release-ZIP enthält Windows-Backslashes.'
+              }
+              if (@($Names | Where-Object { -not $_.StartsWith('afd-spritpreise/') }).Count -gt 0) {
+                  throw 'Release-ZIP enthält Dateien außerhalb von afd-spritpreise/.'
+              }
+          }
+          finally {
+              $Archive.Dispose()
+          }
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "${{ github.ref_name }}"
+          build/afd-spritpreise.zip#afd-spritpreise.zip
+          --verify-tag
+          --generate-notes
+          --title "AfD Spritpreise ${{ github.ref_name }}"

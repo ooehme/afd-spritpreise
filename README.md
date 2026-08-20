@@ -99,6 +99,45 @@ npm run package
 build/afd-spritpreise.zip
 ```
 
+## Releases und automatische Updates
+
+WordPress prüft die GitHub-API auf das neueste veröffentlichte Release. Ist dessen Version höher als `AFDSP_VERSION`, erscheint das Update regulär unter **Dashboard → Aktualisierungen** und in der Plugin-Liste.
+
+Ein Push eines Tags im Format `vX.Y.Z` startet `.github/workflows/release.yml`. Der Workflow:
+
+1. prüft, dass Tag, Plugin-Header, `readme.txt` und `package.json` dieselbe Version enthalten,
+2. baut die JavaScript-Assets,
+3. führt die Tests aus,
+4. erzeugt `afd-spritpreise.zip`,
+5. validiert die ZIP-Struktur,
+6. erstellt ein GitHub Release und hängt `afd-spritpreise.zip` als Release-Asset an.
+
+Vor einem Release müssen deshalb diese drei Versionsangaben identisch sein:
+
+```text
+afd-spritpreise.php  → Version: X.Y.Z und AFDSP_VERSION
+readme.txt            → Stable tag: X.Y.Z
+package.json          → "version": "X.Y.Z"
+```
+
+Danach wird das Release lokal ausgelöst mit:
+
+```bash
+git checkout main
+git pull
+git tag -a vX.Y.Z -m "AfD Spritpreise X.Y.Z"
+git push origin vX.Y.Z
+```
+
+Beispiel für Version 1.2.0:
+
+```bash
+git tag -a v1.2.0 -m "AfD Spritpreise 1.2.0"
+git push origin v1.2.0
+```
+
+Das Release sollte nicht manuell als ZIP gebaut oder hochgeladen werden; der Tag ist der Release-Trigger.
+
 ## Datenschutz
 
 Das Plugin speichert keine personenbezogenen Nutzerdaten. Preisabfragen laufen serverseitig über TankPuls. Photon wird nur bei aktiver Gebietssuche im Backend oder Block-Editor verwendet.
