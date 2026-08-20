@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.2
+
+- Kompakte Shortcode-Ausgabe an das auf afd-chemnitz.de eingesetzte Layout angeglichen.
+- Drei interaktive Kraftstoff-Tabs für Diesel, Super E5 und Super E10.
+- Farbverläufe übernehmen die WordPress-Presets mit identischen Fallbacks.
+- Theme-Typografie wird in der kompakten Shortcode-Ausgabe geerbt.
+
 ## 1.2.1
 
 - GitHub-Updater liefert auch bei bereits aktueller Version vollständige Update-Metadaten, damit WordPress das Plugin als Auto-Update-fähig erkennt.
