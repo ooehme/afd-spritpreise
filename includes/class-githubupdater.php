@@ -134,7 +134,9 @@ final class GithubUpdater
             return null;
         }
 
-        $package = '';
+        // The workflow publishes afd-spritpreise.zip. The source archive remains a
+        // fallback so update checks do not break if an older release lacks the asset.
+        $package = (string) ($body['zipball_url'] ?? '');
         foreach ((array) ($body['assets'] ?? []) as $asset) {
             if (($asset['name'] ?? '') === self::RELEASE_ASSET && !empty($asset['browser_download_url'])) {
                 $package = (string) $asset['browser_download_url'];
