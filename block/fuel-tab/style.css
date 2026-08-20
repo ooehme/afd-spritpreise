@@ -13,13 +13,4 @@
 .afdsp--builder .afdsp-fuel-tab .wp-block-button__link {
     cursor: pointer;
     text-align: center;
-    transition: filter .15s ease;
-}
-
-/* A selected tab is a persistent state; CSS :active only exists while the pointer is pressed.
- * Darkening the real Core Button preserves the active theme colors, gradients, radius and typography. */
-.afdsp--builder .afdsp-fuel-tab.is-active .wp-block-button__link,
-.afdsp--builder .afdsp-fuel-tab .afdsp-tab.is-active,
-.afdsp--builder .afdsp-fuel-tab .afdsp-tab[aria-selected="true"] {
-    filter: brightness(.85);
 }
