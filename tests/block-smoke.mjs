@@ -31,6 +31,7 @@ for (const name of expected) {
 if (registered.size !== expected.length) throw new Error(`Unexpected block count: ${registered.size}`);
 if (typeof registered.get('afd-spritpreise/fuel-price').save !== 'function') throw new Error('Parent save handler missing.');
 if (typeof registered.get('afd-spritpreise/fuel-tabs').save !== 'function') throw new Error('Fuel tabs must persist their child blocks.');
+if (typeof registered.get('afd-spritpreise/fuel-tab').save !== 'function') throw new Error('Fuel tab must persist its native Core Button child.');
 
 for (const removed of [
     'afd-spritpreise/header',
@@ -45,4 +46,4 @@ for (const removed of [
     if (registered.has(removed)) throw new Error(`Obsolete block still registered: ${removed}`);
 }
 
-console.log(`${registered.size} Gutenberg blocks registered; styleable fuel-tab child present.`);
+console.log(`${registered.size} Gutenberg blocks registered; fuel-tab persists native Core Button markup.`);

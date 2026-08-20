@@ -51,24 +51,19 @@ final class ComponentRenderer
 
     public function tabs(array $attributes, string $content, object $block): string
     {
-        return '<div ' . get_block_wrapper_attributes(['class' => 'afdsp-tabs afdsp-builder-tabs']) . ' role="group" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $content . '</div>';
+        return '<div ' . get_block_wrapper_attributes(['class' => 'afdsp-tabs afdsp-builder-tabs']) . ' role="tablist" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $content . '</div>';
     }
 
     public function tab(array $attributes, string $content, object $block): string
     {
         $fuel = isset(self::FUEL_LABELS[$attributes['fuel'] ?? '']) ? (string) $attributes['fuel'] : 'diesel';
-        $label = trim((string) ($attributes['label'] ?? '')) ?: self::FUEL_LABELS[$fuel];
         $active = $fuel === $this->context_fuel($block);
-        $class = 'afdsp-tab wp-element-button' . ($active ? ' is-active' : '');
+        $content = $this->decorate_tab_button($content, $fuel, $active);
         $wrapper = get_block_wrapper_attributes([
-            'class' => $class,
-            'type' => 'button',
-            'aria-pressed' => $active ? 'true' : 'false',
-            'tabindex' => $active ? '0' : '-1',
-            'data-afdsp-tab' => $fuel,
+            'class' => 'afdsp-fuel-tab' . ($active ? ' is-active' : ''),
         ]);
 
-        return '<button ' . $wrapper . '>' . esc_html($label) . '</button>';
+        return '<div ' . $wrapper . '>' . $content . '</div>';
     }
 
     public function data_value(array $attributes, string $content, object $block): string
@@ -86,6 +81,32 @@ final class ComponentRenderer
         $value = array_key_exists($field, $data) ? (string) $data[$field] : '';
 
         return '<' . $tagName . ' ' . get_block_wrapper_attributes(['class' => 'afdsp-data-value']) . ' data-afdsp-bind="' . esc_attr($field) . '">' . esc_html($value) . '</' . $tagName . '>';
+    }
+
+    private function decorate_tab_button(string $content, string $fuel, bool $active): string
+    {
+        if ('' === trim($content) || !class_exists('WP_HTML_Tag_Processor')) {
+            return $content;
+        }
+
+        $processor = new \WP_HTML_Tag_Processor($content);
+        if (!$processor->next_tag(['class_name' => 'wp-block-button__link'])) {
+            return $content;
+        }
+
+        $processor->add_class('afdsp-tab');
+        if ($active) {
+            $processor->add_class('is-active');
+        } else {
+            $processor->remove_class('is-active');
+        }
+        $processor->set_attribute('data-afdsp-tab', $fuel);
+        $processor->set_attribute('role', 'tab');
+        $processor->set_attribute('aria-selected', $active ? 'true' : 'false');
+        $processor->set_attribute('aria-pressed', $active ? 'true' : 'false');
+        $processor->set_attribute('tabindex', $active ? '0' : '-1');
+
+        return $processor->get_updated_html();
     }
 
     private function context_config(object $block): array
