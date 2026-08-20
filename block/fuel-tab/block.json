@@ -19,5 +19,5 @@
     "spacing": { "margin": true }
   },
   "editorScript": "afdsp-block-editor",
-  "style": "afdsp-frontend"
+  "style": ["afdsp-frontend", "file:./style.css"]
 }
