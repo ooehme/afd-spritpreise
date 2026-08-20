@@ -107,7 +107,8 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .afdsp-tab { transition: background-color .16s ease, color .16s ease, outline-color .16s ease; }
+    .afdsp--full .afdsp-tab,
+    .afdsp--compact .afdsp-tab { transition: background-color .16s ease, color .16s ease, outline-color .16s ease; }
 }
 
 /* Gutenberg builder. Core blocks own layout and presentation. */
@@ -129,8 +130,4 @@
     width: 100%;
     min-width: 0;
     cursor: pointer;
-}
-.afdsp--builder .afdsp-builder-tabs .afdsp-tab.is-active {
-    outline: 2px solid currentColor;
-    outline-offset: -2px;
 }
