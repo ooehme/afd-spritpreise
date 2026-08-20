@@ -46,6 +46,12 @@ final class Plugin
             $config = $this->normalize_render_config($attributes);
             wp_enqueue_style('afdsp-frontend');
             wp_enqueue_script('afdsp-frontend');
+
+            if ('compact' === $config['displayMode']) {
+                wp_enqueue_style('afdsp-compact-site');
+                return (new CompactRenderer($this->service()))->render($config);
+            }
+
             return (new Renderer($this->service()))->render($config);
         } catch (\Throwable $error) {
             if (current_user_can('manage_options')) {
