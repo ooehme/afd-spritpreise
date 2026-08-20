@@ -51,7 +51,7 @@ final class ComponentRenderer
 
     public function tabs(array $attributes, string $content, object $block): string
     {
-        return '<div ' . get_block_wrapper_attributes(['class' => 'afdsp-tabs afdsp-builder-tabs']) . ' role="group" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $content . '</div>';
+        return '<div ' . get_block_wrapper_attributes(['class' => 'afdsp-tabs afdsp-builder-tabs wp-block-button']) . ' role="group" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $content . '</div>';
     }
 
     public function tab(array $attributes, string $content, object $block): string
@@ -59,7 +59,7 @@ final class ComponentRenderer
         $fuel = isset(self::FUEL_LABELS[$attributes['fuel'] ?? '']) ? (string) $attributes['fuel'] : 'diesel';
         $label = trim((string) ($attributes['label'] ?? '')) ?: self::FUEL_LABELS[$fuel];
         $active = $fuel === $this->context_fuel($block);
-        $class = 'afdsp-tab wp-element-button' . ($active ? ' is-active' : '');
+        $class = 'afdsp-tab wp-element-button wp-block-button__link' . ($active ? ' is-active' : '');
         $wrapper = get_block_wrapper_attributes([
             'class' => $class,
             'type' => 'button',
