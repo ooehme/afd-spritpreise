@@ -1,12 +1,14 @@
 <?php
 /**
  * Plugin Name:       AfD Spritpreise
+ * Plugin URI:        https://oliveroehme.de/werkzeuge/afd-spritpreise
  * Description:       Zeigt regionale Median-Kraftstoffpreise und ein konfigurierbares Steuerszenario.
  * Version:           1.1.0
  * Requires at least: 6.6
  * Tested up to:      7.0
  * Requires PHP:      8.1
- * Author:            AfD Spritpreise
+ * Author:            Oliver Oehme
+ * Author URI:        https://oliveroehem.de
  * Text Domain:       afd-spritpreise
  * Update URI:        https://github.com/ooehme/afd-spritpreise
  * License:           GPL-2.0-or-later
