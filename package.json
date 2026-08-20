@@ -1,6 +1,6 @@
 {
   "name": "afd-spritpreise",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "description": "Build- und Prüfskripte für das WordPress-Plugin AfD Spritpreise",
   "scripts": {
