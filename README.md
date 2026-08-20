@@ -2,6 +2,8 @@
 
 WordPress-Plugin für regionale Kraftstoffpreise und eine transparent konfigurierte Szenariorechnung. Tankstellendaten werden serverseitig geladen, je Kraftstoff wird der Median berechnet.
 
+Autor: Oliver Oehme · Projektseite: https://oliveroehme.de/werkzeuge/afd-spritpreise
+
 ## Voraussetzungen
 
 - WordPress 6.6 oder neuer
