@@ -10,11 +10,13 @@
     color: #fff;
     background: var(--afdsp-gradient-hellblau);
     box-shadow: none;
+    font-family: inherit;
 }
 
 .afdsp--compact-site .afdsp-compact-site-title {
     margin: 0 0 .45rem;
     color: inherit;
+    font-family: inherit;
     font-size: clamp(2rem, 4.6vw, 4.8rem);
     font-weight: 800;
     line-height: .98;
@@ -130,37 +132,6 @@
 .afdsp--compact-site .afdsp-stale {
     margin: 0 0 .35rem;
     border-radius: .35rem;
-}
-
-.afdsp--compact-site .afdsp-compact-site-extra,
-.afdsp--compact-site .afdsp-compact-site-details {
-    margin-top: .35rem;
-    padding: .6rem .75rem;
-    color: #fff;
-    background: var(--afdsp-gradient-nachtblau);
-}
-
-.afdsp--compact-site .afdsp-compact-site-extra {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: .25rem 1rem;
-}
-
-.afdsp--compact-site .afdsp-compact-site-extra span {
-    font-size: .78rem;
-    text-transform: uppercase;
-}
-
-.afdsp--compact-site .afdsp-compact-site-details summary {
-    cursor: pointer;
-    font-weight: 700;
-}
-
-.afdsp--compact-site .afdsp-compact-site-details p {
-    margin: .45rem 0 0;
-    font-size: .82rem;
 }
 
 .afdsp--compact-site .afdsp-compact-site-source {
