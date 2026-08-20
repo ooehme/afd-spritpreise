@@ -40,10 +40,21 @@
         { label: __('Methodik', 'afd-spritpreise'), value: 'method', sample: __('Median aus gültigen, aktiven Tankstellen. Intern wird ohne vorzeitige Rundung gerechnet.', 'afd-spritpreise') }
     ];
 
+    function coreButtonTemplate(label) {
+        return [[
+            'core/buttons',
+            { layout: { type: 'flex', justifyContent: 'stretch' } },
+            [[
+                'core/button',
+                { text: label, tagName: 'button', type: 'button', width: 100 }
+            ]]
+        ]];
+    }
+
     var FUEL_TAB_TEMPLATE = [
-        ['afd-spritpreise/fuel-tab', { fuel: 'diesel', label: 'Diesel' }],
-        ['afd-spritpreise/fuel-tab', { fuel: 'e5', label: 'Super E5' }],
-        ['afd-spritpreise/fuel-tab', { fuel: 'e10', label: 'Super E10' }]
+        ['afd-spritpreise/fuel-tab', { fuel: 'diesel', label: 'Diesel' }, coreButtonTemplate('Diesel')],
+        ['afd-spritpreise/fuel-tab', { fuel: 'e5', label: 'Super E5' }, coreButtonTemplate('Super E5')],
+        ['afd-spritpreise/fuel-tab', { fuel: 'e10', label: 'Super E10' }, coreButtonTemplate('Super E10')]
     ];
 
     var DEFAULT_TEMPLATE = [
@@ -280,10 +291,13 @@
         var defaults = { diesel: 'Diesel', e5: 'Super E5', e10: 'Super E10' };
         var active = ((props.context && props.context['afdsp/defaultFuel']) || 'diesel') === fuel;
         var blockProps = useBlockProps({
-            className: 'afdsp-tab wp-element-button' + (active ? ' is-active' : ''),
-            type: 'button',
-            'aria-pressed': active ? 'true' : 'false',
-            'data-afdsp-tab': fuel
+            className: 'afdsp-fuel-tab' + (active ? ' is-active' : ''),
+            'data-afdsp-fuel-tab': fuel
+        });
+        var innerBlocksProps = useInnerBlocksProps(blockProps, {
+            template: coreButtonTemplate(attributes.label || defaults[fuel]),
+            templateLock: 'all',
+            allowedBlocks: ['core/buttons']
         });
 
         return el(Fragment, {},
@@ -298,13 +312,10 @@
                         ],
                         onChange: function (value) { setAttributes({ fuel: value, label: attributes.label || defaults[value] }); }
                     }),
-                    el(TextControl, {
-                        label: __('Beschriftung', 'afd-spritpreise'), value: attributes.label || defaults[fuel],
-                        onChange: function (value) { setAttributes({ label: value }); }
-                    })
+                    el('p', {}, __('Beschriftung und Gestaltung bearbeitest du direkt am enthaltenen WordPress-Button.', 'afd-spritpreise'))
                 )
             ),
-            el('button', blockProps, attributes.label || defaults[fuel])
+            el('div', innerBlocksProps)
         );
     }
 
@@ -344,10 +355,9 @@
     }
 
     function saveInnerBlocks() { return el(InnerBlocks.Content); }
-    function saveDynamic() { return null; }
 
     blocks.registerBlockType('afd-spritpreise/fuel-price', { edit: parentEdit, save: saveInnerBlocks });
     blocks.registerBlockType('afd-spritpreise/fuel-tabs', { edit: tabsEdit, save: saveInnerBlocks });
-    blocks.registerBlockType('afd-spritpreise/fuel-tab', { edit: tabEdit, save: saveDynamic });
-    blocks.registerBlockType('afd-spritpreise/data-value', { edit: dataValueEdit, save: saveDynamic });
+    blocks.registerBlockType('afd-spritpreise/fuel-tab', { edit: tabEdit, save: saveInnerBlocks });
+    blocks.registerBlockType('afd-spritpreise/data-value', { edit: dataValueEdit, save: function () { return null; } });
 }(window.wp.blocks, window.wp.blockEditor, window.wp.components, window.wp.element, window.wp.i18n));
