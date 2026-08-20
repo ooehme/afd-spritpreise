@@ -66,6 +66,7 @@ Das Plugin speichert keine personenbezogenen Nutzerdaten. Es sendet serverseitig
 * Der konfigurierte Standardkraftstoff erhält den vom Theme definierten Active-State ohne plugin-eigene hardcodierte Button-Stile.
 * Beim Wechsel zwischen Diesel, Super E5 und Super E10 wird der aktive Zustand exklusiv auf genau einen Button übertragen.
 * Veraltete plugin-eigene Active-Outline für Gutenberg-Tabs entfernt.
+* Maus- und Touch-Klicks hinterlassen keinen dauerhaften Fokusrahmen; Tastatur-Fokus und `:focus-visible` bleiben erhalten.
 
 = 1.2.2 =
 
