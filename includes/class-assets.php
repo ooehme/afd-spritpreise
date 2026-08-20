@@ -61,7 +61,7 @@ final class Assets
         }
 
         $compiled = wp_style_engine_get_styles($active, [
-            'selector' => '.afdsp--builder .afdsp-fuel-tab.is-active .wp-block-button__link, .afdsp--builder .afdsp-tab[aria-pressed="true"]',
+            'selector' => '.afdsp--builder .afdsp-tab[aria-pressed="true"]',
             'convert_vars_to_classnames' => false,
         ]);
 
