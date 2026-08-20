@@ -1,0 +1,160 @@
+.afdsp--compact-site {
+    --afdsp-gradient-hellblau: var(--wp--preset--gradient--custom-hellblau, linear-gradient(135deg, rgb(0, 162, 223) 0%, rgb(0, 114, 179) 100%));
+    --afdsp-gradient-dunkelblau: var(--wp--preset--gradient--custom-dunkelblau, linear-gradient(135deg, rgb(0, 102, 166) 0%, rgb(0, 59, 99) 100%));
+    --afdsp-gradient-rot: var(--wp--preset--gradient--custom-rot, linear-gradient(135deg, rgb(213, 23, 47) 0%, rgb(162, 17, 38) 98%));
+    --afdsp-gradient-nachtblau: var(--wp--preset--gradient--custom-nachtblau, linear-gradient(135deg, rgb(0, 64, 111) 0%, rgb(8, 35, 59) 99%));
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    padding: clamp(.75rem, 2.5vw, 1.5rem);
+    color: #fff;
+    background: var(--afdsp-gradient-hellblau);
+    box-shadow: none;
+    font-family: inherit;
+}
+
+.afdsp--compact-site .afdsp-compact-site-title {
+    margin: 0 0 .45rem;
+    color: inherit;
+    font-family: inherit;
+    font-size: clamp(2rem, 4.6vw, 4.8rem);
+    font-weight: 800;
+    line-height: .98;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.afdsp--compact-site .afdsp-compact-site-card {
+    overflow: hidden;
+    border-radius: .5rem;
+    padding: .35rem;
+    background: var(--afdsp-gradient-nachtblau);
+}
+
+.afdsp--compact-site .afdsp-compact-site-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border-radius: .4rem .4rem 0 0;
+}
+
+.afdsp--compact-site .afdsp-compact-site-tab {
+    min-width: 0;
+    min-height: 2.4rem;
+    border: 0;
+    border-radius: 0;
+    padding: .55rem .5rem;
+    color: #fff;
+    background: var(--afdsp-gradient-nachtblau);
+    cursor: pointer;
+    font: inherit;
+    font-size: clamp(.72rem, 1.2vw, .95rem);
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.afdsp--compact-site .afdsp-compact-site-tab:hover,
+.afdsp--compact-site .afdsp-compact-site-tab:focus-visible {
+    filter: brightness(1.12);
+}
+
+.afdsp--compact-site .afdsp-compact-site-tab:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+}
+
+.afdsp--compact-site .afdsp-compact-site-tab.is-active {
+    box-shadow: inset 0 0 0 1px #fff;
+}
+
+.afdsp--compact-site .afdsp-compact-site-panel {
+    margin-top: .35rem;
+}
+
+.afdsp--compact-site .afdsp-compact-site-prices {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: hidden;
+}
+
+.afdsp--compact-site .afdsp-compact-site-price {
+    display: flex;
+    min-width: 0;
+    min-height: 7.2rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: .85rem .7rem;
+    text-align: center;
+}
+
+.afdsp--compact-site .afdsp-compact-site-price--current {
+    background: var(--afdsp-gradient-rot);
+}
+
+.afdsp--compact-site .afdsp-compact-site-price--scenario {
+    background: var(--afdsp-gradient-hellblau);
+}
+
+.afdsp--compact-site .afdsp-compact-site-price--saving {
+    background: var(--afdsp-gradient-dunkelblau);
+}
+
+.afdsp--compact-site .afdsp-compact-site-price > span {
+    color: inherit;
+    font-size: clamp(.78rem, 1.25vw, 1rem);
+    font-weight: 500;
+}
+
+.afdsp--compact-site .afdsp-compact-site-price > strong {
+    margin-top: .15rem;
+    color: inherit;
+    font-size: clamp(1.75rem, 3.7vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    white-space: nowrap;
+}
+
+.afdsp--compact-site .afdsp-compact-site-price small {
+    margin-top: .25rem;
+    color: inherit;
+    font-size: clamp(.62rem, .95vw, .78rem);
+}
+
+.afdsp--compact-site .afdsp-compact-site-price small b {
+    font-weight: 700;
+}
+
+.afdsp--compact-site .afdsp-stale {
+    margin: 0 0 .35rem;
+    border-radius: .35rem;
+}
+
+.afdsp--compact-site .afdsp-compact-site-source {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: .3rem 1rem;
+    padding: .55rem .7rem .1rem;
+    color: #fff;
+    font-size: clamp(.6rem, .8vw, .72rem);
+    font-style: italic;
+}
+
+@media (max-width: 44rem) {
+    .afdsp--compact-site .afdsp-compact-site-title {
+        font-size: clamp(1.8rem, 9vw, 3rem);
+    }
+
+    .afdsp--compact-site .afdsp-compact-site-prices {
+        grid-template-columns: 1fr;
+    }
+
+    .afdsp--compact-site .afdsp-compact-site-price {
+        min-height: 6rem;
+    }
+}
