@@ -51,14 +51,24 @@ final class ComponentRenderer
 
     public function tabs(array $attributes, string $content, object $block): string
     {
-        $fuel = $this->context_fuel($block);
-        $buttons = '';
-        foreach (self::FUEL_LABELS as $value => $label) {
-            $active = $value === $fuel;
-            $buttons .= '<button type="button" class="afdsp-tab' . ($active ? ' is-active' : '') . '" aria-pressed="' . ($active ? 'true' : 'false') . '" tabindex="' . ($active ? '0' : '-1') . '" data-afdsp-tab="' . esc_attr($value) . '">' . esc_html($label) . '</button>';
-        }
+        return '<div ' . get_block_wrapper_attributes(['class' => 'afdsp-tabs afdsp-builder-tabs']) . ' role="group" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $content . '</div>';
+    }
 
-        return '<div ' . get_block_wrapper_attributes(['class' => 'afdsp-tabs afdsp-builder-tabs']) . ' role="group" aria-label="' . esc_attr__('Kraftstoffart', 'afd-spritpreise') . '">' . $buttons . '</div>';
+    public function tab(array $attributes, string $content, object $block): string
+    {
+        $fuel = isset(self::FUEL_LABELS[$attributes['fuel'] ?? '']) ? (string) $attributes['fuel'] : 'diesel';
+        $label = trim((string) ($attributes['label'] ?? '')) ?: self::FUEL_LABELS[$fuel];
+        $active = $fuel === $this->context_fuel($block);
+        $class = 'afdsp-tab wp-element-button' . ($active ? ' is-active' : '');
+        $wrapper = get_block_wrapper_attributes([
+            'class' => $class,
+            'type' => 'button',
+            'aria-pressed' => $active ? 'true' : 'false',
+            'tabindex' => $active ? '0' : '-1',
+            'data-afdsp-tab' => $fuel,
+        ]);
+
+        return '<button ' . $wrapper . '>' . esc_html($label) . '</button>';
     }
 
     public function data_value(array $attributes, string $content, object $block): string

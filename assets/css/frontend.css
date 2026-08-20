@@ -17,8 +17,8 @@
 }
 
 .afdsp *, .afdsp *::before, .afdsp *::after { box-sizing: border-box; }
-.afdsp button, .afdsp summary { font: inherit; }
-.afdsp a { color: #075d86; text-underline-offset: .15em; }
+.afdsp--full button, .afdsp--compact button, .afdsp--full summary, .afdsp--compact summary { font: inherit; }
+.afdsp--full a, .afdsp--compact a { color: #075d86; text-underline-offset: .15em; }
 .afdsp[hidden], .afdsp [hidden] { display: none !important; }
 
 /* Standalone shortcode renderer. */
@@ -39,10 +39,10 @@
 .afdsp-eyebrow { margin: 0 0 .35rem; color: #9fe9f8; font-size: .78em; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
 .afdsp-title { margin: 0; color: inherit; font-size: clamp(1.65rem, 1.2rem + 2.2vw, 3rem); line-height: 1.08; }
 .afdsp-intro { margin: .65rem 0 0; color: #e8f4fb; }
-.afdsp-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .25rem; padding: .5rem; background: var(--afdsp-navy); }
-.afdsp-tab { min-width: 0; min-height: 2.75rem; border: 0; border-radius: .55rem; padding: .6rem .35rem; color: #dcebf5; background: transparent; cursor: pointer; font-weight: 700; }
-.afdsp-tab:hover, .afdsp-tab:focus-visible { background: rgba(255,255,255,.12); outline: 2px solid transparent; }
-.afdsp-tab.is-active { color: var(--afdsp-navy); background: var(--afdsp-cyan); }
+.afdsp--full .afdsp-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .25rem; padding: .5rem; background: var(--afdsp-navy); }
+.afdsp--full .afdsp-tab { min-width: 0; min-height: 2.75rem; border: 0; border-radius: .55rem; padding: .6rem .35rem; color: #dcebf5; background: transparent; cursor: pointer; font-weight: 700; }
+.afdsp--full .afdsp-tab:hover, .afdsp--full .afdsp-tab:focus-visible { background: rgba(255,255,255,.12); outline: 2px solid transparent; }
+.afdsp--full .afdsp-tab.is-active { color: var(--afdsp-navy); background: var(--afdsp-cyan); }
 .afdsp-panel { padding: clamp(.8rem, 2.5vw, 1.5rem); }
 .afdsp-board { overflow: hidden; border-radius: .8rem; background: #fff; box-shadow: 0 .15rem .8rem rgba(7, 27, 52, .07); }
 .afdsp-stale { margin: 0; padding: .65rem .85rem; color: #5c4600; background: #fff4c7; font-size: .88em; font-weight: 650; }
@@ -107,7 +107,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .afdsp-tab { transition: background-color .16s ease, color .16s ease; }
+    .afdsp-tab { transition: background-color .16s ease, color .16s ease, outline-color .16s ease; }
 }
 
 /* Gutenberg builder. Core blocks own layout and presentation. */
@@ -118,16 +118,19 @@
     line-height: inherit;
 }
 
-.afdsp--builder a { color: inherit; }
 .afdsp--builder .afdsp-data-value { box-sizing: border-box; max-width: 100%; }
 
-/* The only purpose-built presentation retained in Gutenberg is the fuel switch. */
+/* Fuel tabs keep only their functional three-column layout. Theme and block supports own appearance. */
 .afdsp--builder .afdsp-builder-tabs {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-.afdsp--builder .afdsp-builder-tabs .afdsp-tab { color: inherit; background: transparent; }
+.afdsp--builder .afdsp-builder-tabs .afdsp-tab {
+    width: 100%;
+    min-width: 0;
+    cursor: pointer;
+}
 .afdsp--builder .afdsp-builder-tabs .afdsp-tab.is-active {
-    color: #fff;
-    background: var(--afdsp-cyan, #008fc5);
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
 }
