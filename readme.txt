@@ -4,7 +4,7 @@ Tags: kraftstoffpreise, tankstellen, median, shortcode, gutenberg
 Requires at least: 6.6
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,10 +16,11 @@ AfD Spritpreise von Oliver Oehme lädt aktuelle Tankstellendaten serverseitig vo
 
 Projektseite: https://oliveroehme.de/werkzeuge/afd-spritpreise
 
-Der Gutenberg-Baukasten verwendet nur drei Plugin-Blöcke:
+Der Gutenberg-Baukasten verwendet vier Plugin-Blöcke:
 
 * `afd-spritpreise/fuel-price` als Datenkontext
 * `afd-spritpreise/fuel-tabs` als Kraftstoffumschalter
+* `afd-spritpreise/fuel-tab` als einzelner Kraftstoff-Tab mit nativem WordPress-Core-Button
 * `afd-spritpreise/data-value` für einen einzelnen dynamischen Wert
 
 Layout und Präsentation erfolgen mit normalen Gutenberg-Core-Blöcken wie Gruppe, Spalten, Überschrift und Absatz. Es gibt keine Plugin-eigenen Price-Board-, Facts-, Header-, Metric-, Station-, Forderungs- oder Methodik-Container mehr.
@@ -58,6 +59,14 @@ Nein. Photon wird nur bei der Gebietskonfiguration im Backend und Editor aufgeru
 Das Plugin speichert keine personenbezogenen Nutzerdaten. Es sendet serverseitige Preisabfragen an TankPuls und nur bei aktiver Backend-/Editor-Suche den eingegebenen Suchtext an Photon.
 
 == Changelog ==
+
+= 1.2.3 =
+
+* Gutenberg-Kraftstofftabs verwenden native WordPress-Core-Buttons und übernehmen Theme-/Site-Editor-Stile vollständig.
+* Der konfigurierte Standardkraftstoff erhält den vom Theme definierten Active-State ohne plugin-eigene hardcodierte Button-Stile.
+* Beim Wechsel zwischen Diesel, Super E5 und Super E10 wird der aktive Zustand exklusiv auf genau einen Button übertragen.
+* Veraltete plugin-eigene Active-Outline für Gutenberg-Tabs entfernt.
+* Maus- und Touch-Klicks hinterlassen keinen dauerhaften Fokusrahmen; Tastatur-Fokus und `:focus-visible` bleiben erhalten.
 
 = 1.2.2 =
 
