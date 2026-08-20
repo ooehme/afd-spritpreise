@@ -4,7 +4,7 @@ Tags: kraftstoffpreise, tankstellen, median, shortcode, gutenberg
 Requires at least: 6.6
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,13 @@ Nein. Photon wird nur bei der Gebietskonfiguration im Backend und Editor aufgeru
 Das Plugin speichert keine personenbezogenen Nutzerdaten. Es sendet serverseitige Preisabfragen an TankPuls und nur bei aktiver Backend-/Editor-Suche den eingegebenen Suchtext an Photon.
 
 == Changelog ==
+
+= 1.2.2 =
+
+* Kompakte Shortcode-Ausgabe an das auf afd-chemnitz.de eingesetzte Layout angeglichen.
+* Drei interaktive Kraftstoff-Tabs für Diesel, Super E5 und Super E10.
+* Farbverläufe übernehmen die WordPress-Presets mit identischen Fallbacks.
+* Theme-Typografie wird in der kompakten Shortcode-Ausgabe geerbt.
 
 = 1.2.1 =
 
