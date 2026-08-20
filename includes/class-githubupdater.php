@@ -32,16 +32,19 @@ final class GithubUpdater
         }
 
         $release = $this->release();
-        if (!$release || version_compare(AFDSP_VERSION, $release['version'], '>=')) {
-            return false;
-        }
 
+        // WordPress only exposes the per-plugin automatic-update UI when the plugin
+        // occurs in update_plugins->response or update_plugins->no_update. Returning
+        // false for an up-to-date external plugin skips both collections and makes
+        // Core treat the plugin as not supporting updates. Therefore always return
+        // valid metadata for our plugin; wp_update_plugins() itself decides whether
+        // it belongs in response or no_update by comparing the versions.
         return [
             'id' => 'https://github.com/' . $this->owner . '/' . $this->repository,
             'slug' => $this->repository,
-            'version' => $release['version'],
+            'version' => $release['version'] ?? AFDSP_VERSION,
             'url' => self::HOMEPAGE,
-            'package' => $release['package'],
+            'package' => $release['package'] ?? '',
             'tested' => $pluginData['Tested up to'] ?? '',
             'requires_php' => '8.1',
             'icons' => [],
