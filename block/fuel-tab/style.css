@@ -1,0 +1,22 @@
+.afdsp--builder .afdsp-builder-tabs > .afdsp-fuel-tab,
+.afdsp--builder .afdsp-fuel-tab .wp-block-buttons,
+.afdsp--builder .afdsp-fuel-tab .wp-block-button,
+.afdsp--builder .afdsp-fuel-tab .wp-block-button__link {
+    width: 100%;
+    min-width: 0;
+}
+
+.afdsp--builder .afdsp-fuel-tab .wp-block-buttons {
+    display: block;
+}
+
+.afdsp--builder .afdsp-fuel-tab .wp-block-button__link {
+    cursor: pointer;
+    text-align: center;
+}
+
+.afdsp--builder .afdsp-fuel-tab.is-active .wp-block-button__link,
+.afdsp--builder .afdsp-fuel-tab .afdsp-tab.is-active {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+}
