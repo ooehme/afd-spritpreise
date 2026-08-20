@@ -14,9 +14,3 @@
     cursor: pointer;
     text-align: center;
 }
-
-.afdsp--builder .afdsp-fuel-tab.is-active .wp-block-button__link,
-.afdsp--builder .afdsp-fuel-tab .afdsp-tab.is-active {
-    outline: 2px solid currentColor;
-    outline-offset: -2px;
-}
