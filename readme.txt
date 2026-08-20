@@ -12,7 +12,9 @@ Regionale Median-Kraftstoffpreise und ein transparent konfigurierbares Steuersze
 
 == Description ==
 
-AfD Spritpreise lädt aktuelle Tankstellendaten serverseitig von TankPuls, berechnet den Median für Diesel, Super E5 und Super E10 und stellt daraus dynamische Datenwerte bereit.
+AfD Spritpreise von Oliver Oehme lädt aktuelle Tankstellendaten serverseitig von TankPuls, berechnet den Median für Diesel, Super E5 und Super E10 und stellt daraus dynamische Datenwerte bereit.
+
+Projektseite: https://oliveroehme.de/werkzeuge/afd-spritpreise
 
 Der Gutenberg-Baukasten verwendet nur drei Plugin-Blöcke:
 
