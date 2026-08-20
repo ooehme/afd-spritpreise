@@ -4,7 +4,7 @@ Tags: kraftstoffpreise, tankstellen, median, shortcode, gutenberg
 Requires at least: 6.6
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,17 @@ Nein. Photon wird nur bei der Gebietskonfiguration im Backend und Editor aufgeru
 Das Plugin speichert keine personenbezogenen Nutzerdaten. Es sendet serverseitige Preisabfragen an TankPuls und nur bei aktiver Backend-/Editor-Suche den eingegebenen Suchtext an Photon.
 
 == Changelog ==
+
+= 1.2.1 =
+
+* GitHub-Updater liefert auch bei bereits aktueller Version vollständige Update-Metadaten, damit WordPress das Plugin als Auto-Update-fähig erkennt.
+* Dadurch wird der Schalter für automatische Plugin-Aktualisierungen in der Plugin-Liste angezeigt.
+
+= 1.2.0 =
+
+* GitHub-Release-Workflow für Tags `v*` mit Build, Tests und WordPress-kompatiblem Release-ZIP.
+* GitHub-Updater bevorzugt das veröffentlichte Release-Asset `afd-spritpreise.zip`.
+* Kompaktes Gutenberg-Startlayout und separat gestaltbare Kraftstoff-Tabs.
 
 = 1.1.0 =
 
