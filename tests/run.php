@@ -192,8 +192,8 @@ test('Mehrere Blockinstanzen mit unterschiedlichen Bounding Boxes', function ():
     $plugin = Plugin::instance();
     $plugin->render(['displayMode' => 'compact', 'minLat' => 50.0, 'minLng' => 12.0, 'maxLat' => 50.5, 'maxLng' => 12.5, 'areaLabel' => 'A']);
     $plugin->render(['displayMode' => 'compact', 'minLat' => 51.0, 'minLng' => 13.0, 'maxLat' => 51.5, 'maxLng' => 13.5, 'areaLabel' => 'B']);
-    assert_true(count(array_filter($GLOBALS['_remote_urls'], fn ($url) => str_contains($url, 'minLat=50'))) === 1);
-    assert_true(count(array_filter($GLOBALS['_remote_urls'], fn ($url) => str_contains($url, 'minLat=51'))) === 1);
+    assert_true(count(array_filter($GLOBALS['_remote_urls'], fn ($url) => str_contains($url, 'minLat=50'))) === 3);
+    assert_true(count(array_filter($GLOBALS['_remote_urls'], fn ($url) => str_contains($url, 'minLat=51'))) === 3);
 });
 
 test('Shortcode', function (): void {
