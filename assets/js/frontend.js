@@ -27,9 +27,12 @@
             tabs.forEach(function (item) {
                 var active = item === tab;
                 item.classList.toggle('is-active', active);
-                if (item.hasAttribute('aria-selected')) item.setAttribute('aria-selected', active ? 'true' : 'false');
-                if (item.hasAttribute('aria-pressed')) item.setAttribute('aria-pressed', active ? 'true' : 'false');
+                item.setAttribute('aria-selected', active ? 'true' : 'false');
+                item.setAttribute('aria-pressed', active ? 'true' : 'false');
                 item.tabIndex = active ? 0 : -1;
+
+                var wrapper = item.closest('.afdsp-fuel-tab');
+                if (wrapper) wrapper.classList.toggle('is-active', active);
             });
             panels.forEach(function (panel) {
                 panel.hidden = panel.getAttribute('data-afdsp-panel') !== tab.getAttribute('data-afdsp-tab');
