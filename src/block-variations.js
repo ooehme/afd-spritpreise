@@ -73,17 +73,7 @@
         attributes: { layoutPreset: 'full' },
         innerBlocks: FULL_TEMPLATE,
         isDefault: true,
-        scope: ['inserter', 'block'],
+        scope: ['inserter'],
         isActive: function (attributes) { return attributes.layoutPreset === 'full'; }
-    });
-
-    blocks.registerBlockVariation('afd-spritpreise/fuel-price', {
-        name: 'compact',
-        title: __('AfD Spritpreise – kompakt', 'afd-spritpreise'),
-        description: __('Kompakte Preisübersicht mit Kraftstofftabs und drei Preisfeldern.', 'afd-spritpreise'),
-        icon: 'index-card',
-        attributes: { layoutPreset: 'compact' },
-        scope: ['inserter', 'block'],
-        isActive: function (attributes) { return attributes.layoutPreset === 'compact'; }
     });
 }(window.wp.blocks, window.wp.i18n));
