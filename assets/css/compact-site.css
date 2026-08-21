@@ -1,94 +1,84 @@
 .afdsp--compact-site {
-    --afdsp-gradient-hellblau: var(--wp--preset--gradient--custom-hellblau, linear-gradient(135deg, rgb(0, 162, 223) 0%, rgb(0, 114, 179) 100%));
-    --afdsp-gradient-dunkelblau: var(--wp--preset--gradient--custom-dunkelblau, linear-gradient(135deg, rgb(0, 102, 166) 0%, rgb(0, 59, 99) 100%));
-    --afdsp-gradient-rot: var(--wp--preset--gradient--custom-rot, linear-gradient(135deg, rgb(213, 23, 47) 0%, rgb(162, 17, 38) 98%));
-    --afdsp-gradient-nachtblau: var(--wp--preset--gradient--custom-nachtblau, linear-gradient(135deg, rgb(0, 64, 111) 0%, rgb(8, 35, 59) 99%));
+    --afdsp-gradient-hellblau: linear-gradient(0deg, rgb(0, 162, 223) 0%, rgb(0, 114, 179) 100%);
+    --afdsp-gradient-dunkelblau: linear-gradient(180deg, rgb(0, 102, 166) 0%, rgb(0, 59, 99) 100%);
+    --afdsp-gradient-rot: linear-gradient(180deg, rgb(213, 23, 47) 0%, rgb(162, 17, 38) 98%);
+    --afdsp-gradient-nachtblau: linear-gradient(180deg, rgb(0, 64, 111) 0%, rgb(8, 35, 59) 99%);
     overflow: visible;
     border: 0;
     border-radius: 0;
-    padding: clamp(.75rem, 2.5vw, 1.5rem);
+    padding: var(--wp--preset--spacing--30, 1.5rem);
     color: #fff;
     background: var(--afdsp-gradient-hellblau);
     box-shadow: none;
     font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 .afdsp--compact-site .afdsp-compact-site-title {
-    margin: 0 0 .45rem;
+    margin: 0;
     color: inherit;
     font-family: inherit;
-    font-size: clamp(2rem, 4.6vw, 4.8rem);
-    font-weight: 800;
-    line-height: .98;
     text-align: center;
-    text-transform: uppercase;
 }
 
 .afdsp--compact-site .afdsp-compact-site-card {
     overflow: hidden;
-    border-radius: .5rem;
-    padding: .35rem;
+    margin: var(--wp--preset--spacing--20, 1rem) 0;
+    border: 0;
+    border-radius: 8px;
+    padding: 0;
     background: var(--afdsp-gradient-nachtblau);
 }
 
 .afdsp--compact-site .afdsp-compact-site-tabs {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    overflow: hidden;
-    border-radius: .4rem .4rem 0 0;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.afdsp--compact-site .afdsp-compact-site-tab-wrap {
+    width: 100%;
+    margin: 0;
 }
 
 .afdsp--compact-site .afdsp-compact-site-tab {
+    width: 100%;
     min-width: 0;
-    min-height: 2.4rem;
-    border: 0;
+    margin: 0;
     border-radius: 0;
-    padding: .55rem .5rem;
-    color: #fff;
-    background: var(--afdsp-gradient-nachtblau);
     cursor: pointer;
-    font: inherit;
-    font-size: clamp(.72rem, 1.2vw, .95rem);
-    font-weight: 700;
-    line-height: 1.1;
-    text-transform: uppercase;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.afdsp--compact-site .afdsp-compact-site-tab:hover,
-.afdsp--compact-site .afdsp-compact-site-tab:focus-visible {
-    filter: brightness(1.12);
+.afdsp--compact-site .afdsp-compact-site-tab-wrap:first-child .afdsp-compact-site-tab {
+    border-radius: 8px 0 0 0;
 }
 
-.afdsp--compact-site .afdsp-compact-site-tab:focus-visible {
-    position: relative;
-    z-index: 1;
-    outline: 2px solid #fff;
-    outline-offset: -2px;
-}
-
-.afdsp--compact-site .afdsp-compact-site-tab.is-active {
-    box-shadow: inset 0 0 0 1px #fff;
+.afdsp--compact-site .afdsp-compact-site-tab-wrap:last-child .afdsp-compact-site-tab {
+    border-radius: 0 8px 0 0;
 }
 
 .afdsp--compact-site .afdsp-compact-site-panel {
-    margin-top: .35rem;
+    margin: 0;
 }
 
 .afdsp--compact-site .afdsp-compact-site-prices {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr));
     overflow: hidden;
 }
 
 .afdsp--compact-site .afdsp-compact-site-price {
     display: flex;
     min-width: 0;
-    min-height: 7.2rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: .85rem .7rem;
+    padding: var(--wp--preset--spacing--30, 1.5rem);
     text-align: center;
 }
 
@@ -104,57 +94,63 @@
     background: var(--afdsp-gradient-dunkelblau);
 }
 
-.afdsp--compact-site .afdsp-compact-site-price > span {
+.afdsp--compact-site .afdsp-compact-site-label,
+.afdsp--compact-site .afdsp-compact-site-value,
+.afdsp--compact-site .afdsp-compact-site-saving-percent,
+.afdsp--compact-site .afdsp-compact-site-tank-saving {
+    margin: 0;
     color: inherit;
-    font-size: clamp(.78rem, 1.25vw, 1rem);
-    font-weight: 500;
 }
 
-.afdsp--compact-site .afdsp-compact-site-price > strong {
-    margin-top: .15rem;
-    color: inherit;
-    font-size: clamp(1.75rem, 3.7vw, 3.2rem);
-    font-weight: 800;
-    line-height: 1.05;
+.afdsp--compact-site .afdsp-compact-site-label--current {
+    font-size: var(--wp--preset--font-size--medium, 1rem);
+}
+
+.afdsp--compact-site .afdsp-compact-site-value {
+    font-size: var(--wp--preset--font-size--xx-large, 2.5rem);
+    line-height: inherit;
     white-space: nowrap;
 }
 
-.afdsp--compact-site .afdsp-compact-site-price small {
-    margin-top: .25rem;
-    color: inherit;
-    font-size: clamp(.62rem, .95vw, .78rem);
-}
-
-.afdsp--compact-site .afdsp-compact-site-price small b {
+.afdsp--compact-site .afdsp-compact-site-value--current,
+.afdsp--compact-site .afdsp-compact-site-value--saving {
     font-weight: 700;
 }
 
+.afdsp--compact-site .afdsp-compact-site-value--scenario {
+    font-weight: 800;
+}
+
+.afdsp--compact-site .afdsp-compact-site-tank-saving {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0;
+    font-size: var(--wp--preset--font-size--small, .875rem);
+}
+
 .afdsp--compact-site .afdsp-stale {
-    margin: 0 0 .35rem;
-    border-radius: .35rem;
+    margin: 0;
+    border-radius: 0;
 }
 
 .afdsp--compact-site .afdsp-compact-site-source {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
-    gap: .3rem 1rem;
-    padding: .55rem .7rem .1rem;
+    gap: 0;
+    margin-top: var(--wp--preset--spacing--20, 1rem);
+    padding: 0 var(--wp--preset--spacing--20, 1rem) var(--wp--preset--spacing--20, 1rem);
     color: #fff;
-    font-size: clamp(.6rem, .8vw, .72rem);
+    font-size: .65rem;
     font-style: italic;
+    font-weight: 400;
 }
 
-@media (max-width: 44rem) {
-    .afdsp--compact-site .afdsp-compact-site-title {
-        font-size: clamp(1.8rem, 9vw, 3rem);
-    }
+.afdsp--compact-site .afdsp-compact-site-source > span {
+    min-width: 0;
+}
 
-    .afdsp--compact-site .afdsp-compact-site-prices {
-        grid-template-columns: 1fr;
-    }
-
-    .afdsp--compact-site .afdsp-compact-site-price {
-        min-height: 6rem;
-    }
+.afdsp--compact-site .afdsp-compact-site-source > span:last-child {
+    text-align: right;
 }
