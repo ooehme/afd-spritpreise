@@ -16,12 +16,12 @@ AfD Spritpreise von Oliver Oehme lädt aktuelle Tankstellendaten serverseitig vo
 
 Projektseite: https://oliveroehme.de/werkzeuge/afd-spritpreise
 
-Der Gutenberg-Baukasten verwendet vier Plugin-Blöcke:
+Im Gutenberg-Inserter stehen zwei Einstiege zur Verfügung:
 
-* `afd-spritpreise/fuel-price` als Datenkontext
-* `afd-spritpreise/fuel-tabs` als Kraftstoffumschalter
-* `afd-spritpreise/fuel-tab` als einzelner Kraftstoff-Tab mit nativem WordPress-Core-Button
-* `afd-spritpreise/data-value` für einen einzelnen dynamischen Wert
+* `AfD Spritpreise` mit ausführlichem Default-Layout für Preisvergleich, 50-Liter-Ersparnis, günstigste Tankstelle, Rechenbestandteile und Methodik
+* `AfD Spritpreise – kompakt` mit dem kompakten Default-Layout aus Kraftstofftabs, drei Preisfeldern und Quellenzeile
+
+Beide Einstiege basieren technisch auf demselben Datenkontext `afd-spritpreise/fuel-price` und verwenden die gemeinsamen Plugin-Blöcke `fuel-tabs`, `fuel-tab` und `data-value`. Bestehende Inhalte mit `fuel-price` bleiben dadurch kompatibel.
 
 Layout und Präsentation erfolgen mit normalen Gutenberg-Core-Blöcken wie Gruppe, Spalten, Überschrift und Absatz. Es gibt keine Plugin-eigenen Price-Board-, Facts-, Header-, Metric-, Station-, Forderungs- oder Methodik-Container mehr.
 
@@ -34,7 +34,7 @@ Der Shortcode `[afd_spritpreise]` bleibt als eigenständige Full-/Compact-Ausgab
 1. Plugin-ZIP unter Plugins → Installieren hochladen.
 2. Plugin aktivieren.
 3. Unter Einstellungen → AfD Spritpreise das Standardgebiet und die Rechenwerte konfigurieren.
-4. Block einfügen oder `[afd_spritpreise]` verwenden.
+4. Einen der beiden Gutenberg-Einstiege einfügen oder `[afd_spritpreise]` verwenden.
 
 == Frequently Asked Questions ==
 
