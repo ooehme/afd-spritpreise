@@ -154,7 +154,7 @@ final class ComponentRenderer
             'saving' => $this->number($c['saving_cents'], 1) . ' ct/l',
             'saving_percent' => $this->number($c['saving_percent'], 1) . ' % weniger',
             'saving_50l' => $this->money($c['saving_50l']) . ' weniger',
-            'station_label' => sprintf(__('Günstigste Tankstelle für %s', 'afd-spritpreise'), self::FUEL_LABELS[$fuel]),
+            'station_label' => sprintf(__('aktuell günstigste Tankstelle für %s', 'afd-spritpreise'), self::FUEL_LABELS[$fuel]),
             'station_name' => $station['name'],
             'station_address' => trim($station['street'] . ', ' . $station['postcode'] . ' ' . $station['city'], ' ,'),
             'station_price' => $this->price($station['price']),

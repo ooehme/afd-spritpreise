@@ -27,7 +27,7 @@
         { label: __('Ersparnis je Liter', 'afd-spritpreise'), value: 'saving', sample: '57,2 ct/l' },
         { label: __('Ersparnis in Prozent', 'afd-spritpreise'), value: 'saving_percent', sample: '24,5 % weniger' },
         { label: __('Ersparnis bei 50 Litern', 'afd-spritpreise'), value: 'saving_50l', sample: '28,61 € weniger' },
-        { label: __('Tankstellen-Bezeichnung', 'afd-spritpreise'), value: 'station_label', sample: __('Günstigste Tankstelle für Diesel', 'afd-spritpreise') },
+        { label: __('Tankstellen-Bezeichnung', 'afd-spritpreise'), value: 'station_label', sample: __('aktuell günstigste Tankstelle für Diesel', 'afd-spritpreise') },
         { label: __('Tankstellen-Name', 'afd-spritpreise'), value: 'station_name', sample: 'Tankstelle Beispiel' },
         { label: __('Tankstellen-Adresse', 'afd-spritpreise'), value: 'station_address', sample: 'Musterstraße 1, 09111 Chemnitz' },
         { label: __('Tankstellen-Preis', 'afd-spritpreise'), value: 'station_price', sample: '2,318 €/l' },

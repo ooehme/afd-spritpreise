@@ -66,13 +66,14 @@ final class Options
     {
         $input = is_array($input) ? $input : [];
         $defaults = self::defaults();
+        $current = self::get();
 
         try {
             $box = BoundingBox::from_array((array) ($input['area'] ?? []));
             $area = $box->to_array();
         } catch (\InvalidArgumentException) {
             add_settings_error(self::OPTION, 'invalid_bbox', __('Die Bounding Box ist ungültig; das bisherige Gebiet wurde beibehalten.', 'afd-spritpreise'));
-            $area = self::get()['area'];
+            $area = $current['area'];
         }
         $area['areaLabel'] = sanitize_text_field((string) ($input['area']['areaLabel'] ?? $area['areaLabel'] ?? ''));
 
@@ -89,7 +90,9 @@ final class Options
             ],
             'photon' => ['endpoint' => $photon ?: $defaults['photon']['endpoint']],
             'calculation' => self::sanitize_calculation((array) ($input['calculation'] ?? []), $defaults['calculation']),
-            'display' => self::sanitize_display((array) ($input['display'] ?? []), $defaults['display']),
+            'display' => array_key_exists('display', $input)
+                ? self::sanitize_display((array) $input['display'], $defaults['display'])
+                : $current['display'],
         ];
     }
 
