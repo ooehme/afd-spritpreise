@@ -14,3 +14,8 @@
     cursor: pointer;
     text-align: center;
 }
+
+.afdsp--builder .afdsp-fuel-tab .wp-block-button__link:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
