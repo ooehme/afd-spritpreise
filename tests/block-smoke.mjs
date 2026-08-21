@@ -1,4 +1,5 @@
 const registered = new Map();
+const variations = new Map();
 
 globalThis.window = {
     afdspAreaPickerConfig: { area: {} },
@@ -7,6 +8,11 @@ globalThis.window = {
             registerBlockType(name, settings) {
                 if (registered.has(name)) throw new Error(`Duplicate block: ${name}`);
                 registered.set(name, settings);
+            },
+            registerBlockVariation(blockName, variation) {
+                const key = `${blockName}:${variation.name}`;
+                if (variations.has(key)) throw new Error(`Duplicate variation: ${key}`);
+                variations.set(key, variation);
             }
         },
         blockEditor: {},
@@ -17,6 +23,7 @@ globalThis.window = {
 };
 
 await import('../assets/js/block.js');
+await import('../assets/js/block-variations.js');
 
 const expected = [
     'afd-spritpreise/fuel-price',
@@ -33,6 +40,12 @@ if (typeof registered.get('afd-spritpreise/fuel-price').save !== 'function') thr
 if (typeof registered.get('afd-spritpreise/fuel-tabs').save !== 'function') throw new Error('Fuel tabs must persist their child blocks.');
 if (typeof registered.get('afd-spritpreise/fuel-tab').save !== 'function') throw new Error('Fuel tab must persist its native Core Button child.');
 
+const full = variations.get('afd-spritpreise/fuel-price:full');
+const compact = variations.get('afd-spritpreise/fuel-price:compact');
+if (!full || !compact || variations.size !== 2) throw new Error('Full and compact Gutenberg variations must be registered.');
+if (!full.isDefault || !Array.isArray(full.innerBlocks) || !full.innerBlocks.length) throw new Error('Full variation must be the default and provide its detailed layout.');
+if (compact.attributes?.layoutPreset !== 'compact') throw new Error('Compact variation must select the compact layout preset.');
+
 for (const removed of [
     'afd-spritpreise/header',
     'afd-spritpreise/metric',
@@ -46,4 +59,4 @@ for (const removed of [
     if (registered.has(removed)) throw new Error(`Obsolete block still registered: ${removed}`);
 }
 
-console.log(`${registered.size} Gutenberg blocks registered; fuel-tab persists native Core Button markup.`);
+console.log(`${registered.size} Gutenberg blocks registered with full and compact entry variations.`);
