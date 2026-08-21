@@ -8,7 +8,7 @@
   "icon": "database",
   "description": "Ein einzelner dynamischer Wert aus dem AfD-Spritpreise-Datenkontext.",
   "textdomain": "afd-spritpreise",
-  "ancestor": ["afd-spritpreise/fuel-price"],
+  "ancestor": ["afd-spritpreise/fuel-price", "afd-spritpreise/fuel-price-compact"],
   "attributes": {
     "field": { "type": "string", "default": "current" },
     "tagName": { "type": "string", "default": "div" }
