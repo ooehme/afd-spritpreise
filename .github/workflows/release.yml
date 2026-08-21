@@ -34,6 +34,11 @@ jobs:
           }
           $PluginVersion = $Matches[1]
 
+          if ($Plugin -notmatch "define\('AFDSP_VERSION',\s*'([0-9A-Za-z.+-]+)'\)") {
+              throw 'AFDSP_VERSION konnte nicht gelesen werden.'
+          }
+          $ConstantVersion = $Matches[1]
+
           if ($Readme -notmatch 'Stable tag:\s+([0-9A-Za-z.+-]+)') {
               throw 'Stable tag konnte nicht gelesen werden.'
           }
@@ -41,6 +46,9 @@ jobs:
 
           if ($TagVersion -ne $PluginVersion) {
               throw "Tag v$TagVersion passt nicht zur Plugin-Version $PluginVersion."
+          }
+          if ($TagVersion -ne $ConstantVersion) {
+              throw "Tag v$TagVersion passt nicht zu AFDSP_VERSION $ConstantVersion."
           }
           if ($TagVersion -ne $StableTag) {
               throw "Tag v$TagVersion passt nicht zum Stable tag $StableTag."

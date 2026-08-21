@@ -23,10 +23,11 @@ final class Assets
         wp_register_style('afdsp-admin', AFDSP_URL . 'assets/css/admin.css', [], AFDSP_VERSION);
         wp_register_script('afdsp-area-picker', AFDSP_URL . 'assets/js/area-picker.js', ['wp-api-fetch'], AFDSP_VERSION, true);
         wp_register_script('afdsp-admin-shortcodes', AFDSP_URL . 'assets/js/admin-shortcodes.js', [], AFDSP_VERSION, true);
+        wp_register_script('afdsp-block-icons', AFDSP_URL . 'assets/js/block-icon.js', ['wp-element', 'wp-hooks'], AFDSP_VERSION, true);
         wp_register_script(
             'afdsp-block-editor',
             AFDSP_URL . 'assets/js/block.js',
-            ['wp-blocks', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n', 'wp-server-side-render', 'afdsp-area-picker'],
+            ['wp-blocks', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n', 'wp-server-side-render', 'afdsp-area-picker', 'afdsp-block-icons'],
             AFDSP_VERSION,
             true
         );
@@ -34,6 +35,13 @@ final class Assets
             'afdsp-block-variations',
             AFDSP_URL . 'assets/js/block-variations.js',
             ['afdsp-block-editor', 'wp-blocks', 'wp-i18n'],
+            AFDSP_VERSION,
+            true
+        );
+        wp_register_script(
+            'afdsp-block-variation-icon',
+            AFDSP_URL . 'assets/js/block-variation-icon.js',
+            ['afdsp-block-variations', 'wp-blocks'],
             AFDSP_VERSION,
             true
         );

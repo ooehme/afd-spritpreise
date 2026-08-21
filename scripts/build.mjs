@@ -1,7 +1,7 @@
 import { copyFile, mkdir, readFile, readdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 
-const files = ['area-picker.js', 'frontend.js', 'block.js', 'block-variations.js', 'block-compact.js', 'admin-shortcodes.js'];
+const files = ['area-picker.js', 'frontend.js', 'block.js', 'block-variations.js', 'block-compact.js', 'block-icon.js', 'block-variation-icon.js', 'admin-shortcodes.js'];
 await mkdir('assets/js', { recursive: true });
 for (const file of files) {
     const check = spawnSync(process.execPath, ['--check', `src/${file}`], { stdio: 'inherit' });
