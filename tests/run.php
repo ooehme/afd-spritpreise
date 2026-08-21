@@ -163,6 +163,7 @@ test('Atomare Gutenberg-Datenwerte und Datenbindung', function (): void {
 });
 
 test('Block-Metadaten aktivieren native Gutenberg-Stile', function (): void {
+    $parents = ['afd-spritpreise/fuel-price', 'afd-spritpreise/fuel-price-compact'];
     foreach (['fuel-tabs', 'data-value'] as $directory) {
         $metadata = json_decode(file_get_contents(AFDSP_DIR . 'block/' . $directory . '/block.json'), true, 512, JSON_THROW_ON_ERROR);
         assert_true(!empty($metadata['supports']['color']['background']), $directory . ': background support missing');
@@ -171,11 +172,15 @@ test('Block-Metadaten aktivieren native Gutenberg-Stile', function (): void {
         assert_true(!empty($metadata['supports']['typography']['__experimentalFontFamily']), $directory . ': font-family support missing');
         assert_true(!empty($metadata['supports']['spacing']['padding']), $directory . ': padding support missing');
         assert_true(!empty($metadata['supports']['__experimentalBorder']['radius']), $directory . ': border support missing');
-        assert_same(['afd-spritpreise/fuel-price'], $metadata['ancestor'], $directory . ': block must stay freely nestable below fuel-price');
+        assert_same($parents, $metadata['ancestor'], $directory . ': block must stay freely nestable below both fuel-price parents');
     }
 
     $parent = json_decode(file_get_contents(AFDSP_DIR . 'block/block.json'), true, 512, JSON_THROW_ON_ERROR);
+    $compactParent = json_decode(file_get_contents(AFDSP_DIR . 'block/compact/block.json'), true, 512, JSON_THROW_ON_ERROR);
     assert_true(!array_key_exists('allowedBlocks', $parent['supports']), 'Parent must not restrict InnerBlocks through allowedBlocks.');
+    assert_true(!array_key_exists('allowedBlocks', $compactParent['supports']), 'Compact parent must not restrict InnerBlocks through allowedBlocks.');
+    assert_same('afd-spritpreise/fuel-price-compact', $compactParent['name'], 'Compact parent block metadata missing.');
+    assert_same($parent['providesContext'], $compactParent['providesContext'], 'Both parent blocks must provide the same data context.');
 
     foreach (['header', 'metric', 'tank-saving', 'cheapest-station', 'demands', 'method', 'price-board', 'facts'] as $removed) {
         assert_true(!is_file(AFDSP_DIR . 'block/' . $removed . '/block.json'), 'Obsolete metadata still exists: ' . $removed);
