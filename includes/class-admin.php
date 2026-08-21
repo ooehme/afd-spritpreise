@@ -40,6 +40,7 @@ final class Admin
         $options = Options::get();
         wp_enqueue_style('afdsp-admin');
         wp_enqueue_script('afdsp-area-picker');
+        wp_enqueue_script('afdsp-admin-shortcodes');
         wp_localize_script('afdsp-area-picker', 'afdspAreaPickerConfig', [
             'endpoint' => esc_url_raw(rest_url('afd-spritpreise/v1/photon')),
             'nonce' => wp_create_nonce('wp_rest'),
@@ -89,6 +90,15 @@ final class Admin
                 </section>
                 <?php submit_button(__('Einstellungen speichern', 'afd-spritpreise')); ?>
             </form>
+            <section class="afdsp-settings-card">
+                <h2><?php esc_html_e('Shortcodes', 'afd-spritpreise'); ?></h2>
+                <p><?php esc_html_e('Fertige Shortcodes für die beiden eigenständigen Ansichten. Gebiet und Berechnungswerte werden aus den Einstellungen übernommen.', 'afd-spritpreise'); ?></p>
+                <div class="afdsp-shortcodes">
+                    <?php $this->shortcode_row('afdsp-shortcode-full', __('Detaillierte Ansicht', 'afd-spritpreise'), '[afd_spritpreise display="full"]'); ?>
+                    <?php $this->shortcode_row('afdsp-shortcode-compact', __('Kompakte Ansicht', 'afd-spritpreise'), '[afd_spritpreise display="compact"]'); ?>
+                </div>
+                <p class="description"><?php esc_html_e('Optionale Parameter wie fuel, area und min_lat/min_lng/max_lat/max_lng können weiterhin ergänzt werden.', 'afd-spritpreise'); ?></p>
+            </section>
             <section class="afdsp-settings-card">
                 <h2><?php esc_html_e('Cache', 'afd-spritpreise'); ?></h2>
                 <dl class="afdsp-diagnostics"><dt><?php esc_html_e('Einträge', 'afd-spritpreise'); ?></dt><dd><?php echo esc_html((string) $cache['entries']); ?></dd><dt><?php esc_html_e('Letzter erfolgreicher Abruf', 'afd-spritpreise'); ?></dt><dd><?php echo esc_html($cache['last_success'] ?: '–'); ?></dd><dt><?php esc_html_e('Letzter Fehler', 'afd-spritpreise'); ?></dt><dd><?php echo esc_html($cache['last_error']['message'] ?? '–'); ?></dd></dl>
@@ -146,6 +156,11 @@ final class Admin
     private function text(string $section, string $key, string $label, mixed $value, string $type = 'text', ?string $min = null, ?string $max = null, ?string $step = null): void
     {
         ?><label><?php echo esc_html($label); ?><input class="regular-text" type="<?php echo esc_attr($type); ?>" name="afdsp_settings[<?php echo esc_attr($section); ?>][<?php echo esc_attr($key); ?>]" value="<?php echo esc_attr((string) $value); ?>"<?php if ($min) : ?> min="<?php echo esc_attr($min); ?>"<?php endif; ?><?php if ($max) : ?> max="<?php echo esc_attr($max); ?>"<?php endif; ?><?php if ($step) : ?> step="<?php echo esc_attr($step); ?>"<?php endif; ?>></label><?php
+    }
+
+    private function shortcode_row(string $id, string $label, string $shortcode): void
+    {
+        ?><div class="afdsp-shortcode-row"><label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($label); ?></label><div class="afdsp-shortcode-copy"><input id="<?php echo esc_attr($id); ?>" class="large-text code" type="text" readonly value="<?php echo esc_attr($shortcode); ?>"><button type="button" class="button" data-afdsp-copy-shortcode="<?php echo esc_attr($id); ?>" data-copied-label="<?php esc_attr_e('Kopiert', 'afd-spritpreise'); ?>"><?php esc_html_e('Kopieren', 'afd-spritpreise'); ?></button></div></div><?php
     }
 
     private function action_form(string $action, string $label, string $class = 'button'): void
