@@ -15,6 +15,12 @@
 .afdsp-coordinates { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .7rem; margin-top: .7rem; }
 .afdsp-checkboxes { display: flex; flex-wrap: wrap; gap: .8rem 1.2rem; margin-top: 1rem; }
 .afdsp-checkboxes label { flex-direction: row; align-items: center; font-weight: 400; }
+.afdsp-shortcodes { display: grid; gap: 1rem; margin: 1rem 0; }
+.afdsp-shortcode-row { display: grid; gap: .35rem; }
+.afdsp-shortcode-row > label { font-weight: 600; }
+.afdsp-shortcode-copy { display: flex; gap: .5rem; align-items: center; }
+.afdsp-shortcode-copy input { min-width: 0; margin: 0; }
+.afdsp-shortcode-copy .button { flex: 0 0 auto; }
 .afdsp-diagnostics { display: grid; grid-template-columns: minmax(10rem, auto) 1fr; gap: .35rem 1rem; }
 .afdsp-diagnostics dt { font-weight: 650; }
 .afdsp-diagnostics dd { margin: 0; overflow-wrap: anywhere; }
@@ -24,3 +30,8 @@
 .afdsp-editor-results { margin-bottom: 1rem; }
 .afdsp-editor-bbox { color: #646970; font-family: monospace; font-size: 11px; overflow-wrap: anywhere; }
 .afdsp-editor-placeholder { border: 1px dashed #8c8f94; padding: 2rem; text-align: center; }
+
+@media (max-width: 600px) {
+    .afdsp-shortcode-copy { align-items: stretch; flex-direction: column; }
+    .afdsp-shortcode-copy .button { align-self: flex-start; }
+}
