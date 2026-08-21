@@ -87,16 +87,6 @@ final class Admin
                         <?php foreach ($this->calculation_labels() as $key => $label) : $this->text('calculation', $key, $label, $options['calculation'][$key], 'number', '0', '1000', '0.0001'); endforeach; ?>
                     </div>
                 </section>
-                <section class="afdsp-settings-card">
-                    <h2><?php esc_html_e('Darstellung', 'afd-spritpreise'); ?></h2>
-                    <div class="afdsp-settings-grid">
-                        <label><?php esc_html_e('Standard-Kraftstoff', 'afd-spritpreise'); ?><select name="afdsp_settings[display][defaultFuel]"><?php foreach (['diesel' => 'Diesel', 'e5' => 'Super E5', 'e10' => 'Super E10'] as $value => $label) : ?><option value="<?php echo esc_attr($value); ?>" <?php selected($options['display']['defaultFuel'], $value); ?>><?php echo esc_html($label); ?></option><?php endforeach; ?></select></label>
-                        <label><?php esc_html_e('Standard-Modus', 'afd-spritpreise'); ?><select name="afdsp_settings[display][displayMode]"><option value="full" <?php selected($options['display']['displayMode'], 'full'); ?>><?php esc_html_e('Vollständig', 'afd-spritpreise'); ?></option><option value="compact" <?php selected($options['display']['displayMode'], 'compact'); ?>><?php esc_html_e('Kompakt', 'afd-spritpreise'); ?></option></select></label>
-                    </div>
-                    <div class="afdsp-checkboxes">
-                        <?php foreach ($this->display_labels() as $key => $label) : ?><label><input type="checkbox" name="afdsp_settings[display][<?php echo esc_attr($key); ?>]" value="1" <?php checked($options['display'][$key]); ?>> <?php echo esc_html($label); ?></label><?php endforeach; ?>
-                    </div>
-                </section>
                 <?php submit_button(__('Einstellungen speichern', 'afd-spritpreise')); ?>
             </form>
             <section class="afdsp-settings-card">
@@ -186,10 +176,5 @@ final class Admin
             'co2_petrol_kg' => __('CO₂ Benzin (kg/l)', 'afd-spritpreise'), 'co2_diesel_kg' => __('CO₂ Diesel (kg/l)', 'afd-spritpreise'),
             'co2_price_per_tonne' => __('CO₂-Preis aktuell (€/t)', 'afd-spritpreise'), 'co2_scenario_per_tonne' => __('AfD CO₂-Preis (€/t)', 'afd-spritpreise'),
         ];
-    }
-
-    private function display_labels(): array
-    {
-        return ['showTitle' => __('Titel anzeigen', 'afd-spritpreise'), 'showDemands' => __('Forderungen anzeigen', 'afd-spritpreise'), 'showMethod' => __('Methodik anzeigen', 'afd-spritpreise'), 'showCheapestStation' => __('Günstigste Tankstelle anzeigen', 'afd-spritpreise'), 'showTankSaving' => __('50-Liter-Ersparnis anzeigen', 'afd-spritpreise'), 'showDetailsLink' => __('Detail-/Quellenlink anzeigen', 'afd-spritpreise')];
     }
 }
