@@ -7,7 +7,7 @@
   "category": "widgets",
   "icon": "index-card",
   "textdomain": "afd-spritpreise",
-  "ancestor": ["afd-spritpreise/fuel-price"],
+  "ancestor": ["afd-spritpreise/fuel-price", "afd-spritpreise/fuel-price-compact"],
   "usesContext": ["afdsp/defaultFuel"],
   "supports": {
     "align": ["wide", "full"],
