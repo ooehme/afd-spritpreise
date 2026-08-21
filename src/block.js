@@ -40,142 +40,110 @@
         { label: __('Methodik', 'afd-spritpreise'), value: 'method', sample: __('Median aus gültigen, aktiven Tankstellen. Intern wird ohne vorzeitige Rundung gerechnet.', 'afd-spritpreise') }
     ];
 
-    function coreButtonTemplate(label) {
-        return [[
-            'core/buttons',
-            { layout: { type: 'flex', justifyContent: 'stretch' } },
-            [[
-                'core/button',
-                { text: label, tagName: 'button', type: 'button', width: 100 }
-            ]]
-        ]];
+    function coreButtonTemplate(label, radius) {
+        var attributes = { text: label, tagName: 'button', type: 'button', width: 100 };
+        if (radius) attributes.style = { border: { radius: radius } };
+        return [['core/buttons', { layout: { type: 'flex', justifyContent: 'stretch' } }, [['core/button', attributes]]]];
     }
 
     var FUEL_TAB_TEMPLATE = [
-        ['afd-spritpreise/fuel-tab', { fuel: 'diesel', label: 'Diesel' }, coreButtonTemplate('Diesel')],
-        ['afd-spritpreise/fuel-tab', { fuel: 'e5', label: 'Super E5' }, coreButtonTemplate('Super E5')],
-        ['afd-spritpreise/fuel-tab', { fuel: 'e10', label: 'Super E10' }, coreButtonTemplate('Super E10')]
+        ['afd-spritpreise/fuel-tab', { fuel: 'diesel', label: 'Diesel' }, coreButtonTemplate('Diesel', { topLeft: '8px', topRight: '0px', bottomLeft: '0px', bottomRight: '0px' })],
+        ['afd-spritpreise/fuel-tab', { fuel: 'e5', label: 'Super E5' }, coreButtonTemplate('Super E5', { topLeft: '0px', topRight: '0px', bottomLeft: '0px', bottomRight: '0px' })],
+        ['afd-spritpreise/fuel-tab', { fuel: 'e10', label: 'Super E10' }, coreButtonTemplate('Super E10', { topLeft: '0px', topRight: '8px', bottomLeft: '0px', bottomRight: '0px' })]
     ];
 
     var DEFAULT_TEMPLATE = [
         ['core/group', {
             align: 'wide',
             style: {
-                spacing: {
-                    padding: {
-                        top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30',
-                        left: 'var:preset|spacing|30', right: 'var:preset|spacing|30'
-                    }
-                },
+                spacing: { padding: { top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30', left: 'var:preset|spacing|30', right: 'var:preset|spacing|30' } },
                 background: { gradient: 'linear-gradient(0deg,rgb(0,162,223) 0%,rgb(0,114,179) 100%)' },
                 color: { text: '#ffffff' }
             },
             layout: { type: 'constrained' }
         }, [
-            ['core/group', { align: 'wide', style: { spacing: { blockGap: '0' } }, layout: { type: 'constrained' } }, [
-                ['core/group', {
+            ['core/heading', {
+                align: 'wide',
+                content: __('Kraftstoffpreise mit der AfD', 'afd-spritpreise'),
+                fitText: true,
+                style: {
+                    typography: { textAlign: 'center' },
+                    spacing: { padding: { top: '0', bottom: '0' }, margin: { top: '0', bottom: '0', left: '0', right: '0' } }
+                }
+            }],
+            ['core/group', {
+                align: 'wide',
+                style: {
+                    spacing: { blockGap: '0', margin: { top: 'var:preset|spacing|20', bottom: 'var:preset|spacing|20' } },
+                    border: { radius: { topLeft: '8px', topRight: '8px', bottomLeft: '8px', bottomRight: '8px' }, width: '0px', style: 'none' },
+                    background: { gradient: 'linear-gradient(180deg,rgb(0,64,111) 0%,rgb(8,35,59) 99%)' }
+                },
+                layout: { type: 'default' }
+            }, [
+                ['afd-spritpreise/fuel-tabs', {
                     align: 'wide',
-                    style: { spacing: { padding: { top: '0', bottom: '0' }, margin: { top: '0', bottom: '0' } } },
-                    layout: { type: 'flex', orientation: 'vertical', justifyContent: 'stretch' }
-                }, [
-                    ['core/heading', { level: 2, content: __('Kraftstoffpreise mit der AfD', 'afd-spritpreise'), textAlign: 'center' }],
-                    ['core/group', { layout: { type: 'constrained' } }, [
-                        ['afd-spritpreise/fuel-tabs', {
-                            align: 'wide',
-                            style: { border: { radius: { topLeft: '8px', topRight: '8px', bottomLeft: '0px', bottomRight: '0px' } } }
-                        }]
-                    ]]
-                ]],
+                    style: { border: { radius: { topLeft: '0px', topRight: '0px', bottomLeft: '0px', bottomRight: '0px' } } }
+                }, FUEL_TAB_TEMPLATE],
                 ['core/group', {
                     align: 'wide',
                     style: {
-                        background: { gradient: 'linear-gradient(180deg,rgb(0,59,99) 0%,rgb(0,30,52) 100%)' },
                         color: { text: '#ffffff' },
-                        spacing: {
-                            blockGap: '0',
-                            padding: {
-                                top: 'var:preset|spacing|20', bottom: 'var:preset|spacing|20',
-                                left: 'var:preset|spacing|20', right: 'var:preset|spacing|20'
-                            }
-                        },
+                        spacing: { blockGap: '0', padding: { top: '0', bottom: '0', left: '0', right: '0' } },
                         border: { radius: { bottomLeft: '8px', bottomRight: '8px' } }
                     },
                     layout: { type: 'grid', minimumColumnWidth: '21rem', autoFit: true }
                 }, [
                     ['core/group', {
                         style: {
-                            spacing: {
-                                blockGap: '0',
-                                padding: {
-                                    top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30',
-                                    left: 'var:preset|spacing|30', right: 'var:preset|spacing|30'
-                                }
-                            },
+                            spacing: { blockGap: '0', padding: { top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30', left: 'var:preset|spacing|30', right: 'var:preset|spacing|30' } },
                             background: { gradient: 'linear-gradient(180deg,rgb(213,23,47) 0%,rgb(162,17,38) 98%)' }
                         },
                         layout: { type: 'flex', orientation: 'vertical', justifyContent: 'center' }
                     }, [
                         ['core/paragraph', { content: __('aktueller Preis', 'afd-spritpreise'), fontSize: 'medium' }],
-                        ['afd-spritpreise/data-value', {
-                            field: 'current', tagName: 'p', fontSize: 'xx-large',
-                            style: { typography: { fontStyle: 'normal', fontWeight: '700' } }
-                        }]
+                        ['afd-spritpreise/data-value', { field: 'current', tagName: 'p', fontSize: 'xx-large', style: { typography: { fontStyle: 'normal', fontWeight: '700' } } }]
                     ]],
                     ['core/group', {
                         style: {
-                            spacing: {
-                                blockGap: '0',
-                                padding: {
-                                    top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30',
-                                    left: 'var:preset|spacing|30', right: 'var:preset|spacing|30'
-                                }
-                            },
+                            spacing: { blockGap: '0', padding: { top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30', left: 'var:preset|spacing|30', right: 'var:preset|spacing|30' } },
                             background: { gradient: 'linear-gradient(180deg,rgb(0,162,223) 0%,rgb(0,114,179) 100%)' }
                         },
                         layout: { type: 'flex', orientation: 'vertical', justifyContent: 'center' }
                     }, [
                         ['core/paragraph', { content: __('AfD-Preis*', 'afd-spritpreise') }],
-                        ['afd-spritpreise/data-value', {
-                            field: 'scenario', tagName: 'p', fontSize: 'xx-large',
-                            style: { typography: { fontStyle: 'normal', fontWeight: '800' } }
-                        }]
+                        ['afd-spritpreise/data-value', { field: 'scenario', tagName: 'p', fontSize: 'xx-large', style: { typography: { fontStyle: 'normal', fontWeight: '800' } } }]
                     ]],
                     ['core/group', {
                         style: {
-                            spacing: {
-                                blockGap: '0',
-                                padding: {
-                                    top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30',
-                                    left: 'var:preset|spacing|30', right: 'var:preset|spacing|30'
-                                }
-                            },
+                            spacing: { blockGap: '0', padding: { top: 'var:preset|spacing|30', bottom: 'var:preset|spacing|30', left: 'var:preset|spacing|30', right: 'var:preset|spacing|30' } },
                             background: { gradient: 'linear-gradient(180deg,rgb(0,102,166) 0%,rgb(0,59,99) 100%)' }
                         },
                         layout: { type: 'flex', orientation: 'vertical', justifyContent: 'center' }
                     }, [
                         ['core/group', { style: { spacing: { blockGap: '0' } }, layout: { type: 'flex', orientation: 'vertical', justifyContent: 'center' } }, [
                             ['afd-spritpreise/data-value', { field: 'saving_percent', tagName: 'p' }],
-                            ['afd-spritpreise/data-value', {
-                                field: 'saving', tagName: 'p', fontSize: 'xx-large',
-                                style: { typography: { fontStyle: 'normal', fontWeight: '700' } }
-                            }]
+                            ['afd-spritpreise/data-value', { field: 'saving', tagName: 'p', fontSize: 'xx-large', style: { typography: { fontStyle: 'normal', fontWeight: '700' } } }]
                         ]],
                         ['core/group', { fontSize: 'small', style: { spacing: { blockGap: '0' } }, layout: { type: 'flex', flexWrap: 'nowrap', justifyContent: 'center' } }, [
                             ['core/paragraph', { content: __('bei 50 Litern ', 'afd-spritpreise') }],
                             ['afd-spritpreise/data-value', { field: 'saving_50l', tagName: 'span' }]
                         ]]
                     ]]
+                ]],
+                ['core/group', {
+                    style: {
+                        typography: { fontStyle: 'italic', fontWeight: '400', fontSize: '0.65rem' },
+                        spacing: {
+                            margin: { top: 'var:preset|spacing|20', bottom: '0' },
+                            padding: { top: '0', bottom: 'var:preset|spacing|20', right: 'var:preset|spacing|20', left: 'var:preset|spacing|20' },
+                            blockGap: '0'
+                        }
+                    },
+                    layout: { type: 'flex', flexWrap: 'nowrap', justifyContent: 'space-between' }
+                }, [
+                    ['afd-spritpreise/data-value', { field: 'intro', tagName: 'span' }],
+                    ['core/paragraph', { content: __('Preisdaten: TankPuls · MTS-K', 'afd-spritpreise') }]
                 ]]
-            ]],
-            ['core/group', {
-                style: {
-                    typography: { fontStyle: 'italic', fontWeight: '400', fontSize: '0.65rem' },
-                    spacing: { margin: { top: 'var:preset|spacing|20', bottom: '0' }, padding: { top: '0', bottom: '0' }, blockGap: '0' }
-                },
-                layout: { type: 'flex', flexWrap: 'nowrap', justifyContent: 'space-between' }
-            }, [
-                ['afd-spritpreise/data-value', { field: 'intro', tagName: 'span' }],
-                ['core/paragraph', { content: __('Preisdaten: TankPuls · MTS-K', 'afd-spritpreise') }]
             ]]
         ]]
     ];
