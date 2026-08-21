@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.4
+
+- Zwei klar getrennte Gutenberg-Hauptblöcke eingeführt: `AfD Spritpreise` und `AfD Spritpreise – kompakt`, jeweils mit eigenem Default-Layout und gemeinsamem Datenkontext.
+- Ausführliches Gutenberg-Default-Layout auf die aktuelle Preis-, Tankstellen-, Rechen- und Methodikdarstellung umgestellt.
+- Compact-Gutenberg-Default und beide Shortcode-Varianten visuell aufeinander abgestimmt.
+- Full- und Compact-Shortcode verwenden eigene theme-unabhängige Styles, damit die Darstellung unter unterschiedlichen Themes konsistent bleibt.
+- Backend-Abschnitt „Darstellung“ entfernt; Full/Compact wird über Blocktyp bzw. explizites Shortcode-Attribut gewählt.
+- Shortcode-Infobox unter Einstellungen → AfD Spritpreise mit Kopier-Buttons für Full und Compact ergänzt.
+- Tankstellenbezeichnung auf „aktuell günstigste Tankstelle für …“ vereinheitlicht.
+- Pointer-/Touch-Fokusrahmen der Gutenberg-Kraftstofftabs korrigiert; Tastaturfokus bleibt erhalten.
+- Beide Gutenberg-Hauptblöcke verwenden dasselbe benutzerdefinierte SVG-Symbol; Kraftstoffauswahl, Kraftstoff-Tab und Datenwert behalten passende Funktionssymbole.
+- Block-Metadaten, JavaScript-Build und Release-Versionen auf 1.2.4 vereinheitlicht.
+
 ## 1.2.3
 
 - Gutenberg-Kraftstofftabs verwenden native WordPress-Core-Buttons und übernehmen Theme-/Site-Editor-Stile vollständig.
