@@ -35,6 +35,13 @@ final class Assets
             AFDSP_VERSION,
             true
         );
+        wp_register_script(
+            'afdsp-block-compact-editor',
+            AFDSP_URL . 'assets/js/block-compact.js',
+            ['afdsp-block-editor', 'wp-blocks'],
+            AFDSP_VERSION,
+            true
+        );
     }
 
     private function attach_theme_button_active_state(): void
