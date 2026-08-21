@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "afd-spritpreise/fuel-price-compact",
+  "version": "1.1.0",
+  "title": "AfD Spritpreise – kompakt",
+  "category": "widgets",
+  "icon": "index-card",
+  "description": "Kompakte Preisübersicht mit Kraftstofftabs, drei Preisfeldern und Quellenzeile.",
+  "textdomain": "afd-spritpreise",
+  "attributes": {
+    "minLat": { "type": "number" },
+    "minLng": { "type": "number" },
+    "maxLat": { "type": "number" },
+    "maxLng": { "type": "number" },
+    "areaLabel": { "type": "string" },
+    "defaultFuel": { "type": "string", "default": "diesel" }
+  },
+  "providesContext": {
+    "afdsp/minLat": "minLat",
+    "afdsp/minLng": "minLng",
+    "afdsp/maxLat": "maxLat",
+    "afdsp/maxLng": "maxLng",
+    "afdsp/areaLabel": "areaLabel",
+    "afdsp/defaultFuel": "defaultFuel"
+  },
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "ariaLabel": true,
+    "html": false,
+    "background": {
+      "backgroundImage": true,
+      "backgroundSize": true,
+      "gradient": true
+    },
+    "color": {
+      "background": true,
+      "text": true,
+      "link": true,
+      "gradients": true
+    },
+    "shadow": true,
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "dimensions": {
+      "minHeight": true,
+      "minWidth": true
+    },
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "position": {
+      "sticky": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "textAlign": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalTextTransform": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalLetterSpacing": true
+    },
+    "layout": {
+      "allowSizingOnChildren": true
+    }
+  },
+  "editorScript": "afdsp-block-compact-editor",
+  "editorStyle": "afdsp-admin",
+  "style": "afdsp-frontend"
+}
