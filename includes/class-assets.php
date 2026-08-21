@@ -22,6 +22,7 @@ final class Assets
 
         wp_register_style('afdsp-admin', AFDSP_URL . 'assets/css/admin.css', [], AFDSP_VERSION);
         wp_register_script('afdsp-area-picker', AFDSP_URL . 'assets/js/area-picker.js', ['wp-api-fetch'], AFDSP_VERSION, true);
+        wp_register_script('afdsp-admin-shortcodes', AFDSP_URL . 'assets/js/admin-shortcodes.js', [], AFDSP_VERSION, true);
         wp_register_script(
             'afdsp-block-editor',
             AFDSP_URL . 'assets/js/block.js',
