@@ -39,6 +39,13 @@ final class Assets
             true
         );
         wp_register_script(
+            'afdsp-block-variation-icon',
+            AFDSP_URL . 'assets/js/block-variation-icon.js',
+            ['afdsp-block-variations', 'wp-blocks'],
+            AFDSP_VERSION,
+            true
+        );
+        wp_register_script(
             'afdsp-block-compact-editor',
             AFDSP_URL . 'assets/js/block-compact.js',
             ['afdsp-block-editor', 'wp-blocks'],
