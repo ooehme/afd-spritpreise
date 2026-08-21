@@ -70,10 +70,8 @@
         title: __('AfD Spritpreise', 'afd-spritpreise'),
         description: __('Ausführliche Ansicht mit Preisen, Tankstelle, Rechenbestandteilen und Methodik.', 'afd-spritpreise'),
         icon: 'money-alt',
-        attributes: { layoutPreset: 'full' },
         innerBlocks: FULL_TEMPLATE,
         isDefault: true,
-        scope: ['inserter'],
-        isActive: function (attributes) { return attributes.layoutPreset === 'full'; }
+        scope: ['inserter']
     });
 }(window.wp.blocks, window.wp.i18n));
