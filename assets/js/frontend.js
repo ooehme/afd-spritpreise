@@ -42,9 +42,11 @@
         }
 
         tabs.forEach(function (tab, index) {
-            tab.addEventListener('click', function (event) {
+            tab.addEventListener('pointerdown', function (event) {
+                if (event.isPrimary) event.preventDefault();
+            });
+            tab.addEventListener('click', function () {
                 activate(tab, false);
-                if (event.detail > 0) tab.blur();
             });
             tab.addEventListener('keydown', function (event) {
                 if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'Home' && event.key !== 'End') return;

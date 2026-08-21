@@ -13,6 +13,7 @@
 .afdsp--builder .afdsp-fuel-tab .wp-block-button__link {
     cursor: pointer;
     text-align: center;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .afdsp--builder .afdsp-fuel-tab .wp-block-button__link:focus:not(:focus-visible) {
