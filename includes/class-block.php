@@ -24,6 +24,9 @@ final class Block
         register_block_type(AFDSP_DIR . 'block', [
             'render_callback' => [$this->renderer, 'parent'],
         ]);
+        register_block_type(AFDSP_DIR . 'block/compact', [
+            'render_callback' => [$this->renderer, 'parent'],
+        ]);
         register_block_type(AFDSP_DIR . 'block/fuel-tabs', [
             'render_callback' => [$this->renderer, 'tabs'],
         ]);

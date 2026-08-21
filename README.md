@@ -13,38 +13,49 @@ Autor: Oliver Oehme · Projektseite: https://oliveroehme.de/werkzeuge/afd-spritp
 
 ## Gutenberg-Architektur
 
-Der Gutenberg-Teil besteht bewusst nur noch aus drei Plugin-Blöcken:
+Im Gutenberg-Inserter gibt es zwei eigenständige Einstiegspunkte:
 
-- `afd-spritpreise/fuel-price` – Datenkontext und frei bearbeitbare InnerBlocks-Fläche
+- `AfD Spritpreise` (`afd-spritpreise/fuel-price`) – Datenkontext mit ausführlichem Default-Layout
+- `AfD Spritpreise – kompakt` (`afd-spritpreise/fuel-price-compact`) – derselbe Datenkontext mit kompaktem Default-Layout
+
+Beide Hauptblöcke verwenden dieselben atomaren Bausteine:
+
 - `afd-spritpreise/fuel-tabs` – interaktiver Kraftstoffumschalter
+- `afd-spritpreise/fuel-tab` – einzelner Kraftstoff-Tab mit nativem WordPress-Core-Button
 - `afd-spritpreise/data-value` – genau ein dynamischer Datenwert
+
+Der ausführliche Einstieg enthält als Startlayout Preisvergleich, Ersparnis bei 50 Litern, günstigste Tankstelle, die drei Rechenbestandteile und die Methodik. Der kompakte Einstieg verwendet das abgestimmte Kartenlayout mit drei Kraftstofftabs, drei Preisfeldern und Quellenzeile.
 
 Alle Präsentations- und Layoutaufgaben werden normalen Gutenberg-Core-Blöcken überlassen. Überschriften, Texte, Gruppen, Zeilen, Stapel, Spalten, Hintergründe und Abstände sind keine Plugin-Komponenten mehr.
 
-Der Hauptblock hat weder `templateLock` noch eine `allowedBlocks`-Einschränkung. Das Start-Template ist lediglich ein Vorschlag und kann vollständig umgebaut oder gelöscht werden.
+Beide Hauptblöcke haben weder `templateLock` noch eine `allowedBlocks`-Einschränkung. Die Default-Layouts sind lediglich Startpunkte und können vollständig umgebaut oder gelöscht werden.
 
-Beispiel:
+Beispiel für den ausführlichen Einstieg:
 
 ```text
 AfD Spritpreise
 ├── Gruppe
-│   ├── Überschrift (core/heading)
+│   ├── Absatz: Regionale Kraftstoffpreise
+│   ├── Überschrift
 │   └── Datenwert: Einleitung
 ├── Kraftstoffauswahl
-├── Spalten (core/columns)
-│   ├── Spalte
-│   │   ├── Absatz: Aktueller Preis
-│   │   └── Datenwert: Aktueller Preis
-│   ├── Spalte
-│   │   └── Datenwert: Szenariopreis
-│   └── Spalte
-│       └── Datenwert: Ersparnis
-└── beliebige weitere Core-Blöcke
+├── Spalten
+│   ├── Aktueller Preis
+│   ├── Szenariopreis
+│   └── Ersparnis
+├── Spalten
+│   ├── Ersparnis bei 50 Litern
+│   └── günstigste Tankstelle
+├── Rechenbestandteile
+│   ├── Energiesteuer
+│   ├── CO₂-Preis
+│   └── Mehrwertsteuer
+└── Methodik
 ```
 
 ### Atomarer Datenwert
 
-`afd-spritpreise/data-value` kann unterhalb des Hauptblocks beliebig tief in Core-Blöcken verschachtelt werden. Im Inspector wird ausgewählt, welcher Wert ausgegeben wird und welches HTML-Element der Block verwendet.
+`afd-spritpreise/data-value` kann unterhalb eines der beiden Hauptblöcke beliebig tief in Core-Blöcken verschachtelt werden. Im Inspector wird ausgewählt, welcher Wert ausgegeben wird und welches HTML-Element der Block verwendet.
 
 Verfügbare Werte:
 
@@ -60,13 +71,13 @@ Damit können Beschriftung und Wert voneinander unabhängig aufgebaut werden. Ei
 
 ## Block Context
 
-Der Hauptblock stellt folgende Werte über Gutenberg Block Context bereit:
+Beide Hauptblöcke stellen dieselben Werte über Gutenberg Block Context bereit:
 
 - Bounding Box
 - Gebietsbezeichnung
 - Standardkraftstoff
 
-`data-value` und `fuel-tabs` verwenden nur `ancestor: ["afd-spritpreise/fuel-price"]`. Gruppen, Spalten oder andere Core-Blöcke dürfen deshalb dazwischen liegen.
+`data-value` und `fuel-tabs` verwenden `ancestor: ["afd-spritpreise/fuel-price", "afd-spritpreise/fuel-price-compact"]`. Gruppen, Spalten oder andere Core-Blöcke dürfen deshalb dazwischen liegen.
 
 Ist `fuel-tabs` vorhanden, enthält der Hauptblock die Daten für Diesel, E5 und E10. Beim Umschalten aktualisiert `frontend.js` alle Elemente mit `data-afdsp-bind`, ohne eine neue Browser-Anfrage an die Preis-API.
 
@@ -91,7 +102,7 @@ npm test
 npm run package
 ```
 
-`npm run build` prüft die JavaScript-Dateien, kopiert `src/*.js` nach `assets/js/` und validiert alle vorhandenen `block.json`-Dateien.
+`npm run build` prüft die JavaScript-Dateien, kopiert die Dateien aus `src/` nach `assets/js/` und validiert alle vorhandenen `block.json`-Dateien.
 
 `npm run package` erzeugt:
 

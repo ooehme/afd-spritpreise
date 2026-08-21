@@ -16,16 +16,16 @@ AfD Spritpreise von Oliver Oehme lädt aktuelle Tankstellendaten serverseitig vo
 
 Projektseite: https://oliveroehme.de/werkzeuge/afd-spritpreise
 
-Der Gutenberg-Baukasten verwendet vier Plugin-Blöcke:
+Im Gutenberg-Inserter stehen zwei Einstiege zur Verfügung:
 
-* `afd-spritpreise/fuel-price` als Datenkontext
-* `afd-spritpreise/fuel-tabs` als Kraftstoffumschalter
-* `afd-spritpreise/fuel-tab` als einzelner Kraftstoff-Tab mit nativem WordPress-Core-Button
-* `afd-spritpreise/data-value` für einen einzelnen dynamischen Wert
+* `AfD Spritpreise` (`afd-spritpreise/fuel-price`) mit ausführlichem Default-Layout für Preisvergleich, 50-Liter-Ersparnis, günstigste Tankstelle, Rechenbestandteile und Methodik
+* `AfD Spritpreise – kompakt` (`afd-spritpreise/fuel-price-compact`) mit dem kompakten Default-Layout aus Kraftstofftabs, drei Preisfeldern und Quellenzeile
+
+Beide Hauptblöcke stellen denselben Datenkontext bereit und verwenden die gemeinsamen Plugin-Blöcke `fuel-tabs`, `fuel-tab` und `data-value`. Bestehende Inhalte mit `fuel-price` bleiben unverändert kompatibel.
 
 Layout und Präsentation erfolgen mit normalen Gutenberg-Core-Blöcken wie Gruppe, Spalten, Überschrift und Absatz. Es gibt keine Plugin-eigenen Price-Board-, Facts-, Header-, Metric-, Station-, Forderungs- oder Methodik-Container mehr.
 
-Der Datenwert kann frei unterhalb des Hauptblocks verschachtelt und mit nativen Gutenberg-Einstellungen für Farben, Typografie, Textausrichtung, Abstände, Rahmen, Schatten und Größen gestaltet werden.
+Der Datenwert kann frei unterhalb eines der beiden Hauptblöcke verschachtelt und mit nativen Gutenberg-Einstellungen für Farben, Typografie, Textausrichtung, Abstände, Rahmen, Schatten und Größen gestaltet werden.
 
 Der Shortcode `[afd_spritpreise]` bleibt als eigenständige Full-/Compact-Ausgabe erhalten.
 
@@ -34,13 +34,13 @@ Der Shortcode `[afd_spritpreise]` bleibt als eigenständige Full-/Compact-Ausgab
 1. Plugin-ZIP unter Plugins → Installieren hochladen.
 2. Plugin aktivieren.
 3. Unter Einstellungen → AfD Spritpreise das Standardgebiet und die Rechenwerte konfigurieren.
-4. Block einfügen oder `[afd_spritpreise]` verwenden.
+4. Einen der beiden Gutenberg-Einstiege einfügen oder `[afd_spritpreise]` verwenden.
 
 == Frequently Asked Questions ==
 
 = Kann ich normale Gutenberg-Gruppen und Spalten verwenden? =
 
-Ja. `fuel-tabs` und `data-value` benötigen nur den Hauptblock `afd-spritpreise/fuel-price` als Vorfahren. Beliebige Core-Blöcke dürfen dazwischen liegen.
+Ja. `fuel-tabs` und `data-value` benötigen nur `afd-spritpreise/fuel-price` oder `afd-spritpreise/fuel-price-compact` als Vorfahren. Beliebige Core-Blöcke dürfen dazwischen liegen.
 
 = Kann ich Preis, Beschriftung und Hinweis getrennt gestalten? =
 
