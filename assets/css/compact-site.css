@@ -1,160 +1,228 @@
-.afdsp--compact-site {
-    --afdsp-gradient-hellblau: var(--wp--preset--gradient--custom-hellblau, linear-gradient(135deg, rgb(0, 162, 223) 0%, rgb(0, 114, 179) 100%));
-    --afdsp-gradient-dunkelblau: var(--wp--preset--gradient--custom-dunkelblau, linear-gradient(135deg, rgb(0, 102, 166) 0%, rgb(0, 59, 99) 100%));
-    --afdsp-gradient-rot: var(--wp--preset--gradient--custom-rot, linear-gradient(135deg, rgb(213, 23, 47) 0%, rgb(162, 17, 38) 98%));
-    --afdsp-gradient-nachtblau: var(--wp--preset--gradient--custom-nachtblau, linear-gradient(135deg, rgb(0, 64, 111) 0%, rgb(8, 35, 59) 99%));
+.afdsp.afdsp--compact-site {
+    --afdsp-gradient-hellblau: linear-gradient(0deg, rgb(0, 162, 223) 0%, rgb(0, 114, 179) 100%);
+    --afdsp-gradient-dunkelblau: linear-gradient(180deg, rgb(0, 102, 166) 0%, rgb(0, 59, 99) 100%);
+    --afdsp-gradient-rot: linear-gradient(180deg, rgb(213, 23, 47) 0%, rgb(162, 17, 38) 98%);
+    --afdsp-gradient-nachtblau: linear-gradient(180deg, rgb(0, 64, 111) 0%, rgb(8, 35, 59) 99%);
     overflow: visible;
     border: 0;
     border-radius: 0;
-    padding: clamp(.75rem, 2.5vw, 1.5rem);
+    padding: 1.5rem;
     color: #fff;
     background: var(--afdsp-gradient-hellblau);
     box-shadow: none;
-    font-family: inherit;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
-.afdsp--compact-site .afdsp-compact-site-title {
-    margin: 0 0 .45rem;
-    color: inherit;
+.afdsp.afdsp--compact-site .afdsp-compact-site-title {
+    margin: 0;
+    padding: 0;
+    color: #fff;
     font-family: inherit;
-    font-size: clamp(2rem, 4.6vw, 4.8rem);
-    font-weight: 800;
-    line-height: .98;
+    font-size: clamp(2rem, 5vw, 4.8rem);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.05;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: none;
 }
 
-.afdsp--compact-site .afdsp-compact-site-card {
+.afdsp.afdsp--compact-site .afdsp-compact-site-card {
     overflow: hidden;
-    border-radius: .5rem;
-    padding: .35rem;
+    margin: 1rem 0;
+    border: 0;
+    border-radius: 8px;
+    padding: 0;
     background: var(--afdsp-gradient-nachtblau);
+    box-shadow: none;
 }
 
-.afdsp--compact-site .afdsp-compact-site-tabs {
+.afdsp.afdsp--compact-site .afdsp-compact-site-tabs.wp-block-buttons {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    overflow: hidden;
-    border-radius: .4rem .4rem 0 0;
+    gap: 0;
+    margin: 0;
+    padding: 0;
 }
 
-.afdsp--compact-site .afdsp-compact-site-tab {
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab-wrap.wp-block-button {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab.wp-block-button__link {
+    display: block;
+    width: 100%;
     min-width: 0;
-    min-height: 2.4rem;
+    min-height: 0;
+    margin: 0;
     border: 0;
     border-radius: 0;
-    padding: .55rem .5rem;
+    padding: .75rem 1rem;
     color: #fff;
     background: var(--afdsp-gradient-nachtblau);
+    box-shadow: none;
     cursor: pointer;
-    font: inherit;
-    font-size: clamp(.72rem, 1.2vw, .95rem);
-    font-weight: 700;
-    line-height: 1.1;
-    text-transform: uppercase;
+    font-family: inherit;
+    font-size: .95rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.afdsp--compact-site .afdsp-compact-site-tab:hover,
-.afdsp--compact-site .afdsp-compact-site-tab:focus-visible {
-    filter: brightness(1.12);
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab-wrap:first-child .afdsp-compact-site-tab {
+    border-radius: 8px 0 0 0;
 }
 
-.afdsp--compact-site .afdsp-compact-site-tab:focus-visible {
-    position: relative;
-    z-index: 1;
-    outline: 2px solid #fff;
-    outline-offset: -2px;
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab-wrap:last-child .afdsp-compact-site-tab {
+    border-radius: 0 8px 0 0;
 }
 
-.afdsp--compact-site .afdsp-compact-site-tab.is-active {
-    box-shadow: inset 0 0 0 1px #fff;
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab:hover {
+    color: #fff;
+    background: linear-gradient(180deg, rgb(0, 77, 132) 0%, rgb(10, 43, 72) 99%);
 }
 
-.afdsp--compact-site .afdsp-compact-site-panel {
-    margin-top: .35rem;
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab[aria-pressed="true"] {
+    color: #fff;
+    background: linear-gradient(180deg, rgb(0, 102, 166) 0%, rgb(0, 59, 99) 100%);
 }
 
-.afdsp--compact-site .afdsp-compact-site-prices {
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab:focus,
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab:focus-visible,
+.afdsp.afdsp--compact-site .afdsp-compact-site-tab:active {
+    outline: 0;
+    box-shadow: none;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-panel {
+    margin: 0;
+    padding: 0;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-prices {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr));
     overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
-.afdsp--compact-site .afdsp-compact-site-price {
+.afdsp.afdsp--compact-site .afdsp-compact-site-price {
     display: flex;
     min-width: 0;
-    min-height: 7.2rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: .85rem .7rem;
+    margin: 0;
+    padding: 1.5rem;
+    color: #fff;
     text-align: center;
 }
 
-.afdsp--compact-site .afdsp-compact-site-price--current {
+.afdsp.afdsp--compact-site .afdsp-compact-site-price--current {
     background: var(--afdsp-gradient-rot);
 }
 
-.afdsp--compact-site .afdsp-compact-site-price--scenario {
+.afdsp.afdsp--compact-site .afdsp-compact-site-price--scenario {
     background: var(--afdsp-gradient-hellblau);
 }
 
-.afdsp--compact-site .afdsp-compact-site-price--saving {
+.afdsp.afdsp--compact-site .afdsp-compact-site-price--saving {
     background: var(--afdsp-gradient-dunkelblau);
 }
 
-.afdsp--compact-site .afdsp-compact-site-price > span {
-    color: inherit;
-    font-size: clamp(.78rem, 1.25vw, 1rem);
-    font-weight: 500;
+.afdsp.afdsp--compact-site .afdsp-compact-site-label,
+.afdsp.afdsp--compact-site .afdsp-compact-site-value,
+.afdsp.afdsp--compact-site .afdsp-compact-site-saving-percent,
+.afdsp.afdsp--compact-site .afdsp-compact-site-tank-saving {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-family: inherit;
+    font-style: normal;
+    text-align: center;
 }
 
-.afdsp--compact-site .afdsp-compact-site-price > strong {
-    margin-top: .15rem;
-    color: inherit;
-    font-size: clamp(1.75rem, 3.7vw, 3.2rem);
-    font-weight: 800;
-    line-height: 1.05;
+.afdsp.afdsp--compact-site .afdsp-compact-site-label {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-value {
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    line-height: 1.15;
     white-space: nowrap;
 }
 
-.afdsp--compact-site .afdsp-compact-site-price small {
-    margin-top: .25rem;
-    color: inherit;
-    font-size: clamp(.62rem, .95vw, .78rem);
-}
-
-.afdsp--compact-site .afdsp-compact-site-price small b {
+.afdsp.afdsp--compact-site .afdsp-compact-site-value--current,
+.afdsp.afdsp--compact-site .afdsp-compact-site-value--saving {
     font-weight: 700;
 }
 
-.afdsp--compact-site .afdsp-stale {
-    margin: 0 0 .35rem;
-    border-radius: .35rem;
+.afdsp.afdsp--compact-site .afdsp-compact-site-value--scenario {
+    font-weight: 800;
 }
 
-.afdsp--compact-site .afdsp-compact-site-source {
+.afdsp.afdsp--compact-site .afdsp-compact-site-saving-percent {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-tank-saving {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0;
+    font-size: .875rem;
+    font-weight: 400;
+}
+
+.afdsp.afdsp--compact-site .afdsp-stale {
+    margin: 0;
+    border-radius: 0;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-source {
+    display: flex;
+    flex-wrap: nowrap;
     justify-content: space-between;
-    gap: .3rem 1rem;
-    padding: .55rem .7rem .1rem;
+    gap: 0;
+    margin-top: 1rem;
+    padding: 0 1rem 1rem;
     color: #fff;
-    font-size: clamp(.6rem, .8vw, .72rem);
+    font-family: inherit;
+    font-size: .65rem;
     font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-source > span {
+    min-width: 0;
+}
+
+.afdsp.afdsp--compact-site .afdsp-compact-site-source > span:last-child {
+    text-align: right;
 }
 
 @media (max-width: 44rem) {
-    .afdsp--compact-site .afdsp-compact-site-title {
+    .afdsp.afdsp--compact-site {
+        padding: 1rem;
+    }
+
+    .afdsp.afdsp--compact-site .afdsp-compact-site-title {
         font-size: clamp(1.8rem, 9vw, 3rem);
     }
 
-    .afdsp--compact-site .afdsp-compact-site-prices {
-        grid-template-columns: 1fr;
-    }
-
-    .afdsp--compact-site .afdsp-compact-site-price {
-        min-height: 6rem;
+    .afdsp.afdsp--compact-site .afdsp-compact-site-source {
+        flex-wrap: wrap;
+        gap: .25rem 1rem;
     }
 }
