@@ -14,8 +14,7 @@
     "maxLat": { "type": "number" },
     "maxLng": { "type": "number" },
     "areaLabel": { "type": "string" },
-    "defaultFuel": { "type": "string", "default": "diesel" },
-    "layoutPreset": { "type": "string" }
+    "defaultFuel": { "type": "string", "default": "diesel" }
   },
   "providesContext": {
     "afdsp/minLat": "minLat",
