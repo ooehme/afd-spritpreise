@@ -46,17 +46,22 @@ final class CompactRenderer
             <?php endif; ?>
 
             <div class="afdsp-compact-site-card">
-                <div class="afdsp-compact-site-tabs" role="tablist" aria-label="<?php esc_attr_e('Kraftstoffart', 'afd-spritpreise'); ?>">
+                <div class="afdsp-compact-site-tabs wp-block-buttons" role="tablist" aria-label="<?php esc_attr_e('Kraftstoffart', 'afd-spritpreise'); ?>">
                     <?php foreach (self::LABELS as $fuel => $fuelLabel) : ?>
-                        <button
-                            class="afdsp-tab afdsp-compact-site-tab<?php echo $fuel === $config['defaultFuel'] ? ' is-active' : ''; ?>"
-                            type="button"
-                            role="tab"
-                            id="<?php echo esc_attr($id . '-tab-' . $fuel); ?>"
-                            aria-controls="<?php echo esc_attr($id . '-panel-' . $fuel); ?>"
-                            aria-selected="<?php echo $fuel === $config['defaultFuel'] ? 'true' : 'false'; ?>"
-                            data-afdsp-tab="<?php echo esc_attr($fuel); ?>"
-                        ><?php echo esc_html($fuelLabel); ?></button>
+                        <?php $active = $fuel === $config['defaultFuel']; ?>
+                        <div class="wp-block-button afdsp-compact-site-tab-wrap">
+                            <button
+                                class="wp-block-button__link wp-element-button afdsp-tab afdsp-compact-site-tab<?php echo $active ? ' is-active' : ''; ?>"
+                                type="button"
+                                role="tab"
+                                id="<?php echo esc_attr($id . '-tab-' . $fuel); ?>"
+                                aria-controls="<?php echo esc_attr($id . '-panel-' . $fuel); ?>"
+                                aria-selected="<?php echo $active ? 'true' : 'false'; ?>"
+                                aria-pressed="<?php echo $active ? 'true' : 'false'; ?>"
+                                tabindex="<?php echo $active ? '0' : '-1'; ?>"
+                                data-afdsp-tab="<?php echo esc_attr($fuel); ?>"
+                            ><?php echo esc_html($fuelLabel); ?></button>
+                        </div>
                     <?php endforeach; ?>
                 </div>
 
@@ -99,20 +104,23 @@ final class CompactRenderer
 
         <div class="afdsp-compact-site-prices">
             <div class="afdsp-compact-site-price afdsp-compact-site-price--current">
-                <span><?php esc_html_e('aktueller Preis', 'afd-spritpreise'); ?></span>
-                <strong><?php echo esc_html($this->price($calc['current_gross'])); ?></strong>
+                <p class="afdsp-compact-site-label afdsp-compact-site-label--current"><?php esc_html_e('aktueller Preis', 'afd-spritpreise'); ?></p>
+                <p class="afdsp-compact-site-value afdsp-compact-site-value--current"><?php echo esc_html($this->price($calc['current_gross'])); ?></p>
             </div>
 
             <div class="afdsp-compact-site-price afdsp-compact-site-price--scenario">
-                <span><?php esc_html_e('AfD-Preis*', 'afd-spritpreise'); ?></span>
-                <strong><?php echo esc_html($this->price($calc['scenario_gross'])); ?></strong>
+                <p class="afdsp-compact-site-label"><?php esc_html_e('AfD-Preis*', 'afd-spritpreise'); ?></p>
+                <p class="afdsp-compact-site-value afdsp-compact-site-value--scenario"><?php echo esc_html($this->price($calc['scenario_gross'])); ?></p>
             </div>
 
             <div class="afdsp-compact-site-price afdsp-compact-site-price--saving">
-                <span><?php echo esc_html($this->number($calc['saving_percent'], 1) . ' % weniger'); ?></span>
-                <strong><?php echo esc_html($this->number($calc['saving_cents'], 1) . ' ct/l'); ?></strong>
+                <p class="afdsp-compact-site-saving-percent"><?php echo esc_html($this->number($calc['saving_percent'], 1) . ' % weniger'); ?></p>
+                <p class="afdsp-compact-site-value afdsp-compact-site-value--saving"><?php echo esc_html($this->number($calc['saving_cents'], 1) . ' ct/l'); ?></p>
                 <?php if ($config['showTankSaving']) : ?>
-                    <small><?php esc_html_e('bei 50 Litern', 'afd-spritpreise'); ?> <b><?php echo esc_html($this->money($calc['saving_50l']) . ' weniger'); ?></b></small>
+                    <p class="afdsp-compact-site-tank-saving">
+                        <span><?php esc_html_e('bei 50 Litern ', 'afd-spritpreise'); ?></span>
+                        <span><?php echo esc_html($this->money($calc['saving_50l']) . ' weniger'); ?></span>
+                    </p>
                 <?php endif; ?>
             </div>
         </div>
