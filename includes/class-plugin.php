@@ -52,6 +52,7 @@ final class Plugin
                 return (new CompactRenderer($this->service()))->render($config);
             }
 
+            wp_enqueue_style('afdsp-full-site');
             return (new Renderer($this->service()))->render($config);
         } catch (\Throwable $error) {
             if (current_user_can('manage_options')) {

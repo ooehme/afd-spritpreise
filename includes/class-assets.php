@@ -16,11 +16,13 @@ final class Assets
         wp_register_style('afdsp-frontend', AFDSP_URL . 'assets/css/frontend.css', [], AFDSP_VERSION);
         $this->attach_theme_button_active_state();
 
+        wp_register_style('afdsp-full-site', AFDSP_URL . 'assets/css/full-site.css', ['afdsp-frontend'], AFDSP_VERSION);
         wp_register_style('afdsp-compact-site', AFDSP_URL . 'assets/css/compact-site.css', ['afdsp-frontend'], AFDSP_VERSION);
         wp_register_script('afdsp-frontend', AFDSP_URL . 'assets/js/frontend.js', [], AFDSP_VERSION, true);
 
         wp_register_style('afdsp-admin', AFDSP_URL . 'assets/css/admin.css', [], AFDSP_VERSION);
         wp_register_script('afdsp-area-picker', AFDSP_URL . 'assets/js/area-picker.js', ['wp-api-fetch'], AFDSP_VERSION, true);
+        wp_register_script('afdsp-admin-shortcodes', AFDSP_URL . 'assets/js/admin-shortcodes.js', [], AFDSP_VERSION, true);
         wp_register_script(
             'afdsp-block-editor',
             AFDSP_URL . 'assets/js/block.js',
